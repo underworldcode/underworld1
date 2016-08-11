@@ -1,0 +1,17 @@
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<!-- This is a simple usage example of the RateFieldTimeIntegrator component -->
+<!-- Here we calculate the cumulative total strain -->
+<!-- Add this at the end of your input file chain to activate -->~
+
+<struct name="components" mergeType="merge">
+   <struct name="cumulativeTotalStrain">
+      <param name="Type">RateFieldTimeIntegrator</param>
+      <param name="MaterialPointsSwarm">materialSwarm</param>
+      <param name="RateField">StrainRateInvariantField</param>
+      <param name="TimeIntegrator">timeIntegrator</param>
+   </struct>
+</struct>
+
+</StGermainData>

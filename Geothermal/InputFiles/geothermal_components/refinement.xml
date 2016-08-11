@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<!-- Requires topographyDL to have been included too! -->
+
+	<param name="materialBoxMinX" mergeType="replace"> -0.5 </param>
+	<param name="materialBoxMinY" mergeType="replace"> -0.5 </param>
+	<param name="materialBoxMinZ" mergeType="replace"> -0.5 </param>
+	<param name="materialBoxMaxX" mergeType="replace">  0.5 </param>
+	<param name="materialBoxMaxY" mergeType="replace">  0.5 </param>
+	<param name="materialBoxMaxZ" mergeType="replace">  0.5 </param>
+
+	<struct name="components" mergeType="merge">
+		<struct name="surfaceAdaptor" mergeType="merge">
+			<param name="adaptForMaterial" mergeType="replace">True</param>
+			<param name="minElementSize_X" mergeType="replace"> 1 </param>
+			<param name="minElementSize_Y" mergeType="replace"> 1 </param>
+			<param name="minElementSize_Z" mergeType="replace"> 1 </param>
+			<param name="elementDilationPower" mergeType="replace"> 2 </param>
+		</struct>
+	</struct>
+
+</StGermainData>

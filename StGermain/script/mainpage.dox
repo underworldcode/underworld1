@@ -1,0 +1,149 @@
+/*! \mainpage 
+* Welcome to the Doxygen documentation. Please read the following sections to locate:
+* 
+*
+* \section Plugin A Plugin 
+* Plugins are separated by project. For a list of Plugins by project see:
+* <ul>
+*    <li> \ref StgDomain_Plugins</li> 
+*    <li> \ref StgFEM_Plugins</li> 
+*    <li> \ref PICellerator_Plugins</li> 
+*    <li> \ref Underworld_Plugins</li> 
+*    <li> \ref gLucifer_Plugins</li> 
+*    <li> and possibly \ref Experimental_Plugins</li> 
+* </ul>
+*
+* \section Component A Component
+* \ref Components list all available components.  
+*
+* \section Class A Class
+*  <a href="annotated.html">Classes</a> are extracted from the *.c and *.h files. These pages detail all classes defined in
+* the code, including 'pseudo-classes'. 
+*
+* \section File A File
+* \ref <a href="files.html">Files</a> contains the extracted *.c, and *.h file descriptions.
+*
+* \section Directory A Directory
+*  <a href="dirs.html">Directories</a> lists all directories in the code base.
+*
+* \section Search Search Feature
+* Or use the search feature in the side bar.
+* 
+\section Develop For Developers
+See the \ref DevInfo for Information on Writing Doxygen.
+
+\page DevInfo Doxygen Information for Developers Page
+
+\section BasicExample Basic Example of Doxygen Document-Style
+In general, for a comment to be included in Doxygen, it must be in the following form:
+
+\verbatim /** <My content here> */\endverbatim </li>
+
+
+\section BasicFileExample Basic Example of Documenting Underworld Plugin Files
+To document the whole file, near the top of the file include:
+
+\verbatim
+/** \file
+\brief Add Your Description.
+
+\pluginname{Plugin Name From File}
+
+\pluginexample{Put in code here as you want it displayed. It will be added in a verbatim mode.}
+
+*/
+\endverbatim
+
+\section UwOptions Other Options for Documenting Underworld Code.
+To run through a few useful examples:
+
+Other options that can be included are:
+<ul>
+<li> <b>\\plugindetails</b> Add your detailed descriptions here. This one is optional if there is more to say. 
+Otherwise just add it after the first sentence in brief.</li>
+<li> <b>\\uwname</b>{Name tag alternative for non-plugins}</li>
+<li> <b>\\uwexample</b>{Example tag alternative for non-plugins}</li>
+<li> <b>\\organisation</b>{Put in organisation here}</li>
+<li> <b>\\licence</b>{Put Licence information here}</li>
+<li> <b>\\projectweb</b>{Put project web information here}</li>
+<li> <b>\\parent</b>{Put parent info here- doxygen should already extract this, so it is possibly redundant}</li>
+<li> <b>\\reference</b>{Scienfitic reference here}</li>
+<li> <b>\\equation</b>{Put equation in latex format here. It does not need to have math-mode start/finish tags. These are auto-added}</li>
+<li> <b>\\Purpose</b> Put details of file/function/struct/type's purpose here.</li>
+<li> <b>\\Inputs</b> Put details of file/function/struct/type's input's here.</li>
+<li> <b>\\Interactions</b> Put details of file/function/struct/type's interactions with other file/function/struct/type's here.</li>
+<li> <b>\\Outputs</b> Put details of file/function/struct/type's input's here. </li>
+</ul>
+NB. Can use <b>\\pluginname</b> or <b>\@pluginname</b> for each of these options.
+
+ 
+\section CodeExample An Example Plugin in the Code Base
+Check out MaxVelocity.c for an example of how to document a plugin.
+
+\section DoxygenDefaults Other Doxygen Defaults Available
+
+Other useful Doxygen defaults for Underworld documentation include:
+<ul>
+<li><b>\\author</b> Put author here.</li>
+<li><b>\\details</b> Put details of file/struct/function type here.</li>
+<li><b>\\param</b> </li>
+<li><b>\\todo</b> </li>
+</ul>
+
+Other options are available in doxygen as standard items. See the <a href="http//:www.doxygen.org">Doxygen documentation</a> for a complete list. 
+
+\section DoxygenDefaultsForUW Other Doxygen Defaults for Underworld
+Some other Doxygen defaults include:
+<ul>
+  <li> Comment blocks should be directly before or after a function/struct/type definition OR</li>
+  <li> Comment blocks can be in another location IF they are linked by using the:
+  <ul>
+    <li> <b>\\function</b> function_name</li>
+    <li> <b>\\struct</b> struct_name</li>
+    <li> <b>\\type</b> type_name</li>
+  commands.</li>
+  </ul>
+
+  <li>To include LaTeX natively into Doxygen, use the following:
+  <ul>
+   <li> Best to use <b>\\equation</b>{} tag. </li>
+   <li><b>\\f$ \\f$</b>  - for inline comments (replaces $ $ inline latex command)</li>
+   <li><b>\\f[ \\f]</b>  - for unnumbered displayed formulas on a separate line. (replaces $$ $$ latex command.</li>
+   <li><b>\\f{<environment>}{   \\f}</b> - for other environment commands. Replace <environment> with desired native latex environment name.</li>
+  </ul></li>
+  <li> For including XML code examples, best to use the <b>\\uwexample</b> or <b>\\pluginexample</b> tags, but you can also use:
+  <ul>
+    <li><b>\\verbatim</b> Add verbatim content here. <b>\\endverbatim</b> </li>
+  </ul></li>
+</ul>
+
+\section FunctionStandard Standard Comment Content for Functions in Underworld
+ If possible, each comment on a function should include (if possible and relevant):
+<ul>
+   <li> Purpose</li>
+   <li> Inputs</li>
+   <li> Outputs</li>
+   <li> Interactions </li>
+</ul>
+
+\section CreatingDoxygen Creating Your Own Version of Underworld Documentation
+
+There are a number of options and ways of creating Underworld Documentation:
+<ul>
+<li> Through Scons, type:
+<ul><li><tt> scons --help </tt></li><li> This will list all the current options for creating Underworld documentation. 
+This is the simplest but least flexible way to generate documentation.</li>
+<li> The current options include: <tt> doc-doxygen, doc-codex, doc-doxygenlite </tt> </li>
+</ul>
+</li>
+<li> Read the README in the <tt> StGermain/script/</tt> directory for a list of other options for generating Doxygen help files for underworld. Some of the options include:
+<ul> <li><tt> createDoxygen.py</tt> This allows you to select a subdirectory for which to generate the code. This allows a developer to quickly check their documentation without having to generate the whole document. 
+<li><tt> createDocs.py </tt> Which generates the Codex and Doxygen. </li>
+<li><tt> createCodex.py </tt> Which generates the Codex. </li>
+<li><tt> createHTMLDocuments.py </tt> Which allows for more flexible options in generating the Codex </li>
+<li> For all options, type <tt> -h </tt> for help.</li>  
+</ul>
+</li>
+</ul> 
+ 
+**/

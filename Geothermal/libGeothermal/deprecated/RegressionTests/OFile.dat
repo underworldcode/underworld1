@@ -1,0 +1,1 @@
+np 1 --elementResI=24 --elementResJ=12 --elementResK=16 --components.surfaceAdaptor.minElementSize_X=3200 --components.surfaceAdaptor.minElementSize_Y=400 --components.surfaceAdaptor.minElementSize_Z=2400 --maxTimeSteps=1

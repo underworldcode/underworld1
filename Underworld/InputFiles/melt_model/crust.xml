@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+  <struct name="components" mergeType="merge">
+
+    <struct name="uppercrustShape">
+      <param name="Type">PolygonShape</param>
+      <param name="startZ" units="km">0</param>
+      <param name="endZ" units="km">360</param>
+      <list name="vertices">
+        <asciidata><columnDefinition name="x" type="double" units="km"/><columnDefinition name="y" type="double" units="km"/>
+            0 80
+            360 80
+            360 110
+            0 110
+            </asciidata>
+      </list>
+    </struct>
+    <struct name="lowercrustShape">
+      <param name="Type">PolygonShape</param>
+      <param name="startZ" units="km">0</param>
+      <param name="endZ" units="km">360</param>
+      <list name="vertices">
+        <asciidata><columnDefinition name="x" type="double" units="km"/><columnDefinition name="y" type="double" units="km"/>
+            0 50
+            360 50
+            360 80
+            0 80
+            </asciidata>
+      </list>
+    </struct>
+
+    <struct name="crustIsoRheology" mergeType="merge">
+      <param name="Type">MaterialViscosity</param>
+      <param name="eta0" units="Pa*s">1.0e23</param>
+    </struct>
+
+    <struct name="crust_temperature_dep_viscosity">
+
+      <param name="Type">ViscousCreep</param>
+      <param name="StrainRateInvariantField">StrainRateInvariantField</param>
+      <param name="TemperatureField">TemperatureField</param>
+      <param name="PressureField">PressureField</param>
+      <param name="GrainSize">1</param>
+      <param name="shear_modulus" units="Pa">1</param>
+      <param name="burgers_vector" units="m">1</param>
+      <param name="DefaultStrainRateInvariant" units="s^-1">1e-10</param>
+      <param name="enable_limit_eta">False</param>
+      <param name="enable_diffusion">False</param>
+      <param name="enable_peierls">False</param>
+
+      <param name="enable_dislocation">True</param>
+      <param name="dislocation_material_constant" units="s^-1">5.1e-24</param>
+      <param name="dislocation_activation_energy" units="J*mol^-1">1.9e5</param>
+      <param name="dislocation_stress_exponent">3</param>
+      <param name="dislocation_grainsize_exponent">0</param>
+
+    </struct>
+    <struct name="crust_melt_viscosity">
+    <!-- 
+      aux = 1.0 + (parExt->F - self->lowerlimit) / (self->lowerlimit - self->upperlimit);
+		  viscosity = viscosity * (1 * aux + self->minVisFac * (1 - aux) );
+      -->
+      <param name="Type">MeltViscosity</param>
+      <param name="ParticleMelting">particleMelting</param>
+      <!-- parameters -->
+      <param name="MeltFraction_LowerLimit">0.05</param>
+      <param name="MeltFraction_UpperLimit">0.15</param>
+      <param name="max_linear_decrease">1e-3</param>
+    </struct>
+    <struct name="crust_yielding">
+      <param name="Type">DruckerPrager</param>
+      <param name="PressureField">PressureField</param>
+      <param name="MaterialPointsSwarm">materialSwarm</param>
+      <param name="StrainRateField">StrainRateField</param>
+      <param name="cohesion" units="Pa">15e6</param>
+      <param name="frictionCoefficient">0.44</param>
+      <param name="minimumViscosity" units="Pa*s">1.0e18</param>
+      <!-- DISABLE strain weakening
+         <param name="StrainWeakening">strainWeakening</param>
+         -->
+    </struct>
+    <struct name="lowercrust" mergeType="merge">
+      <param name="Type">RheologyMaterial</param>
+      <param name="Shape">lowercrustShape</param>
+      <list name="Rheology">
+        <!--
+        <param>crustIsoRheology</param>
+            -->
+        <param>crust_temperature_dep_viscosity</param>
+        <param>viscosityLimiter</param>
+        <param>crust_melt_viscosity</param>
+        <param>crust_yielding</param>
+      </list>
+      <param name="DensityLabel">crustDensity</param>
+      <param name="ThermalExpansivityLabel" units="K^-1">0.0</param>
+      <param name="DiffusivityLabel">defaultDiffusivity</param>
+      <param name="CpLabel">default_cp</param>
+      <param name="LatentHeatFusionLabel" units="kJ*kg^-1">250.0</param>
+      <param name="RadiogenicHeatProductionLabel" units="W/(m*m*m)">7.67e-7</param>
+      <param name="MeltFractionLabel">meltFraction</param>
+      <param name="MeltExpansionLabel"> 0.13 </param>
+      <param name="PressureLabel"> default_pressure_ppc </param> <!-- temp debugging -->
+    </struct>
+
+    <struct name="meltFraction">
+      <param name="Type">Ppc_Polynomial</param>
+      <param name="ImposeMinMax"> True </param>
+      <param name="MaxValue"> 0.3 </param>
+      <param name="MinValue"> 0.0 </param>
+      <param name="Field"> superSolidusTemperature </param>
+      <list name="Terms">
+        <struct>
+          <param name="Coefficient">0.3936</param>
+          <param name="Power">0</param>
+        </struct>
+        <struct>
+          <param name="Coefficient">0.253</param>
+          <param name="Power">1</param>
+        </struct>
+        <struct>
+          <param name="Coefficient">0.4256</param>
+          <param name="Power">2</param>
+        </struct>
+        <struct>
+          <param name="Coefficient">2.988</param>
+          <param name="Power">3</param>
+        </struct>
+      </list>
+    </struct>
+
+    <struct name="solidusTemperature">
+       <param name="Type">Ppc_Polynomial</param>
+       <param name="Field"> default_pressure_ppc </param>
+         <list name="Terms">
+           <struct>
+             <param name="Coefficient">850.0</param> <!-- patrice used 773 -->
+             <param name="Power">0</param>
+           </struct>
+           <struct>
+             <param name="Coefficient">-1.2e-7</param>
+             <param name="Power">1</param>
+           </struct>
+           <struct>
+             <param name="Coefficient">1.2e-16</param>
+             <param name="Power">2</param>
+           </struct>
+         </list>
+    </struct>
+
+    <struct name="liquidusTemperature">
+       <param name="Type">Ppc_Polynomial</param>
+       <param name="Field"> default_pressure_ppc </param>
+         <list name="Terms">
+           <struct>
+             <param name="Coefficient">1493.0</param>
+             <param name="Power">0</param>
+           </struct>
+           <struct>
+             <param name="Coefficient">-1.2e-7</param>
+             <param name="Power">1</param>
+           </struct>
+           <struct>
+             <param name="Coefficient">1.6e-16</param>
+             <param name="Power">2</param>
+           </struct>
+         </list>
+    </struct>
+
+    <struct name="superSolidusTemperature">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> / </param>
+      <param name="ImposeMinMax"> True </param>
+      <param name="MaxValue"> 0.5 </param>
+      <param name="MinValue"> -0.5 </param>
+      <list name="Properties">
+        <param>frac_numerator</param>
+        <param>frac_denominator</param>
+      </list>
+    </struct>
+
+    <struct name="frac_numerator">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> - </param>
+      <list name="Properties">
+        <param>default_temperature_ppc</param>
+        <param>meanStateTemperature</param>
+      </list>
+    </struct>
+
+   <struct name="meanStateTemperature">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> * </param>
+      <list name="Properties">
+         <param>0.5</param>
+         <param>Tsolidus_plus_Tliquidus</param>
+      </list>
+   </struct>
+
+    <struct name="Tsolidus_plus_Tliquidus">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> + </param>
+      <list name="Properties">
+        <param>solidusTemperature</param>
+        <param>liquidusTemperature</param>
+      </list>
+    </struct>
+
+
+    <struct name="frac_denominator">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> - </param>
+      <list name="Properties">
+        <param>liquidusTemperature</param>
+        <param>solidusTemperature</param>
+      </list>
+    </struct>
+
+    <struct name="uppercrust" mergeType="merge">
+      <param name="Type">RheologyMaterial</param>
+      <param name="Shape">uppercrustShape</param>
+      <list name="Rheology">
+        <!--
+         <param>crustIsoRheology</param>
+            -->
+        <param>crust_temperature_dep_viscosity</param>
+        <param>viscosityLimiter</param>
+        <param>crust_yielding</param>
+      </list>
+      <param name="DensityLabel">crustDensity</param>
+      <param name="ThermalExpansivityLabel" units="K^-1">0.0</param>
+      <param name="DiffusivityLabel">defaultDiffusivity</param>
+      <param name="CpLabel">default_cp</param>
+      <param name="LatentHeatFusionLabel" units="kJ*kg^-1">0.0</param>
+      <param name="RadiogenicHeatProductionLabel" units="W/(m*m*m)">7.67e-7</param>
+      <param name="MeltFractionLabel">0.0</param>
+      <param name="MeltExpansionLabel"> 0.0 </param>
+      <param name="PressureLabel"> default_pressure_ppc </param> <!-- temp debugging -->
+    </struct>
+
+    <struct name="weakShape">
+      <param name="Type">PolygonShape</param>
+      <param name="CentreX" units="km">160</param>
+      <param name="CentreY" units="km">90</param>
+      <param name="CentreZ" units="km">180</param>
+      <!--
+      <param name="alpha">0.0</param>
+      <param name="gamma">0.0</param>
+      <param name="beta">0.785398164</param>
+      -->
+      <param name="startZ" units="km">120</param>
+      <param name="endZ" units="km">360</param>
+      <list name="vertices">
+        <asciidata><columnDefinition name="x" type="double" units="km"/><columnDefinition name="y" type="double" units="km"/>
+            185 80 
+            195 80 
+            180 110 
+            170 110
+<!--
+            152 80 120
+            157 80 120
+            168 110 120
+            163 110 120
+-->
+            </asciidata>
+      </list>
+    </struct>
+    <struct name="weak_temperature_dep_viscosity">
+      <param name="Type">ViscousCreep</param>
+      <param name="StrainRateInvariantField">StrainRateInvariantField</param>
+      <param name="TemperatureField">TemperatureField</param>
+      <param name="PressureField">PressureField</param>
+      <param name="GrainSize">1</param>
+      <param name="shear_modulus" units="Pa">1</param>
+      <param name="burgers_vector" units="m">1</param>
+      <param name="DefaultStrainRateInvariant" units="s^-1">1e-10</param>
+      <param name="enable_limit_eta">False</param>
+      <param name="enable_diffusion">False</param>
+      <param name="enable_peierls">False</param>
+
+      <param name="enable_dislocation">True</param>
+      <param name="dislocation_material_constant" units="s^-1">5.1e-23</param>
+      <param name="dislocation_activation_energy" units="J*mol^-1">1.9e5</param>
+      <param name="dislocation_stress_exponent">3</param>
+      <param name="dislocation_grainsize_exponent">0</param>
+    </struct>
+    <struct name="weak_yielding">
+      <param name="Type">DruckerPrager</param>
+      <param name="PressureField">PressureField</param>
+      <param name="MaterialPointsSwarm">materialSwarm</param>
+      <param name="StrainRateField">StrainRateField</param>
+      <param name="cohesion" units="Pa">15e5</param>
+      <param name="frictionCoefficient">0.044</param>
+      <param name="minimumViscosity" units="Pa*s">1.0e17</param>
+      <!--
+         <param name="StrainWeakening">strainWeakening</param>
+         -->
+    </struct>
+
+    <struct name="weakIsoRheology">
+      <param name="Type">MaterialViscosity</param>
+      <param name="eta0" units="Pa*s">1e20</param>
+    </struct>
+    <struct name="weak">
+      <param name="Type">RheologyMaterial</param>
+      <param name="Shape">weakShape</param>
+      <list name="Rheology">
+      <!--
+         <param>weakIsoRheology</param>
+      -->
+        <param>weak_temperature_dep_viscosity</param>
+        <param>viscosityLimiter</param>
+        <param>weak_yielding</param>
+      </list>
+      <param name="DensityLabel">crustDensity</param>
+      <param name="ThermalExpansivityLabel" units="K^-1">0.0</param>
+      <param name="DiffusivityLabel">defaultDiffusivity</param>
+      <param name="CpLabel">default_cp</param>
+      <param name="LatentHeatFusionLabel" units="kJ*kg^-1">0</param>
+      <param name="RadiogenicHeatProductionLabel" units="W/(m*m*m)">7.67e-7</param>
+      <param name="MeltFractionLabel">0.0</param>
+      <param name="MeltExpansionLabel"> 0.0 </param>
+      <param name="PressureLabel"> default_pressure_ppc </param> <!-- temp debugging -->
+    </struct>
+
+    <struct name="crustDensity">
+      <param name="Type">Ppc_LinearDensityMelt</param>
+      <param name="ReferenceDensity" units="kg*m^-3">2720.0</param>
+      <param name="ReferenceTemperature" units="K">293.15</param>
+      <param name="ThermalExpansivity"> ThermalExpansivityLabel </param>
+      <param name="Temperature"> default_temperature_ppc </param>
+      <param name="MeltDensityChange"> MeltExpansionLabel </param>
+      <param name="MeltFraction"> MeltFractionLabel </param>
+      <param name="Compressibility"> 0 </param>
+    </struct>
+  </struct>
+</StGermainData>

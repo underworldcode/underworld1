@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+  <struct name="components" mergeType="merge">
+    <struct name="lowercrust">
+      <param name="Type">RheologyMaterial</param>
+      <param name="Shape">lowercrustShape</param>
+      <list name="Rheology">
+        <param> lowercrustViscosity </param>
+      </list>
+      <param name="DensityLabel"> lowercrustDensity </param>
+      <param name="CpLabel"> Cp </param>
+      <param name="ThermalExpansivityLabel"> lowercrustAlpha </param>
+      <param name="DiffusivityLabel"> lowercrustDiffusivity </param>
+      <param name="RadiogenicHeatProductionLabel"> lowercrustRadiogenicHeatProduction </param>
+    </struct>
+    <struct name="lowercrustDensity">
+      <param name="Type">Ppc_Constant</param>
+      <param name="Manager">thePpcManager</param>
+      <param name="Value" units="kg*m^-3"> 3000 </param>
+      <!--
+      <param name="Type">Ppc_LinearDensity</param>
+      <param name="Manager">thePpcManager</param>
+      <param name="Temperature">default_temperature_ppc</param>
+      <param name="CompressibilityLabel">0</param>
+      <param name="Pressure">default_pressure_ppc</param>
+      <param name="ReferenceTemperature" units="K">273.15</param>
+      <param name="ReferencePressure" units="Pa">0</param>
+      <param name="ReferenceDensity" units="kg*m^-3">3000</param>
+      -->
+    </struct>
+    <struct name="lowercrustRadiogenicHeatProduction">
+      <param name="Type">Ppc_Constant</param>
+      <param name="Manager">thePpcManager</param>
+      <param name="Value" units="uW*m^-3"> 0.9 </param>
+    </struct>
+    <struct name="lowercrustDiffusivity">
+      <param name="Type">Ppc_Constant</param>
+      <param name="Manager">thePpcManager</param>
+      <param name="Value" units="m*m/s"> 1.0e-6 </param>
+    </struct>
+    <struct name="lowercrustViscosity">
+      <param name="Type">MaterialViscosity</param>
+      <param name="eta0" units="Pa*s">1e24</param>
+    </struct>
+    <struct name="lowercrustAlpha">
+      <param name="Type">Ppc_Constant</param>
+      <param name="Manager">thePpcManager</param>
+      <param name="Value" units="K^-1"> 0 </param>
+    </struct>
+  </struct>
+</StGermainData>

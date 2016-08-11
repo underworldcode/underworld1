@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<!-- Note: suffixing the name by "_Toolbox" is important here! -->
+<param name="Name">Geothermal_Toolbox</param>
+<param name="Author">...</param>
+<param name="Organisation">MCC</param>
+<param name="Project">Underworld</param>
+<param name="Location">./</param>
+<param name="Project Web">http://mcc.monash.edu.au/Underworld</param>
+<param name="Copyright">Copyright (c) 2005, Monash Cluster Computing</param>
+<param name="License"></param>
+<param name="Summary">...</param>
+<param name="Description">Geothermal Toolbox</param>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Type">PDERework</param>
+		<param name="Name">PDERework</param>
+		<param name="Essential">True</param>
+		<param name="Description">PDERework is required</param>
+	</struct>
+</list>
+
+</StGermainData>

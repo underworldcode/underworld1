@@ -1,0 +1,14 @@
+# Enable MUMPS using the Uzawa solver and PETSc <= 2.3.3.
+
+# Swap out the A11 matrix type to the MUMPS version.
+
+-Uzawa_velSolver_ksp_type preonly
+-Uzawa_velSolver_pc_type lu
+-mat_type aijmumps
+
+# An issue with MUMPS is that it requires preallocation of arrays, and as
+# such occaisionally it will report errors when the arrays are not big
+# enough. Add in this line to up the array size, and if errors are still
+# reported increase the number.
+
+#-mat_mumps_icntl_14 100

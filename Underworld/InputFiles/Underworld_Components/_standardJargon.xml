@@ -1,0 +1,46 @@
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <import mergeType="merge">
+      <toolbox>Underworld</toolbox>
+   </import>
+
+   <!-- output specific plugins -->
+   <list name="plugins" mergeType="merge">
+      <struct>
+         <param name="Type">StgFEM_StandardConditionFunctions</param>
+         <param name="Context">context</param>
+      </struct>
+
+      <struct>
+         <param name="Type">StgFEM_FrequentOutput</param>
+         <param name="Context">context</param>
+      </struct>
+
+      <struct>
+         <param name="Type">Underworld_Vrms</param>
+         <param name="Context">context</param>
+         <param name="GaussSwarm">gaussSwarm</param>
+         <param name="VelocityField">VelocityField</param>
+      </struct>
+
+      <struct>
+         <param name="Type">StgFEM_CPUTime</param>
+         <param name="Context">context</param>
+      </struct>
+
+      <struct>
+         <param name="Type">Underworld_MaxVelocity</param>
+         <param name="Context">context</param>
+      </struct>
+   </list>
+
+   <struct name="components" mergeType="merge">
+
+      <struct name="context">
+			<param name="Type">UnderworldContext</param>
+		</struct>
+
+   </struct>
+
+</StGermainData>

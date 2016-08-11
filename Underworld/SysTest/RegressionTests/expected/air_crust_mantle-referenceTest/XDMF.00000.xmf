@@ -1,0 +1,214 @@
+<?xml version="1.0" ?>
+<Xdmf xmlns:xi="http://www.w3.org/2001/XInclude" Version="2.0">
+
+<Domain>
+
+   <Grid Name="FEM_Mesh_linearMesh">
+
+      <Time Value="0" />
+
+         <Topology Type="Quadrilateral" NumberOfElements="7200"> 
+            <DataItem Format="HDF" DataType="Int"  Dimensions="7200 4">Mesh.linearMesh.00000.h5:/connectivity</DataItem>
+         </Topology>
+
+         <Geometry Type="XYZ">
+            <DataItem ItemType="Function"  Dimensions="7381 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="7381 1" Name="XCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 2">Mesh.linearMesh.00000.h5:/vertices</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="7381 1" Name="YCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 7381 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 2">Mesh.linearMesh.00000.h5:/vertices</DataItem>
+               </DataItem>
+            </DataItem>
+         </Geometry>
+
+         <Attribute Type="Vector" Center="Node" Name="VelocityField">
+            <DataItem ItemType="Function"  Dimensions="7381 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="7381 1" Name="XValue">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 2">VelocityField.00000.h5:/data</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="7381 1" Name="YValue">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 7381 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 2">VelocityField.00000.h5:/data</DataItem>
+               </DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="StrainRateInvariantField">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">StrainRateInvariantField.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Cell" Name="PressureField">
+            <DataItem ItemType="HyperSlab" Dimensions="7200 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7200 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7200 1">PressureField.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="TemperatureField">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">TemperatureField.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="recoveredPressureField">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">recoveredPressureField.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="recoveredDeviatoricStressInvariantField">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">recoveredDeviatoricStressInvariantField.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="VelocitySquaredField">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">VelocitySquaredField.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="EnergyEqn-phiDotField">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">EnergyEqn-phiDotField.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="MeltFractionLabel-mesh">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">MeltFractionLabel-mesh.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="PressureLabel-mesh">
+            <DataItem ItemType="HyperSlab" Dimensions="7381 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 7381 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="7381 1">PressureLabel-mesh.00000.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+   </Grid>
+
+   <Grid Name="materialSwarm" GridType="Collection">
+
+      <Time Value="0" />
+
+      <Grid Name="materialSwarm_proc_0">
+
+         <Topology Type="POLYVERTEX" NodesPerElement="143972"> </Topology>
+         <Geometry Type="XYZ">
+            <DataItem ItemType="Function"  Dimensions="143972 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="143972 1" Name="XCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 143972 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="143972 2">materialSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="143972 1" Name="YCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 143972 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="143972 2">materialSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+            </DataItem>
+         </Geometry>
+
+         <Attribute Type="Vector" Center="Node" Name="materialSwarm-Position">
+            <DataItem ItemType="Function"  Dimensions="143972 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="143972 1" Name="XValue">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 143972 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="143972 2">materialSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="143972 1" Name="YValue">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 143972 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="143972 2">materialSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="materialSwarm-MaterialIndex">
+            <DataItem Format="HDF" NumberType="Int" Dimensions="143972 1">materialSwarm.00000.h5:/MaterialIndex</DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="materialSwarm-HasYielded">
+            <DataItem Format="HDF" NumberType="Char" Dimensions="143972 1">materialSwarm.00000.h5:/HasYielded</DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="materialSwarm-DruckerPragerTensileFailure">
+            <DataItem Format="HDF" NumberType="Char" Dimensions="143972 1">materialSwarm.00000.h5:/DruckerPragerTensileFailure</DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="materialSwarm-MeltFractionLabel">
+            <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="143972 1">materialSwarm.00000.h5:/MeltFractionLabel</DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="materialSwarm-previous-MeltFractionLabel">
+            <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="143972 1">materialSwarm.00000.h5:/previous-MeltFractionLabel</DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="OwningElement">
+            <DataItem Format="HDF" NumberType="Int" Dimensions="143972 1">materialSwarm.00000.h5:/OwningElement</DataItem>
+         </Attribute>
+
+      </Grid>
+
+   </Grid>
+
+   <Grid Name="passiveTracerSwarm" GridType="Collection">
+
+      <Time Value="0" />
+
+      <Grid Name="passiveTracerSwarm_proc_0">
+
+         <Topology Type="POLYVERTEX" NodesPerElement="1"> </Topology>
+         <Geometry Type="XYZ">
+            <DataItem ItemType="Function"  Dimensions="1 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="1 1" Name="XCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 1 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="1 2">passiveTracerSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="1 1" Name="YCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 1 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="1 2">passiveTracerSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+            </DataItem>
+         </Geometry>
+
+         <Attribute Type="Vector" Center="Node" Name="passiveTracerSwarm-Position">
+            <DataItem ItemType="Function"  Dimensions="1 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="1 1" Name="XValue">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 1 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="1 2">passiveTracerSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="1 1" Name="YValue">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 1 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="1 2">passiveTracerSwarm.00000.h5:/Position</DataItem>
+               </DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="passiveTracerSwarm-MaterialIndex">
+            <DataItem Format="HDF" NumberType="Int" Dimensions="1 1">passiveTracerSwarm.00000.h5:/MaterialIndex</DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="OwningElement">
+            <DataItem Format="HDF" NumberType="Int" Dimensions="1 1">passiveTracerSwarm.00000.h5:/OwningElement</DataItem>
+         </Attribute>
+
+      </Grid>
+
+   </Grid>
+
+</Domain>
+
+</Xdmf>
+

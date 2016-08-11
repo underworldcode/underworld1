@@ -1,0 +1,22 @@
+
+                         SwarmVariable                                 Swarm
+              ------------------------              ------------------------
+       picIntegrationPoints-OwningCell                  picIntegrationPoints
+           picIntegrationPoints-Weight                  picIntegrationPoints
+               picIntegrationPoints-Xi                  picIntegrationPoints
+              picIntegrationPoints-Eta                  picIntegrationPoints
+     picIntegrationPoints-LocalElCoord                  picIntegrationPoints
+              materialSwarm-OwningCell                         materialSwarm
+               materialSwarm-PositionX                         materialSwarm
+               materialSwarm-PositionY                         materialSwarm
+                materialSwarm-Position                         materialSwarm
+           materialSwarm-MaterialIndex                         materialSwarm
+              materialSwarm-HasYielded                         materialSwarm
+                 materialSwarm-Density                         materialSwarm
+                   materialSwarm-Alpha                         materialSwarm
+                 gaussSwarm-OwningCell                            gaussSwarm
+                     gaussSwarm-Weight                            gaussSwarm
+                         gaussSwarm-Xi                            gaussSwarm
+                        gaussSwarm-Eta                            gaussSwarm
+               gaussSwarm-LocalElCoord                            gaussSwarm
+

@@ -1,0 +1,72 @@
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+    
+    <!-- This is example usage of the PpcIntegrals tool -->
+    <!-- It simply calculates the progressive volume of each material, which isn't particularly interesting for this model -->
+    <!-- usage ~:  StGermain RayleighTaylorBenchmark.xml Underworld_Components/MaterialIntegrals_RT.xml --> 
+    <list name="plugins" mergeType="merge">
+        <struct>
+            <param name="Type">Underworld_PpcIntegralOutput</param>
+            <param name="Context">context</param>
+        </struct>
+    </list>
+    <struct name="components" mergeType="merge">
+        <!-- get material volumes -->
+        <struct name="lightLayInt">
+            <param name="Type">PpcIntegral</param>
+            <param name="functionLabel">IsMaterialPpcLightLayer</param>
+            <param name="Swarm">picIntegrationPoints</param>
+        </struct>
+        <struct name="IsMaterialPpcLightLayer">
+            <param name="Type">Ppc_IsMaterial</param>
+            <param name="MaterialName">lightLayer</param>
+        </struct>
+        <struct name="backInt">
+            <param name="Type">PpcIntegral</param>
+            <param name="functionLabel">IsMaterialPpcbackground</param>
+            <param name="Swarm">picIntegrationPoints</param>
+        </struct>
+        <struct name="IsMaterialPpcbackground">
+            <param name="Type">Ppc_IsMaterial</param>
+            <param name="MaterialName">background</param>
+        </struct>
+        <struct name="TotalInt">
+            <param name="Type">PpcIntegral</param>
+            <param name="functionLabel">1</param>
+            <param name="Swarm">picIntegrationPoints</param>
+        </struct>
+        <!-- get (material centroids * Volume)  -->
+        <struct name="lightLayCentX">
+            <param name="Type">PpcIntegral</param>
+            <param name="functionLabel">xLightLayer</param>
+        </struct>
+        <struct name="lightLayCentY">
+            <param name="Type">PpcIntegral</param>
+            <param name="functionLabel">yLightLayer</param>
+        </struct>
+        <struct name="xLightLayer">
+            <param name="Type">Ppc_Operation</param>
+            <param name="Operation"> * </param>
+            <list name="Properties">
+                <param>IsMaterialPpcLightLayer</param>
+                <param>xCoord</param>
+            </list>
+        </struct>
+        <struct name="yLightLayer">
+            <param name="Type">Ppc_Operation</param>
+            <param name="Operation"> * </param>
+            <list name="Properties">
+                <param>IsMaterialPpcLightLayer</param>
+                <param>yCoord</param>
+            </list>
+        </struct>
+        <struct name="xCoord">
+            <param name="Type">Ppc_Coord</param>
+            <param name="Axis"> 0 </param>
+        </struct>
+        <struct name="yCoord">
+            <param name="Type">Ppc_Coord</param>
+            <param name="Axis"> 1 </param>
+        </struct>
+    </struct>
+    
+</StGermainData>

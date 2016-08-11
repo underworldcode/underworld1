@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	
+	<!-- There are a tiny number of changes needed to move between 2D and 3D -->
+	
+	<include> Sandbox3D.xml </include>
+
+	<list name="plugins" mergeType="merge">
+		<!-- No 2D specific plugins -->
+	</list>
+
+	<struct name="components" mergeType="merge">
+		<!-- No 2D over-rides needed either -->
+	</struct>
+
+		
+	<param name="particlesPerCell"> 10 </param>
+	
+	<param name="dim"> 2 </param>
+	
+
+	<!-- Set up BCs and ICs 
+		
+		The 2D bc's need to kill the 3D ones since the presence of conditions on a non-existent
+		wall is considered a fatal error.
+		
+		Note: It may be better to go the other way around - extending the 2D example to the 3D rather than
+		trying to clobber the 3D case to make 2D
+	
+	-->
+	
+	<include> Underworld/VariableConditions/velocityBCs.incompressibleExtension2D.xml </include> 
+
+</StGermainData> 

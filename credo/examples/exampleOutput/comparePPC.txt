@@ -1,0 +1,2 @@
+Avg regular = 0.817589
+Avg PPC = 0.932345

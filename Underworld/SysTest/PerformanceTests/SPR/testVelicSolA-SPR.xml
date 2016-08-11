@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <include>Underworld/SPR_Setup.xml</include>
+
+   <struct name="components" mergeType="merge">
+      <struct name="AnalyticrecoveredStrainRateField">
+         <param name="Type">AnalyticFeVariable</param>
+         <param name="NumericField">recoveredStrainRateField</param>
+         <param name="Function">Underworld_Velic_solA_StrainRateFunction</param>
+      </struct>
+      <struct name="AnalyticrecoveredStrainRateField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">SymmetricTensor_Invariant</param>
+         <param name="Operand">AnalyticrecoveredStrainRateField</param>
+      </struct>
+      <struct name="ErrorrecoveredStrainRateField">
+         <param name="Type">ErrorFeVariable</param>
+         <param name="NumericField">recoveredStrainRateField</param>
+         <param name="ConstantMesh">constantMesh</param>
+      </struct>
+      <struct name="ErrorrecoveredStrainRateField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">SymmetricTensor_Invariant</param>
+         <param name="Operand">ErrorrecoveredStrainRateField</param>
+      </struct>
+      <struct name="FieldTest" mergeType="merge">
+         <list name="FieldMappings" mergeType="merge">
+            <struct>
+               <param name="NumericField">recoveredStrainRateField</param>
+               <param name="AnalyticField">AnalyticrecoveredStrainRateField</param>
+               <param name="AnalyticMagnitudeField">AnalyticrecoveredStrainRateField-Mag</param>
+               <param name="ErrorField">ErrorrecoveredStrainRateField</param>
+               <param name="ErrorMagnitudeField">ErrorrecoveredStrainRateField-Mag</param>
+            </struct>
+         </list>
+      </struct>
+   </struct>
+
+</StGermainData>

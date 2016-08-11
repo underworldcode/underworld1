@@ -1,0 +1,72 @@
+#
+# NOTE: The number of multigrid levels needs to be added as an
+# option to the input XML file as follows:
+#
+#   <include>Experimental/MultigridForRegular.xml</include>
+#   <param name="mgLevels">2</param>
+#
+
+-A11_ksp_type fgmres
+-A11_ksp_converged_reason
+-A11_ksp_monitor
+
+# Define MG preconditioner - default options
+
+# -pc_mg_smoothup 1
+# -pc_mg_smoothdown 1
+# 
+# -mg_levels_ksp_type richardson
+# -mg_levels_pc_type sor
+
+
+# For the case where a distributed coarse (i.e. not redundant) solve is required
+
+# -mg_coarse_ksp_type cg
+# -mg_coarse_ksp_max_it 100
+# -mg_coarse_ksp_rtol 1.0e-4
+# -mg_coarse_pc_type sor
+# -mg_coarse_sub_pc_type cholesky
+
+# These more aggressive options give a pretty robust / efficient solve
+
+-A11_pc_mg_smoothup 4
+-A11_pc_mg_smoothdown 4
+ 
+-mg_levels_ksp_type minres
+-mg_levels_ksp_max_it 3
+-mg_levels_pc_type sor
+-mg_levels_ksp_convergence_test skip
+
+
+# The accelerating MG is one of the best ways to kill off nasty problems effectively. Some tuning helps
+# because you can bracket low and high smoothing values if you have seen what works. But a wide range can
+# be very effective, so that's what we set by default.
+
+-mg_accelerating_smoothing true
+
+# Monitor (usual sort of thing)
+
+-mg_accelerating_smoothing_view true
+
+# Range of values for the up / down smooth and 
+# where to start at the beginning of each new iteration - if you have experience
+# that a particular solution needs a lot of iterations then you can help the 
+# algorithm out by suggesting it starts high.
+
+-mg_smooths_max 100
+-mg_smooths_to_start 1
+
+# The manner in which the smoothing cycles changes as the problem gets easier or harder. 
+# The specified acceleration is a factor which increases or decreases the number of cycles to smooths * or / acceleration
+# The specified increment increases or decreases the number of cycles to smooths + or - increment.
+# Should be a big number if a lot of variation is seen in the problem. 
+
+-mg_smoothing_increment 1
+
+# And this is a target which says we'll try to get at least one order of magnitude reduction in 
+# residual over this number of V cycles with the fiddling about in smoothing, but not more than
+# two orders. This is to allow us to progress to smaller, cheaper operations when the calculation 
+# is easy
+
+-mg_target_cycles_10fold_reduction 1
+

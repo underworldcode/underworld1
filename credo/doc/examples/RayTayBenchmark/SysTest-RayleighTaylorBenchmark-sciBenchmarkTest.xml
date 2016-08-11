@@ -1,0 +1,38 @@
+<StgSysTest name="RayleighTaylorBenchmark-sciBenchmarkTest" status="Pass" type="SciBenchmark">
+  <description>Runs a user-defined science benchmark.</description>
+  <testSpecification>
+    <inputFiles>
+      <inputFile>RayleighTaylorBenchmark.xml</inputFile>
+    </inputFiles>
+    <outputPathBase>output/RayleighTaylor-VanKekenBenchmark</outputPathBase>
+    <nproc>1</nproc>
+    <paramOverrides>
+      <param modelPath="maxTimeSteps" paramVal="-1" />
+      <param modelPath="stopTime" paramVal="250" />
+      <param modelPath="elementResI" paramVal="128" />
+      <param modelPath="elementResJ" paramVal="128" />
+    </paramOverrides>
+  </testSpecification>
+  <testComponents>
+    <testComponent name="VRMS of first diapir" status="Pass" type="outputWithinRange">
+      <specification>
+        <outputName value="Vrms" />
+        <reductionOp value="&lt;built-in function max&gt;" />
+        <allowedRange-min value="0.0028" />
+        <allowedRange-max value="0.0032" />
+        <tRange-min value="200" />
+        <tRange-max value="220" />
+      </specification>
+      <result status="Pass">
+        <statusMsg>Model output 'Vrms' value  within required range
+        (0.0028,0.0032) for all runs.</statusMsg>
+        <actualValue>0.00312004</actualValue>
+        <actualTime>213.728</actualTime>
+        <withinRange>True</withinRange>
+      </result>
+    </testComponent>
+  </testComponents>
+  <testResult status="Pass">
+    <statusMsg>All aspects of the benchmark passed.</statusMsg>
+  </testResult>
+</StgSysTest>

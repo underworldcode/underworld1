@@ -1,0 +1,10 @@
+Proposed examples:
+
+Model analysis:
+Be able to run a model, and save results
+Be able to load an existing ModelRun XML, and then re-do the run.
+Be able to document a ModelRun based on existing output directory?
+Based on above loading of existing model capability:
+Be able to load a ModelResult XML, and then do the following analysis:
+plot basic parameters from a group of runs (eg access stuff from FrequentOutput)
+analyse field comparison operators from an existing run

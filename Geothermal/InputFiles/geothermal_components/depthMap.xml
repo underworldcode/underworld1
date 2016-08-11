@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="plugins" mergeType="merge">
+      <struct>
+         <param name="Type">Geothermal_DepthMap</param>
+         <param name="Context">context</param>
+         <param name="DepthFromSurface">5000</param>
+         <param name="Field">TemperatureField</param>
+         <param name="Swarm">picIntegrationPoints</param>
+         <param name="OutputAllNodes">False</param> <!-- Set this to True to output all nodes. -->
+         <param name="OutputTopNodes">False</param> <!-- Set this to True to output the top nodes. -->
+         <param name="GOCADOutput">True</param> <!-- Set this to True to also output a .gocad file. -->
+      </struct>
+   </list>
+
+</StGermainData>

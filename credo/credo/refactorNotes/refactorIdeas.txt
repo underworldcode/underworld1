@@ -1,0 +1,84 @@
+CREDO Refactoring ideas:
+
+Up next:
+- Updating documentation! Esp SciBenchmark section.
+
+Big picture:
+--------
+
+- N.B: Once new Benchmarking features enabled,
+    ... make a specific pitch to Steve and Louis as well.
+may be worth emailing Underworld-users about new release ...
+    ... and also specifically people like Dave May, Sergio, Einat, and Katie 
+       Cooper (inernationally)
+        (esp since Dave May working with Matt)
+    ... and Margaret, Fabio
+    ... and Matt K ... talk about run at CIG
+
+- Tutorials :- screencasts.
+
+- "CREDO" should combine really well with iPython sessions potentially, for
+   interactive model exploration, with results saved
+   (Some mega meta-interpreter hacking here would be cool, to add credo
+     methods to save script history nicely for you etc)
+- CREDO "cookbook" section in scripts, to allow e.g. the Model time
+   per timestep to be looked at.
+
+Specific ideas:
+-------
+
+Overall:
+- (TODO) Use Python's logging system for reporting/printing
+
+Dir structure/general:
+- (D) Separate SysTestSuite out from api.py
+- (D) rename files in SysTest so "testComps" have obvious name. 
+- TODO: really should have standard CREDO tests for all the TestComp operators
+ - if necessary creating Skeleton funcs to get data off ModelRuns/ModelResults
+   (this will be handy in future when have multiple Apps we can test)
+
+SysTestRunner:
+- (D): SysTestRunner has to not do the setup part for when running SciBenchmarks.
+- TODO: Cmd-line like mode to allow running in different 'mode':
+    Default, postProcFromExisting, regenerateFixture.
+
+SysTest API:
+- (D): add setup() func to standard API of sysTests, pass in job runner
+   - and search out all examples of this in client codes to change.
+- add a preRunCheck() phase, to check e.g. reference dir exists
+      and contains correct content?
+
+TestComps API:
+ - (No) Separate TestComponent stuff out from api.py?
+ - (No) make funcs to handle lists of these as XMLs as functions of this
+   module, rather than member funcs of SysTest (just get called there).
+ - (D): make it easier to create TC Status objects at end of testComps
+ - (No) Also parameterise the 'passMsg' vs 'failMsg' for SingleRunTestComponents
+
+ModelSuite API:
+- (D) should runSuite method push down writing of model result XMLs
+   inside there by default, selectable as params? (Think so)
+- TODO: clean up the "read from file" functionality considerably, so it is
+   able to actually read the XML files created, and check/set names etc
+
+JobRunner API:
+- (D) make jobRunner save model run XML and model result XML by default,
+    unless we use cmd line keywords to tell it not no.
+
+Improving JobRunner, ModelResult, ModelSuite etc
+------------------------------------------------
+
+- Note: from Sharples' examples, should probably force writing of model
+  run and model result
+   XMLs at run-time, otherwise the user will likely forget this step 
+   (perhaps as a param to runModel that's set to True by default).
+
+- Adding timing functionality to the JobRunner
+^^^^^^^^^^^
+
+- This will also involve stuff like improving the way suites are
+  generated (e.g. with iterators)
+
+- And also factor into this the command line input processing
+ (perhaps a PETSc or Pyre like
+   system for managing this, where objects can handle as appropriate).

@@ -1,0 +1,382 @@
+===================================================================
+Mercurial commits made during CREDO development from 0.1.1 to 0.1.2
+===================================================================
+
+changeset:   314:cef135a00183
+tag:         tip
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 24 12:11:44 2010 +1000
+files:       README.txt
+description:
+Updated the README to point to the Wiki page for CREDO.
+
+
+changeset:   313:8d5d3f54f066
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 24 09:57:50 2010 +1000
+files:       credo/modelrun.py
+description:
+* Updated the minimum wait time to 2 secs when polling model runs
+* Updated the ModelRunTimeoutError to print the timeout time more elegantly.
+
+
+changeset:   312:760c02fdbd21
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 23 13:33:32 2010 +1000
+files:       doc/conf.py
+description:
+Updated the release number to 0.1.2 in the docs.
+
+
+changeset:   311:54125cb27d7b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 23 13:32:27 2010 +1000
+files:       README.txt
+description:
+Updated README.txt for small file change.
+
+
+changeset:   310:35ec9f7c8251
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 23 13:29:41 2010 +1000
+files:       doc/credo-install.rst
+description:
+Updating CREDO install instructions, now you no longer need the branch.
+
+
+changeset:   309:ce97f76775fb
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Aug 20 16:08:17 2010 +1000
+files:       credo/modelrun.py
+description:
+Need to kill any processes that timeout when running jobs.
+
+
+changeset:   308:95937b7a97d2
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Aug 20 15:30:16 2010 +1000
+files:       credo/modelrun.py credo/modelsuite.py credo/systest/analytic.py credo/systest/analyticMultiRes.py credo/systest/api.py credo/systest/reference.py credo/systest/restart.py credo/systest/scibenchmark.py credo/systest/systestrunner.py
+description:
+Added a 'timeout' paramter to model runs, suites and sys tests, that allows
+you to cancel them after a set period of time.
+
+
+changeset:   307:0c299127fe27
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Aug 18 14:45:34 2010 +1000
+files:       credo/__init__.py
+description:
+Adding printout of CREDO copyright and basic licence statement whenever it is imported.
+
+
+changeset:   306:ed65977a1444
+parent:      305:39cf0b42acd8
+parent:      303:06c78b35c1ec
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Aug 18 12:57:18 2010 +1000
+files:       credo/analysis/tests/output/realistic/VelocityField-cvg.png credo/io/stgfreq.py credo/io/tests/stgfreqsuite.py doc/_static/UWA-basicArchitecture.png doc/_static/UWAnalysis-detail.jpg doc/_static/UWAnalysis-detail.png doc/uwa-apidocs.rst doc/uwa-architecture.rst doc/uwa-developer-notes.rst doc/uwa-examples.rst doc/uwa-glossary.rst doc/uwa-install.rst doc/uwa-intro.rst doc/uwa-pythonlinks.rst doc/uwa-whatsnew.rst scons/uwasystest.py scripts/archive/uwa-analyticTest.py scripts/archive/uwa-analyticTestMultiRes.py scripts/archive/uwa-analyticTestMultiResCvg.py scripts/archive/uwa-referenceTest.py scripts/archive/uwa-restartTest.py scripts/uwa-analyticTest.py scripts/uwa-analyticTestMultiResCvg.py scripts/uwa-referenceTest.py scripts/uwa-restartTest.py scripts/uwa-writeModelResultXML.py scripts/uwa-writeModelRunXML.py uwa/__init__.py uwa/analysis/__init__.py uwa/analysis/api.py uwa/analysis/fields.py uwa/analysis/stats.py uwa/analysis/tests/analysissuite.py uwa/analysis/tests/fieldsInterfacePrototype.py uwa/analysis/tests/fieldssuite.py uwa/analysis/tests/output/Analytic2-analysis.cvg uwa/analysis/tests/output/CosineHillRotate-analysis.cvg uwa/analysis/tests/output/cvgTest/LidDrivenIsoviscousAnalytic-analysis.cvg uwa/analysis/tests/output/realistic/CosineHillRotate-analysis-long.cvg uwa/analysis/tests/output/realistic/VelocityField-cvg.png uwa/analysis/tests/output/realistic/uwaFieldTester-analysis.cvg uwa/analysis/tests/statssuite.py uwa/analysis/tests/testPlottingField.py uwa/io/__init__.py uwa/io/stgcvg.py uwa/io/stgfreq.py uwa/io/stgpath.py uwa/io/stgxml.py uwa/io/tests/output/empty.txt uwa/io/tests/sampleData/Analytic2-analysis.cvg uwa/io/tests/sampleData/CosineHillRotate-analysis.cvg uwa/io/tests/sampleData/FrequentOutput.dat uwa/io/tests/sampleData/stgXML/CosineHillRotateBC.xml uwa/io/tests/sampleData/stgXML/flattenedModel.xml uwa/io/tests/stgcvgsuite.py uwa/io/tests/stgfreqsuite.py uwa/io/tests/stgpathsuite.py uwa/io/tests/stgxmlsuite.py uwa/io/tests/testAll.py uwa/modelresult.py uwa/modelrun.py uwa/modelsuite.py uwa/systest/__init__.py uwa/systest/analytic.py uwa/systest/analyticMultiRes.py uwa/systest/api.py uwa/systest/fieldCvgWithScaleTest.py uwa/systest/fieldWithinTolTest.py uwa/systest/outputWithinRangeTest.py uwa/systest/reference.py uwa/systest/restart.py uwa/systest/scibenchmark.py uwa/systest/systestrunner.py uwa/systest/tests/analytictestsuite.py uwa/systest/tests/fieldcvgwithscaletestsuite.py uwa/systest/tests/input/TempDiffusion.xml uwa/systest/tests/output/cvgTest/LidDrivenIsoviscousAnalytic-analysis.cvg uwa/systest/tests/skeletonSysTest.py uwa/systest/tests/systestapisuite.py uwa/systest/tests/systestrunnersuite.py uwa/systest/tests/systestsuitesuite.py uwa/systest/tests/testAll.py uwa/tests/modelresultsuite.py uwa/tests/modelrunsuite.py uwa/tests/modelsuitesuite.py uwa/utils.py
+description:
+Merge (small local additions with the big uwa->credo rename).
+
+
+changeset:   305:39cf0b42acd8
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Aug 18 12:50:26 2010 +1000
+files:       uwa/io/stgfreq.py uwa/io/tests/sampleData/temp/Time-timeSeries.png uwa/io/tests/sampleData/temp/VRMS-timeSeries.png uwa/io/tests/stgfreqsuite.py
+description:
+Fixed an ability to save plots into new directories.
+Also cleaned up the test of this to save in an output dir.
+
+
+changeset:   304:2ceb2d4c545d
+parent:      287:39f6e3165ff0
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Aug 18 12:38:27 2010 +1000
+files:       uwa/io/stgfreq.py uwa/io/tests/stgfreqsuite.py
+description:
+Added new reduction operators for stgfreq, "first" and "last", useful for
+current benchmarks.
+
+
+changeset:   303:06c78b35c1ec
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 21:13:29 2010 +1000
+files:       credo/__init__.py credo/analysis/__init__.py credo/analysis/api.py credo/analysis/fields.py credo/analysis/stats.py credo/analysis/tests/analysissuite.py credo/analysis/tests/fieldsInterfacePrototype.py credo/analysis/tests/fieldssuite.py credo/analysis/tests/statssuite.py credo/analysis/tests/testPlottingField.py credo/io/__init__.py credo/io/stgcvg.py credo/io/stgfreq.py credo/io/stgpath.py credo/io/stgxml.py credo/io/tests/stgcvgsuite.py credo/io/tests/stgfreqsuite.py credo/io/tests/stgpathsuite.py credo/io/tests/stgxmlsuite.py credo/io/tests/testAll.py credo/modelresult.py credo/modelrun.py credo/modelsuite.py credo/systest/__init__.py credo/systest/analytic.py credo/systest/analyticMultiRes.py credo/systest/api.py credo/systest/fieldCvgWithScaleTest.py credo/systest/fieldWithinTolTest.py credo/systest/outputWithinRangeTest.py credo/systest/reference.py credo/systest/restart.py credo/systest/scibenchmark.py credo/systest/systestrunner.py credo/systest/tests/analytictestsuite.py credo/systest/tests/fieldcvgwithscaletestsuite.py credo/systest/tests/skeletonSysTest.py credo/systest/tests/systestapisuite.py credo/systest/tests/systestrunnersuite.py credo/systest/tests/systestsuitesuite.py credo/systest/tests/testAll.py credo/tests/modelresultsuite.py credo/tests/modelrunsuite.py credo/tests/modelsuitesuite.py credo/utils.py scons/credosystest.py scripts/archive/credo-analyticTest.py scripts/archive/credo-analyticTestMultiRes.py scripts/archive/credo-analyticTestMultiResCvg.py scripts/archive/credo-referenceTest.py scripts/archive/credo-restartTest.py scripts/credo-analyticTest.py scripts/credo-analyticTestMultiResCvg.py scripts/credo-referenceTest.py scripts/credo-restartTest.py scripts/credo-writeModelResultXML.py scripts/credo-writeModelRunXML.py
+description:
+Added a copyright and licence header to each source file of CREDO.
+
+
+changeset:   302:6fdfb9194c1a
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 21:02:49 2010 +1000
+files:       doc/credo-install.rst
+description:
+Removed the note about modifying the environment shell script in stgUnderworld,
+as this is no longer necessary.
+
+
+changeset:   301:1d2067714f7d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 20:23:52 2010 +1000
+files:       updatePyPathLocal.sh
+description:
+Updated the CREDO path updater to work automatically from any dir.
+
+
+changeset:   300:bd30d058fcfa
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 19:59:27 2010 +1000
+files:       .hgtags
+description:
+Updating tags.
+
+
+changeset:   299:52f6fbbfd1ae
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 19:50:58 2010 +1000
+files:       doc/_static/CREDO-architecture-detail.jpg doc/_static/CREDO-architecture-detail.png doc/_static/CREDO-basicArchitecture.png doc/_static/UWA-basicArchitecture.png doc/_static/UWAnalysis-detail.jpg doc/_static/UWAnalysis-detail.png doc/api/analysis.rst doc/api/io.rst doc/api/model.rst doc/api/systest.rst doc/api/utils.rst doc/conf.py doc/credo-apidocs.rst doc/credo-architecture.rst doc/credo-developer-notes.rst doc/credo-examples.rst doc/credo-glossary.rst doc/credo-install.rst doc/credo-intro.rst doc/credo-pythonlinks.rst doc/credo-whatsnew.rst doc/examples/RayTayBasic/ModelResult-RayTay-basicBenchmark.xml doc/examples/RayTayBasic/ModelRun-RayTay-basicBenchmark.xml doc/examples/RayTayBasic/scriptTerminalOutput.txt doc/examples/RayTayBenchmark/scriptTerminalOutput.txt doc/examples/RayTaySuite/scriptTerminalOutput.txt doc/examples/SConsOutput/scons-PICellerator-suite.txt doc/examples/configure-scibenchmark.rst doc/examples/raytay-run-basic.rst doc/examples/raytay-run-suite.rst doc/examples/run-modify-systest-direct.rst doc/examples/run-systest-scons.rst doc/index.rst doc/uwa-apidocs.rst doc/uwa-architecture.rst doc/uwa-developer-notes.rst doc/uwa-examples.rst doc/uwa-glossary.rst doc/uwa-install.rst doc/uwa-intro.rst doc/uwa-pythonlinks.rst doc/uwa-whatsnew.rst
+description:
+The UWA -> CREDO rename of documentation.
+
+
+changeset:   298:1fb0f7ee6064
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 19:15:06 2010 +1000
+files:       scripts/archive/README scripts/archive/credo-analyticTest.py scripts/archive/credo-analyticTestMultiRes.py scripts/archive/credo-analyticTestMultiResCvg.py scripts/archive/credo-referenceTest.py scripts/archive/credo-restartTest.py scripts/archive/uwa-analyticTest.py scripts/archive/uwa-analyticTestMultiRes.py scripts/archive/uwa-analyticTestMultiResCvg.py scripts/archive/uwa-referenceTest.py scripts/archive/uwa-restartTest.py scripts/credo-analyticTest.py scripts/credo-analyticTestMultiResCvg.py scripts/credo-referenceTest.py scripts/credo-restartTest.py scripts/credo-writeModelResultXML.py scripts/credo-writeModelRunXML.py scripts/uwa-analyticTest.py scripts/uwa-analyticTestMultiResCvg.py scripts/uwa-referenceTest.py scripts/uwa-restartTest.py scripts/uwa-writeModelResultXML.py scripts/uwa-writeModelRunXML.py
+description:
+Renamed the UWA scripts to CREDO.
+
+
+changeset:   297:7d99817429a9
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 19:00:34 2010 +1000
+files:       credo/modelsuite.py credo/systest/api.py credo/systest/restart.py
+description:
+Added a new little piece of functionality to System tests required by a recent
+change - ability to set that only a sub-set of the results of a suite should
+be used for testing.
+
+
+changeset:   296:d8c035786e51
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 18:27:42 2010 +1000
+files:       .hgignore
+description:
+Updating hgignore given rename.
+
+
+changeset:   295:21813c5f433e
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 17:49:30 2010 +1000
+files:       scons/credosystest.py scons/uwasystest.py
+description:
+renamed the SCons integration part from UWA -> CREDO.
+
+
+changeset:   294:1d1b4fd30022
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 17:45:58 2010 +1000
+files:       credo/__init__.py credo/analysis/__init__.py credo/analysis/api.py credo/analysis/fields.py credo/analysis/stats.py credo/analysis/tests/analysissuite.py credo/analysis/tests/fieldssuite.py credo/analysis/tests/statssuite.py credo/analysis/tests/testPlottingField.py credo/io/__init__.py credo/io/stgcvg.py credo/io/stgfreq.py credo/io/stgpath.py credo/io/stgxml.py credo/io/tests/stgcvgsuite.py credo/io/tests/stgfreqsuite.py credo/io/tests/stgpathsuite.py credo/io/tests/stgxmlsuite.py credo/modelresult.py credo/modelrun.py credo/modelsuite.py credo/systest/__init__.py credo/systest/analytic.py credo/systest/analyticMultiRes.py credo/systest/api.py credo/systest/fieldCvgWithScaleTest.py credo/systest/fieldWithinTolTest.py credo/systest/outputWithinRangeTest.py credo/systest/reference.py credo/systest/restart.py credo/systest/scibenchmark.py credo/systest/systestrunner.py credo/systest/tests/analytictestsuite.py credo/systest/tests/fieldcvgwithscaletestsuite.py credo/systest/tests/skeletonSysTest.py credo/systest/tests/systestapisuite.py credo/systest/tests/systestrunnersuite.py credo/systest/tests/systestsuitesuite.py credo/tests/modelresultsuite.py credo/tests/modelrunsuite.py credo/tests/modelsuitesuite.py credo/utils.py
+description:
+Big UWA -> CREDO rename of actual source code.
+
+Ran the existing unit tests and they all seem to work, system testing to follow
+soon.
+
+
+changeset:   293:57a0a5847dd5
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 17:45:16 2010 +1000
+files:       updatePyPathLocal.sh
+description:
+Updated the Py Path updater to handle rename.
+
+
+changeset:   292:2b63b72fb89e
+parent:      291:24c22ed72ce0
+parent:      290:d41302875bae
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 17:34:01 2010 +1000
+description:
+Merge.
+
+
+changeset:   291:24c22ed72ce0
+parent:      289:57f243c48eeb
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 17:33:22 2010 +1000
+files:       credo/__init__.py credo/analysis/__init__.py credo/analysis/api.py credo/analysis/fields.py credo/analysis/stats.py credo/analysis/tests/analysissuite.py credo/analysis/tests/fieldsInterfacePrototype.py credo/analysis/tests/fieldssuite.py credo/analysis/tests/output/Analytic2-analysis.cvg credo/analysis/tests/output/CosineHillRotate-analysis.cvg credo/analysis/tests/output/cvgTest/LidDrivenIsoviscousAnalytic-analysis.cvg credo/analysis/tests/output/realistic/CosineHillRotate-analysis-long.cvg credo/analysis/tests/output/realistic/VelocityField-cvg.png credo/analysis/tests/output/realistic/uwaFieldTester-analysis.cvg credo/analysis/tests/statssuite.py credo/analysis/tests/testPlottingField.py credo/io/__init__.py credo/io/stgcvg.py credo/io/stgfreq.py credo/io/stgpath.py credo/io/stgxml.py credo/io/tests/output/empty.txt credo/io/tests/sampleData/Analytic2-analysis.cvg credo/io/tests/sampleData/CosineHillRotate-analysis.cvg credo/io/tests/sampleData/FrequentOutput.dat credo/io/tests/sampleData/stgXML/CosineHillRotateBC.xml credo/io/tests/sampleData/stgXML/flattenedModel.xml credo/io/tests/sampleData/temp/Time-timeSeries.png credo/io/tests/sampleData/temp/VRMS-timeSeries.png credo/io/tests/stgcvgsuite.py credo/io/tests/stgfreqsuite.py credo/io/tests/stgpathsuite.py credo/io/tests/stgxmlsuite.py credo/io/tests/testAll.py credo/modelresult.py credo/modelrun.py credo/modelsuite.py credo/systest/__init__.py credo/systest/analytic.py credo/systest/analyticMultiRes.py credo/systest/api.py credo/systest/fieldCvgWithScaleTest.py credo/systest/fieldWithinTolTest.py credo/systest/outputWithinRangeTest.py credo/systest/reference.py credo/systest/restart.py credo/systest/scibenchmark.py credo/systest/systestrunner.py credo/systest/tests/analytictestsuite.py credo/systest/tests/fieldcvgwithscaletestsuite.py credo/systest/tests/input/TempDiffusion.xml credo/systest/tests/output/cvgTest/LidDrivenIsoviscousAnalytic-analysis.cvg credo/systest/tests/skeletonSysTest.py credo/systest/tests/systestapisuite.py credo/systest/tests/systestrunnersuite.py credo/systest/tests/systestsuitesuite.py credo/systest/tests/testAll.py credo/tests/modelresultsuite.py credo/tests/modelrunsuite.py credo/tests/modelsuitesuite.py credo/utils.py uwa/__init__.py uwa/analysis/__init__.py uwa/analysis/api.py uwa/analysis/fields.py uwa/analysis/stats.py uwa/analysis/tests/analysissuite.py uwa/analysis/tests/fieldsInterfacePrototype.py uwa/analysis/tests/fieldssuite.py uwa/analysis/tests/output/Analytic2-analysis.cvg uwa/analysis/tests/output/CosineHillRotate-analysis.cvg uwa/analysis/tests/output/cvgTest/LidDrivenIsoviscousAnalytic-analysis.cvg uwa/analysis/tests/output/realistic/CosineHillRotate-analysis-long.cvg uwa/analysis/tests/output/realistic/VelocityField-cvg.png uwa/analysis/tests/output/realistic/uwaFieldTester-analysis.cvg uwa/analysis/tests/statssuite.py uwa/analysis/tests/testPlottingField.py uwa/io/__init__.py uwa/io/stgcvg.py uwa/io/stgfreq.py uwa/io/stgpath.py uwa/io/stgxml.py uwa/io/tests/output/empty.txt uwa/io/tests/sampleData/Analytic2-analysis.cvg uwa/io/tests/sampleData/CosineHillRotate-analysis.cvg uwa/io/tests/sampleData/FrequentOutput.dat uwa/io/tests/sampleData/stgXML/CosineHillRotateBC.xml uwa/io/tests/sampleData/stgXML/flattenedModel.xml uwa/io/tests/sampleData/temp/Time-timeSeries.png uwa/io/tests/sampleData/temp/VRMS-timeSeries.png uwa/io/tests/stgcvgsuite.py uwa/io/tests/stgfreqsuite.py uwa/io/tests/stgpathsuite.py uwa/io/tests/stgxmlsuite.py uwa/io/tests/testAll.py uwa/modelresult.py uwa/modelrun.py uwa/modelsuite.py uwa/systest/__init__.py uwa/systest/analytic.py uwa/systest/analyticMultiRes.py uwa/systest/api.py uwa/systest/fieldCvgWithScaleTest.py uwa/systest/fieldWithinTolTest.py uwa/systest/outputWithinRangeTest.py uwa/systest/reference.py uwa/systest/restart.py uwa/systest/scibenchmark.py uwa/systest/systestrunner.py uwa/systest/tests/analytictestsuite.py uwa/systest/tests/fieldcvgwithscaletestsuite.py uwa/systest/tests/input/TempDiffusion.xml uwa/systest/tests/output/cvgTest/LidDrivenIsoviscousAnalytic-analysis.cvg uwa/systest/tests/skeletonSysTest.py uwa/systest/tests/systestapisuite.py uwa/systest/tests/systestrunnersuite.py uwa/systest/tests/systestsuitesuite.py uwa/systest/tests/testAll.py uwa/tests/modelresultsuite.py uwa/tests/modelrunsuite.py uwa/tests/modelsuitesuite.py uwa/utils.py
+description:
+Moving the "uwa" library directory to "credo" as part of the rename project.
+
+
+changeset:   290:d41302875bae
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 17:29:23 2010 +1000
+files:       README.txt
+description:
+Updated README.txt with various new bits of information. This has the project
+already renamed to CREDO from UWA.
+
+
+changeset:   289:57f243c48eeb
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 17 15:23:22 2010 +1000
+files:       uwa/modelrun.py uwa/systest/api.py uwa/systest/systestrunner.py
+description:
+Added a custom exception, ModelRunError, to record if a model failed to run.
+
+SysTest runner can now check for this exception, and will record an Error if
+it's the result of a run, and move on to the next test.
+
+
+changeset:   288:6f3df09c8f44
+user:        JericoRevote
+date:        Tue Aug 17 10:42:23 2010 +1000
+files:       scons/uwasystest.py
+description:
+Testing on Jerico's laptop showed that in some cases we need to re-add uwa stuff to the Python system path directly before running suites - works now.
+
+
+changeset:   287:39f6e3165ff0
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Aug 13 18:11:09 2010 +1000
+files:       uwa/modelsuite.py
+description:
+Just a newline insertion for clarity.
+
+
+changeset:   286:c4ca2cfcff60
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Aug 13 18:08:05 2010 +1000
+files:       uwa/systest/analytic.py uwa/systest/analyticMultiRes.py uwa/systest/api.py uwa/systest/reference.py uwa/systest/restart.py
+description:
+Refactored the SysTest interface a little to simplify coding of new SysTest
+classes: they now no longer have to define their own getStatus function, can use
+a default one on the SysTest class (as long as they define 'passMsg' and
+'failMsg' attributes.).
+
+
+changeset:   285:4aa58809fe44
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Aug 13 18:02:10 2010 +1000
+files:       uwa/systest/fieldWithinTolTest.py
+description:
+added a missing newline.
+
+
+changeset:   284:eb2d4d96909c
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Aug 13 16:38:47 2010 +1000
+files:       COPYING COPYING.txt README README.txt
+description:
+Moving a couple of filenames to add .txt, a more Python standard approach.
+
+
+changeset:   283:1bdec63466e3
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Aug 12 21:18:00 2010 +1000
+files:       COPYING
+description:
+Adding a copy of the LGPLv2+ to be distributed with UWA.
+
+
+changeset:   282:082bd8252dd0
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Aug 12 18:45:59 2010 +1000
+files:       uwa/modelrun.py
+description:
+updated to MPI_RUN_COMMAND enviro variable.
+
+
+changeset:   281:5e0e82dedf82
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Aug 12 18:39:45 2010 +1000
+files:       uwa/modelrun.py
+description:
+Quick fix to allow over-riding of MPI environment variable.
+
+
+changeset:   280:843147ea4053
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Aug 12 15:22:03 2010 +1000
+files:       doc/examples/run-systest-scons.rst doc/uwa-install.rst
+description:
+Updated the UWA doc files to continue recommending running ./scons.py.
+
+
+changeset:   279:6f3ca1b7c31b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Aug 12 13:32:15 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Updated the systestrunner XML output writing, so that even for suites that have no tests themselves (eg if they only have sub-suites), the totals will be printed in the XML.
+
+
+changeset:   278:143d4f95d17b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Aug 11 15:43:37 2010 +1000
+files:       uwa/modelrun.py
+description:
+Fixed a small bug to do with output paths.
+
+
+changeset:   277:0ec477689a33
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Aug 11 15:28:30 2010 +1000
+files:       uwa/modelsuite.py uwa/utils.py
+description:
+Updating the itertools.product usage, to use a back-up function if Python 2.6
+not found.
+
+
+changeset:   276:41c314333af5
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 03 12:11:05 2010 +1000
+files:       doc/examples/run-systest-scons.rst
+description:
+Updated the UWA docs to reflect recent changes in how XML records of test suites
+are saved.
+
+
+changeset:   275:260b01187593
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 03 11:37:52 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Updated the systestrunner to have test suite reporting at the top level of XML
+reports.
+
+
+changeset:   274:cac2e5e9aca4
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 02 19:35:19 2010 +1000
+files:       scons/uwasystest.py uwa/systest/systestrunner.py uwa/systest/tests/systestrunnersuite.py
+description:
+Updated the SysTestRunner to be more Ant-like in its XML record keeping - now writes suites to separate files, including sub-suites. You specify directory theese should all be written to.
+
+
+changeset:   273:e6a46045aa2b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 02 18:18:05 2010 +1000
+files:       .hgignore
+description:
+Added anotehr ignore dir.
+
+
+changeset:   272:f0e995a18c1d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 02 18:17:20 2010 +1000
+files:       uwa/systest/tests/systestrunnersuite.py
+description:
+Updated the SysTestRunner test suite to run all tests again.
+
+
+changeset:   271:2f9be069a2e4
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 02 17:34:43 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+- Updated the SysTestRunner's XML output to be more similar to that of the Python unittest XML capability, unittest-xml-reporting.
+- Added a line at the end of the printed report saying where the XML
+  summary was saved.

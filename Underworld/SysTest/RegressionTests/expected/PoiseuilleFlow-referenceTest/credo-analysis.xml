@@ -1,0 +1,10 @@
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+  <param mergeType="replace" name="outputPath">expected/PoiseuilleFlow-referenceTest</param>
+  <param mergeType="replace" name="maxTimeSteps">1</param>
+  <param mergeType="replace" name="dumpEvery">0</param>
+  <param mergeType="replace" name="checkpointEvery">1</param>
+  <list mergeType="merge" name="FieldVariablesToCheckpoint">
+    <param>VelocityMagnitudeField</param>
+    <param>PressureField</param>
+  </list>
+</StGermainData>

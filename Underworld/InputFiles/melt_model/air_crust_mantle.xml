@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+  <!-- framework to import -->
+  <list name="import">
+    <param> Underworld </param>
+  </list>
+
+  <!-- required for other xml files -->
+  <searchPath>./</searchPath>
+  <searchPath>./melt_model</searchPath>
+
+  <!-- base app call -->
+  <include> Underworld/_standardJargon.xml </include>
+  <include> Underworld/_thermoMechanicalFlow_Melt.xml </include>
+  <include> Underworld/_meshExtension.xml </include>
+  <include> Underworld/REP_Setup_Compressible.xml </include>
+
+  <!-- Geometry & Mesh setup -->
+  <param name="dim"> 2 </param>
+
+  <param name="elementResI"> 120 </param>
+  <param name="minX" units="km"> 0.0 </param> 
+  <param name="maxX" units="km"> 360.0 </param>
+
+  <param name="elementResJ"> 60 </param>
+  <param name="minY" units="km"> 0.0 </param> 
+  <param name="maxY" units="km"> 120.0 </param>
+
+  <param name="elementResK"> 30 </param>
+  <param name="minZ" units="km"> 0.0 </param> 
+  <param name="maxZ" units="km"> 360.0 </param>
+
+  <param name="shadowDepth"> 1 </param>
+
+  <!--
+   The following definitions is for the plugin Underworld_MeshAdvectionCorrection
+   This plugin corrects the advection diffusion eq, for temperature, by subtracting
+   the effect of artificial velocities caused by mesh deformation.
+  -->
+   <include>Underworld/ArtDisplacementField.xml</include>
+   <param name="MeshAdvectionCorrection_UseArtDisplacementField">True</param>
+
+  <param name="Gravity" units="m*s^-2"> 9.8 </param>
+  <list name="plugins" mergeType="merge">
+   <struct>
+      <param name="Type">Underworld_MeshAdvectionCorrection</param>
+      <param name="Context">context</param>
+   </struct>
+  <!--
+   <struct>
+      <param name="Type">Underworld_PureDiffusion</param>
+      <param name="Context">context</param>
+   </struct>
+  <param name="PureDiffusion_TimeSteps">2</param>
+  -->
+  </list>
+
+
+  <include>PICellerator/PassiveTracerSwarm.xml</include>
+
+  <!-- define a passive tracer swarm with 1 particle. This particle is located on the border of the 
+       air layer and crust, in a zone that doesn't experience yielding. It's y coordinate is used as
+       a reference height to 'zero' our pressure solution -->
+  <struct name="components" mergeType="merge">
+    <struct name="passiveTracerParticleLayout" mergeType="replace">
+         <param name="Type">ManualParticleLayout</param>
+         <list name="manualParticlePositions">
+            <asciidata>
+            <columnDefinition name = "x" type="double" units="km"/>
+            <columnDefinition name = "y" type="double" units="km"/>
+            <columnDefinition name = "z" type="double" units="km"/>
+            100 110 120
+            </asciidata>
+         </list>
+    </struct>
+
+    <struct name="lithostaticPressure_ppc">
+      <param name="Type">Ppc_LithostaticPressure</param>
+      <param name="ReferenceDensity" units="kg*m^-3"> 2720 </param>
+      <param name="ReferenceSwarm"> passiveTracerSwarm </param>
+    </struct>
+
+    <struct name="default_pressure_ppc">
+      <param name="Type">Ppc_PressureCalibrate</param>
+      <param name="LithostaticPressureTag"> lithostaticPressure_ppc </param>
+      <param name="ReferenceSwarm"> passiveTracerSwarm </param>
+      <param name="PressureFeVariable"> PressureField </param>
+    </struct>
+
+     <!-- set thermal diffusivity -->
+     <struct name="defaultDiffusivity">
+        <param name="Type">Ppc_Constant</param>
+        <param name="Value" units="m*m/s">9.0e-7</param>
+     </struct>
+     <!-- set specific heat capacity -->
+     <struct name="default_cp">
+        <param name="Type">Ppc_Constant</param>
+        <param name="Value" units="J/(kg*K)">1.0e3</param>
+     </struct>
+    <!-- include radiogenic heating -->
+    <struct name="sourceTerm_thermalEqn" mergeType="replace">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> + </param>
+      <list name="Properties">
+         <param>radiogenicHeating</param> 
+         <param>meltFractionHeating</param> 
+         <!-- not yet implemented
+         <param>adiabaticHeating</param>
+         <param>viscousHeating</param>
+         -->
+      </list>
+    </struct>
+
+    <!-- meltFractionHeating = -1 * latent_heat_fusion * delta_melt_fraction / (specific_heat_capacity * delta_time ) -->
+    <struct name="meltFractionHeating">
+      <param name="Type">Ppc_MeltHeating</param>
+    </struct>
+
+    <!-- radiogenicHeating = radiogenic_heat_production / (specific_heat_capacity * density ) -->
+    <struct name="radiogenicHeating">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> / </param>
+      <list name="Properties">
+         <param>RadiogenicHeatProductionLabel</param>
+         <param>rho_cp</param>
+      </list>
+    </struct>
+    <struct name="rho_cp">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> * </param>
+      <list name="Properties">
+         <param>DensityLabel</param>
+         <param>CpLabel</param>
+      </list>
+    </struct>
+
+    <!-- define a general limiter for viscosity used to constrain
+         wacky values that may come from our Non Newtonian rheology
+    -->
+    <struct name="viscosityLimiter"> 
+      <param name="Type">ViscosityLimiter</param> 
+      <param name="maxViscosity" units="Pa*s">10e24</param> 
+      <param name="minViscosity" units="Pa*s">1e16</param> 
+    </struct>
+
+    <!-- scaling -->
+    <struct name="default_scaling">
+      <param name="Type">Scaling</param>
+      <!--
+			<param name="spaceCoefficient_meters"> 1.0e+6 </param>
+			<param name="timeCoefficient_seconds"> 3.3000033e-5 </param>
+			<param name="massCoefficient_kilograms"> 3.3000033e+21 </param>
+			<param name="temperatureCoefficient_kelvin"> 1 </param>
+         -->
+      <param name="spaceCoefficient_meters"> 1.0 </param>
+      <param name="timeCoefficient_seconds"> 1.0 </param>
+      <param name="massCoefficient_kilograms"> 1.0 </param>
+      <param name="temperatureCoefficient_kelvin"> 1.0 </param>
+    </struct>
+
+  </struct>
+
+  <!-- include separate definitions for differnet material layers -->
+  <include> air.xml </include>
+  <include> crust.xml </include>
+  <include> mantle.xml </include>
+
+  <!-- There are 2 phases to this model:
+        1) geotherm stage.
+        2) extension stage.
+    In 1) only the heat equation is solved for, the advection term is set to 0 (actually all advection is off). 
+    The heat distribution evolves, temperature checkpoint files are saved and the lower crust melt fraction grows. NOTE: during this stage melt doesn't feedback into the energy equation
+    In 2) the stokes eq is enabled with the heat eq. The checkpointed heat distribution from 1) is used as the initial condition for temperature and melt now feedsback into the heat equation, and stokes eq (through the viscosity and buoyancy force term). Also the velocity BC are now in extension and the mesh is allowed to extend in the x-direction.
+
+    To facilitate phases 1) and 2) different BC and IC conditions obviously defined. Below are the 2 configurations with phase 1) commented out. (NOTE in both phases 1) & 2) the same temperatureBCs are included.
+    -->
+
+  <include> temperatureBCs.xml </include>
+
+  <!-- BCs and ICs for phase 1) -->
+  <!--  Condition to reach steady state 
+	<include> Underworld/VariableConditions/velocityBCs.freeslip.xml </include>
+   <include> Underworld/VariableConditions/temperatureICs.sinusoid.xml </include>
+   <param name="SinusoidalTempIC_TopLayerCoord" mergeType="replace">maxY</param>
+   <param name="SinusoidalTempIC_TopLayerBC" mergeType="replace" units="K"> 293.15 </param>
+   <param name="SinusoidalTempIC_BottomLayerCoord" mergeType="replace">minY</param>
+   <param name="SinusoidalTempIC_BottomLayerBC" mergeType="replace" units="K"> 900 </param>
+   <param name="SinusoidalTempIC_PerturbationAmplitude" mergeType="replace" units="K">000</param>
+   <param name="SinusoidalTempIC_HorizontalWaveNumber" mergeType="replace">0.0</param>
+   <param name="SinusoidalTempIC_VerticalWaveNumber" mergeType="replace">1</param>
+   -->
+  <!-- BCs and ICs phase 2) -->
+  <include> velocityBCs.extension.xml </include>
+  <include> temperatureIC.xml </include>
+  
+
+  <!-- Simulation control -->
+  <param name="maxTimeSteps"> 100 </param>
+  <param name="checkpointEvery"> 1 </param>
+  <param name="saveCoordsWithFields"> 0 </param>
+  <param name="outputPath"> ./phase2 </param>
+  <param name="dumpEvery"> 1 </param>
+
+  <!--   choose what to checkpoint -->
+	<list name="FieldVariablesToCheckpoint">
+		<param>VelocityField</param>
+		<param>StrainRateInvariantField</param>
+		<param>TemperatureField</param>
+		<param>PressureField</param>
+		<param>MeltFractionLabel-mesh</param>
+		<param>ViscosityField</param>
+		<param>recoveredPressureField</param>
+		<param>recoveredDeviatoricStressInvariantField</param>
+	</list>
+
+  <param name="courantFactor"> 0.5 </param>
+  <!-- Integration Scheme configuration -->
+  <param name="particlesPerCell"> 20 </param>
+  <param name="allowUnbalancing"> True </param>
+
+</StGermainData>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Xdmf xmlns:xi="http://www.w3.org/2001/XInclude" Version="2.0">
+
+<Domain>
+
+  <Grid GridType="Collection" CollectionType="Temporal" Name="Swarms">
+     <xi:include href="XDMF.00001.xmf" xpointer="xpointer(//Xdmf/Domain/Grid[2])"/>
+  </Grid>
+
+</Domain>
+
+</Xdmf>
+

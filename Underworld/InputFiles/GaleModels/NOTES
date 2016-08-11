@@ -1,0 +1,19 @@
+NOTES on XML files
+
+1) These files a based on the GALE-1.4.1 release
+
+2) The differences between these GALE XML files and XML files from the GALE repository:
+
+   The following component 'Type' strings have been changed. 
+
+   'VonMises'              ---->       'GALEVonMises'.
+   'DruckerPrager'         ---->       'GALEDruckerPrager'.
+   'MixedStabiliserTerm'   ---->       'GALEMixedStabiliserTerm'.
+   'SurfaceAdaptor'        ---->       'GALESurfaceAdaptor'.
+   'NonNewtonian'          ---->       'GALENonNewtonian'.
+   'StressBC'              ---->       'GALEStressBC'.
+   'DivergenceForce'       ---->       'GALEDivergenceForce'.
+   
+   And the plugin:
+   'VTKOutput'             ---->       'GALEVTKOutput'
+

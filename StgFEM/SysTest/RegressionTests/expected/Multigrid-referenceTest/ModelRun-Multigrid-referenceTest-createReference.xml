@@ -1,0 +1,18 @@
+<StgModelRun>
+  <name>Multigrid-referenceTest-createReference</name>
+  <modelInputFiles>
+    <inputFile>Multigrid.xml</inputFile>
+  </modelInputFiles>
+  <outputPath>expected/Multigrid-referenceTest</outputPath>
+  <jobParams>
+    <nproc>1</nproc>
+  </jobParams>
+  <simParams>
+    <restartstep>None</restartstep>
+    <stoptime>None</stoptime>
+    <nsteps>20</nsteps>
+    <dumpevery>0</dumpevery>
+    <cpevery>20</cpevery>
+  </simParams>
+  <analysis/>
+</StgModelRun>

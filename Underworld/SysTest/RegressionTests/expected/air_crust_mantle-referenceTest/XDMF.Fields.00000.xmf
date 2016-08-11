@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Xdmf xmlns:xi="http://www.w3.org/2001/XInclude" Version="2.0">
+
+<Domain>
+
+  <Grid GridType="Collection" CollectionType="Temporal" Name="FEM_Mesh_Fields">
+     <xi:include href="XDMF.00000.xmf" xpointer="xpointer(//Xdmf/Domain/Grid[1])"/>
+  </Grid>
+
+</Domain>
+
+</Xdmf>
+

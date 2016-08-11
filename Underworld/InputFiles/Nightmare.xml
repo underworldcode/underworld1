@@ -1,0 +1,146 @@
+<!-- 
+Nightmare app input file 
+You know that nightmare we have all had; the one where you keep falling.
+
+In this model a sphere is permenently falling due to a periodic boundary conditions applied to the 'top' and 'bottom' walls.
+The two materials in this model have a density contrast, that, in the presence of a gravitation field drives the motion. The fluid in the domain is isoviscous.
+
+To enable periodic behaviour note the boundary conditions used and the 'periodicBCsManager' defined below.
+-->
+
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="import">
+      <param>Underworld</param>
+   </list>
+
+   <include>Underworld/BaseApps/RayleighTaylor.xml</include>
+
+   <list name="plugins" mergeType="merge">
+      <struct>
+         <param name="Type">StgFEM_FrequentOutput</param>
+         <param name="Context">context</param>
+      </struct>
+      <struct>
+         <param name="Type">Underworld_Vrms</param>
+         <param name="Context">context</param>
+         <param name="GaussSwarm">gaussSwarm</param>
+         <param name="VelocityField">VelocityField</param>
+      </struct>
+      <struct>
+         <param name="Type">StgFEM_CPUTime</param>
+         <param name="Context">context</param>
+      </struct>
+   </list>
+
+   <struct name="components" mergeType="merge">
+      <struct name="context">
+         <param name="Type">UnderworldContext</param>
+      </struct>
+      <struct name="backgroundViscosity">
+         <param name="Type">MaterialViscosity</param>
+         <param name="eta0">1.0</param>
+      </struct>
+      <struct name="backgroundShape">
+         <param name="Type">Everywhere</param>
+      </struct>
+      <struct name="background">
+         <param name="Type">RheologyMaterial</param>
+         <param name="Shape">backgroundShape</param>
+         <param name="density">1.0</param>
+         <param name="Rheology">backgroundViscosity</param>
+      </struct>
+      <struct name="blobShape">
+         <param name="Type">Sphere</param>
+         <param name="CentreX">0.5</param>
+         <param name="CentreY">0.5</param>
+         <param name="radius">0.15</param>
+      </struct>
+      <struct name="blobViscosity">
+         <param name="Type">MaterialViscosity</param>
+         <param name="eta0">1.0</param>
+      </struct>
+      <struct name="blobLayer">
+         <param name="Type">RheologyMaterial</param>
+         <param name="Shape">blobShape</param>
+         <param name="density">2.0</param>
+         <param name="Rheology">blobViscosity</param>
+      </struct>
+      <!-- required to make the swam advection periodic in y (J_AXIS) -->
+      <struct name="periodicBCsManager" mergeType="replace">
+         <param name="Type">PeriodicBoundariesManager</param>
+         <param name="Geometry">geometry</param>
+         <param name="mesh">linearMesh</param>
+         <param name="TimeIntegrator">timeIntegrator</param>
+         <param name="Swarm">materialSwarm</param><!-- the swarm to advect -->
+         <list name="PeriodicBoundaries">
+            <param>J_AXIS</param><!-- which boundary to make periodic: other options are I_AXIS and K_AXIS -->
+         </list>
+      </struct>
+   </struct>
+
+   <param name="journal.info.Context-verbose">true</param>
+   <param name="journal.debug">f</param>
+   <param name="journal-level.info.Stg_ComponentFactory">2</param>
+   <param name="journal-enable-branch.debug.StgFEM">f</param>
+   <param name="journal-level-branch.debug.StgFEM">2</param>
+   <param name="journal-enable-branch.debug.Swarm">f</param>
+   <param name="journal-level-branch.debug.Swarm">2</param>
+
+   <!-- general simulation parameters -->
+   <param name="maxTimeSteps">60</param>
+   <param name="dumpEvery">1</param>
+   <param name="outputPath">./output/ </param>
+   <param name="gravity">1.0</param>
+   <param name="checkpointEvery">0</param>
+
+   <!--   choose what to checkpoint
+   <list name="FieldVariablesToCheckpoint">
+      <param>VelocityField</param>
+      <param>VelocityGradientsField</param>
+   </list>
+   -->
+
+   <!--  restart from a previous checkpoint 
+   <param name="restartTimestep">10</param>
+   -->
+
+   <!-- general decomposition parameters -->
+   <param name="dim">2</param>
+   <!-- mesh parameters -->
+   <param name="elementResI">32</param>
+   <param name="elementResJ">32</param>
+   <param name="elementResK">1</param>
+
+   <param name="shadowDepth">1</param>
+   <param name="minX">0.0</param>
+   <param name="minY">0.0</param>
+   <param name="minZ">0.0</param>
+   <param name="maxX">1.0</param>
+   <param name="maxY">1.0</param>
+   <param name="maxZ">1.0</param>
+   <param name="allowUnbalancing">True</param>
+   <param name="buildElementNodeTbl">True</param>
+   
+   <!-- gauss integration point swarm parameters -->
+
+   <!-- Swarm parameters -->
+   <param name="particleLayoutType">random</param>
+   <param name="particlesPerCell">20</param>
+   <param name="seed">13</param>
+
+   <!-- Boundary conditions -->
+   <include>Underworld/VariableConditions/velocityBCs.freeslipSide.PeriodicInY.xml</include>
+
+   <!-- Visualisation stuff -->
+   <include>Underworld/Viewports/ParticleMaterialVP.xml</include>
+   <include>Underworld/Viewports/StrainRateInvariantVP.xml</include>
+   <include>gLucifer/window.xml</include>
+   <struct name="components" mergeType="merge">
+      <struct name="window" mergeType="merge">
+         <param name="Viewport">ParticleMaterialVP StrainRateInvariantVP</param>
+      </struct>
+   </struct>
+
+</StGermainData>

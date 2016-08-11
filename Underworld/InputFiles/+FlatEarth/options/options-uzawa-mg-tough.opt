@@ -1,0 +1,37 @@
+#
+# NOTE: The number of multigrid levels needs to be added as an
+# option to the input XML file as follows:
+#
+#   <include>Experimental/MultigridForRegularUzawa.xml</include>
+#   <param name="mgLevels">2</param>
+#
+
+#-A11_ksp_type fgmres
+#-A11_ksp_converged_reason
+#-A11_ksp_monitor
+
+# Define MG preconditioner - default options
+
+# -pc_mg_smoothup 1
+# -pc_mg_smoothdown 1
+# 
+# -mg_levels_ksp_type richardson
+# -mg_levels_pc_type sor
+
+
+# For the case where a distributed coarse (i.e. not redundant) solve is required
+
+# -mg_coarse_ksp_type cg
+# -mg_coarse_ksp_max_it 100
+# -mg_coarse_ksp_rtol 1.0e-4
+# -mg_coarse_pc_type sor
+
+# These more aggressive options give a pretty robust / efficient solve
+
+-A11_pc_mg_smoothup 3
+-A11_pc_mg_smoothdown 3
+ 
+-mg_levels_ksp_type cg
+-mg_levels_pc_type sor
+-mg_levels_ksp_convergence_test skip
+

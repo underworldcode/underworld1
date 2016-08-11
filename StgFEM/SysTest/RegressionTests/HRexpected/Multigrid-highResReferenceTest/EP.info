@@ -1,0 +1,61 @@
+A listing of all entrypoints (EP) and associated hooks (H) on the Context: FiniteElementContext
+	EP: Context_Construct
+		H: "_AbstractContext_Construct_Hook" (Context)
+	EP: Context_ConstructExtensions
+	EP: Context_Build
+		H: "_FiniteElementContext_Build" (FiniteElementContext)
+	EP: Context_Initialise
+		H: "_FiniteElementContext_Initialise" (FiniteElementContext)
+		H: "StgFEM_FrequentOutput_PrintNewLine" (pluginsOutputFrequentOutput)
+	EP: Context_Execute
+		H: "_AbstractContext_Execute_Hook" (Context)
+	EP: Context_Destroy
+	EP: Context_DestroyExtensions
+	EP: Context_Dt
+		H: "_FiniteElementContext_GetDt" (FiniteElementContext)
+	EP: Context_Step
+		H: "_AbstractContext_Step" (Context)
+	EP: Context_UpdateClass
+	EP: Context_Solve
+		H: "_FiniteElementContext_Solve" (FiniteElementContext)
+		H: "_FiniteElementContext_PostSolve" (FiniteElementContext)
+	EP: Context_PostSolvePreUpdate
+	EP: Context_Sync
+	EP: Context_FrequentOutput
+		H: "StgFEM_FrequentOutput_PrintTime" (pluginsOutputFrequentOutput)
+		H: "StgFEM_FrequentOutput_PrintNewLine" (pluginsOutputFrequentOutput)
+	EP: Context_Dump
+	EP: Context_DumpClass
+	EP: Context_Save
+		H: "_AbstractContext_CreateCheckpointDirectory" (Context)
+		H: "_AbstractContext_SaveTimeInfo" (Context)
+		H: "_FiniteElementContext_SaveFeVariables" (FiniteElementContext)
+		H: "_FiniteElementContext_SaveSwarms" (FiniteElementContext)
+		H: "_FiniteElementContext_SaveMesh" (FiniteElementContext)
+	EP: Context_SaveClass
+	EP: Context_DataSave
+		H: "_AbstractContext_CreateCheckpointDirectory" (Context)
+		H: "_FiniteElementContext_SaveFeVariables" (FiniteElementContext)
+		H: "_FiniteElementContext_SaveMesh" (FiniteElementContext)
+	EP: Context_DataSaveClass
+	EP: FiniteElementContext_EP_CalcDt
+		H: "Stokes_SLE_UpdateDt" (Stokes_SLE)
+	EP: mom_force-assembleForceVector
+		H: "ForceVector_GlobalAssembly_General" (SLESystemSetup)
+	EP: cont_force-assembleForceVector
+		H: "ForceVector_GlobalAssembly_General" (SLESystemSetup)
+	EP: k_matrix-assembleStiffnessMatrix
+		H: "__StiffnessMatrix_NewAssemble" (SLESystemSetup)
+	EP: g_matrix-assembleStiffnessMatrix
+		H: "__StiffnessMatrix_NewAssemble" (SLESystemSetup)
+	EP: preconditioner-assembleStiffnessMatrix
+		H: "__StiffnessMatrix_NewAssemble" (SLESystemSetup)
+	EP: stokesEqn-execute
+		H: "BC_Setup" (Stokes_SLE)
+		H: "LM_Setup" (Stokes_SLE)
+		H: "IntegrationSetup" (Stokes_SLE)
+		H: "ZeroAllVectors" (Stokes_SLE)
+		H: "MatrixSetup" (Stokes_SLE)
+		H: "VectorSetup" (Stokes_SLE)
+		H: "ExecuteSolver" (Stokes_SLE)
+		H: "UpdateSolutionOntoNodes" (Stokes_SLE)

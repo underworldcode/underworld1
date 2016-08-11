@@ -1,0 +1,139 @@
+#
+#   Comment by MirkoV on petsc options form Multigrid and regular Uzawa, 12May2011.
+#
+#   In the Uzawa solver,
+#   The prefix for the ksp for the velocity solve is
+#
+#   Uzawa_velSolver
+#
+#   If you turn on Multigrid, however, then this KSP's prefix get's
+#   clobbered and reset to
+#
+#   A11
+#
+#   The pressure/preconditioner KSP has prefix
+#
+#   Uzawa_pcSolver
+#
+#   So, for example, if you wanted to "view" the velocity solver ksp when
+#   running vanilla Uzawa you would do
+#
+#   -Uzawa_velSolver_ksp_view
+#
+#   But if you turn Multigrid on, then to view that same KSP you would now
+#   do
+#
+#   -A11_ksp_view
+#
+#   The other prefix is left as is.
+
+#
+# NOTE: The number of multigrid levels needs to be added as a command line
+# 	argument to your paramFile otherwise the default resolutions and
+#	levels will be used.  See program help for the runAndTestMG.pl 
+#	script.
+#	The inner loop (A11) is preconditioned with multigrid, whereas the
+#	outer loop is solved using an uzawa solver.
+#
+
+# Outer loop tolerance, iterations, etc need to be set in the stgUnderworld/StgFEM/Apps/StgFEM_Components/StokesFlowUzawa.xml
+
+# The solver for the inner loop signaled by the -A11 nomenclature (velocity matrix). You can set this to fgmres, gmres, bcgs and cg.
+-A11_ksp_type fgmres
+ 
+# Inner loop tolerance
+-A11_ksp_rtol 1.0e-3
+
+#
+# Define MG preconditioner - these are the default options with the alternative option in the comments
+#
+
+# Define the MG type, either as 'multiplicative' or 'additive'. We use 'multiplicative' by default, as additive multigrid is a slightly different algorithm which elects to perform it's smoothing at different times during movement between levels.  It's been shown from literature (to some degree) to be less effective than multiplicative.
+-A11_pc_mg_type multiplicative
+
+# Select either a V-cycle, 'v', or a W-cycle 'w'. By default we use a V-cycle as literature suggests that v is in most cases as good as w (and faster).
+-A11_pc_mg_cycle_type v
+
+# Select the number of cycles to perform per MG precondition. For a tough problem this may need to be increased.
+-A11_pc_mg_multiplicative_cycles 1
+
+# Number of smoothup and smoothdown iterations for the V cycle.
+-A11_pc_mg_smoothup 1
+-A11_pc_mg_smoothdown 1
+
+# OR this is a more flexible way of setting the number of smoothing iterations.
+-A11_mg_levels_ksp_max_its 1
+
+# The smoother or the solver to use when solving for the correction on a multigrid level, this can also be set to minres.
+-A11_mg_levels_ksp_type richardson
+
+# The preconditioner for the smoothers, works in conjunction with the smoother solver.  The SOR preconditioner uses sub-blocks, one for each block of the distributed matrix, and we can specify a sub-preconditioner for each of these sub-blocks in addition to Sor.  Can also be set to bjacobi as it does this also.
+-A11_mg_levels_pc_type sor
+
+# The sub preconditioner for SOR or bjacobi.  Can also be set to cholesky.
+-A11_mg_levels_pc_sub_type ilu
+
+#
+# If you have a tough problem to solve you can TRY these options to gain better convergence:
+#
+
+# For a tough problem, for example, where viscosity gradients are high (10^6) and your problem is not converging try setting these to 50 - 100
+-A11_pc_mg_smoothup 50
+-A11_pc_mg_smoothdown 50
+
+# Swaps out the smoother solver for the minres method
+-A11_mg_levels_ksp_type minres
+
+# SOR is a robust preconditioner type. 
+-A11_mg_levels_pc_type sor
+
+# This option, will change the smoother preconditioner to cholesky, perhaps tougher than the default when used in conjunction with minres.
+-A11_mg_levels_pc_sub_type cholesky
+
+#
+# If you want to try to save time:
+#
+
+# If you have a fixed number of iterations defined, there is no need to test convergence for the smoothers.  This will save time.
+-A11_mg_levels_ksp_convergence_test skip
+
+# If you want the number of iterations dynamically set according to how hard/easy the problem is to solve at that particular timestep:
+-A11_mg_accelerating_smoothing true
+
+# This prints out useful info
+-A11_mg_accelerating_smoothing_view true
+
+# You can fine tune the range of values for the up / down smooth and where to start at the beginning of each new iteration - if you have experience that a particular solution needs a lot of iterations then you can help the algorithm out by suggesting it starts high, e.g. -A11_mg_smooths_to_start 100
+-A11_mg_smooths_min 2 
+-A11_mg_smooths_max 100
+-A11_mg_smooths_to_start 5 
+
+# You can also fine tune the manner in which the smoothing cycles changes as the problem gets easier or harder. 
+# The specified acceleration is a factor which increases or decreases the number of cycles to smooths * or / acceleration
+# The specified increment increases or decreases the number of cycles to smooths + or - increment.  This should be a big number if a lot of variation is seen in the problem. 
+-A11_mg_smoothing_acceleration 1.1
+-A11_mg_smoothing_increment 3
+
+# And you can set a target which says we'll try to get at least one order of magnitude reduction in residual over this number of V cycles with the fiddling about in smoothing, but not more than two orders. This is to allow us to progress to smaller, cheaper operations when the calculation is easy
+-A11_mg_target_cycles_10fold_reduction 5
+
+#
+# For the case where a distributed coarse (i.e. not redundant) solve is required: (you can optionally set EACH mg level like this.  E.g. -A11_mg_levels_1_ etc)
+#
+
+# This is instead of a direct solve on the coarsest level 
+-A11_mg_coarse_ksp_type cg
+
+# max outer iterations on coarsest grid (only valid when direct solve is not used)
+-A11_mg_coarse_ksp_max_it 100
+
+# tolerance on outer loop for coarsest grid
+-A11_mg_coarse_ksp_rtol 1.0e-4
+
+# preconditioner type for coarsest grid - need to set this in-conjunction with sub_pc_type see below:
+-A11_mg_coarse_pc_type sor
+
+# Swaps out the default coarse grid preconditioner (ilu) for cholesky
+-A11_mg_coarse_sub_pc_type cholesky
+
+

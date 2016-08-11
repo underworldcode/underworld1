@@ -1,0 +1,56 @@
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<struct name="components" mergeType="merge">
+
+
+		<struct name="upperPerturbation" mergeType="replace">
+			<param name="Type">PolygonShape</param>
+			<param name="startZ">slabStartZ</param> 
+			<param name="endZ">slabEndZ</param> 
+         <list name="vertices">
+				<asciidata>
+					<columnDefinition name = "x" type="double"/>
+					<columnDefinition name = "y" type="double"/>
+					1.20	1.0
+					1.20	0.975
+					1.02	0.825
+					1.02	0.85
+				</asciidata>
+			</list>
+		</struct>
+		<struct name="corePerturbation" mergeType="replace">
+			<param name="Type">PolygonShape</param>
+			<param name="startZ">slabStartZ</param>
+			<param name="endZ">slabEndZ</param>
+         <list name="vertices">
+				<asciidata> 
+					<columnDefinition name = "x" type="double"/>
+					<columnDefinition name = "y" type="double"/>
+					1.20    0.975  
+					1.20    0.925  
+					1.02    0.775
+					1.02    0.825
+				</asciidata>
+			</list>
+		</struct>
+		<struct name="lowerPerturbation" mergeType="replace">
+			<param name="Type">PolygonShape</param>
+			<param name="startZ">slabStartZ</param>
+			<param name="endZ">slabEndZ</param>
+         <list name="vertices">
+				<asciidata> 
+					<columnDefinition name = "x" type="double"/>
+					<columnDefinition name = "y" type="double"/>
+					1.20    0.925  
+					1.20    0.90  
+					1.02    0.75
+					1.02    0.775
+				</asciidata>
+			</list>
+		</struct>
+
+	</struct>
+
+</StGermainData>	
+
+

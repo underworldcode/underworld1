@@ -1,0 +1,25 @@
+<StgModelRun>
+  <name>TempDiffusion-highResReferenceTest-np1-createReference</name>
+  <modelInputFiles>
+    <inputFile>TempDiffusion.xml</inputFile>
+  </modelInputFiles>
+  <basePath>/home/psunter/AuScopeCodes/stgUnderworldE-PETSc-2.3.3-CREDOWork/StgFEM/SysTest/RegressionTests</basePath>
+  <outputPath>HRexpected/TempDiffusion-highResReferenceTest</outputPath>
+  <jobParams>
+    <nproc>1</nproc>
+  </jobParams>
+  <simParams>
+    <restartstep>None</restartstep>
+    <stoptime>None</stoptime>
+    <nsteps>1</nsteps>
+    <dumpevery>0</dumpevery>
+    <cpevery>1</cpevery>
+  </simParams>
+  <paramOverrides>
+    <param modelPath="elementResI" paramVal="160" />
+    <param modelPath="elementResK" paramVal="20" />
+    <param modelPath="elementResJ" paramVal="160" />
+  </paramOverrides>
+  <solverOpts />
+  <analysisOps />
+</StgModelRun>

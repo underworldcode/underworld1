@@ -1,0 +1,129 @@
+import platform, os
+from config import packages, cc
+
+#
+# Add options to be passed on to build.
+#
+
+options = [
+    ('--prefix', 'prefix', 'Installation prefix.', None),
+    ('--build-dir', 'build_dir', 'Sandbox location.', 'build'),
+    ('--with-debugging', 'with_debugging', 'Build with debugging (default 1)', eval(os.getenv('WITH_DEBUGGING','1')), 'int'),
+    ('--with-profiling', 'with_profiling', 'Build with profiling', eval(os.getenv('WITH_PROFILING','0')), 'int'),
+    ('--optimisation-flag', 'optimisation_flag', 'Choose flag for optimisation', 'default', None),
+    ('--with-warnings', 'with_warnings', 'Print all warnings at compile time (default 1)', eval(os.getenv('WITH_WARNINGS','1')), 'int'),
+    ('--lib-type', 'lib_type', 'Library type: shared or static (default shared)', 'shared'),
+    ('--cc', 'CC', 'C compiler', None),
+    ('--cxx', 'CXX', 'C++ compiler', None),
+    ('--cflags', 'CFLAGS', 'Flags for the C compiler', None)
+]
+
+#
+# Setup the environment.
+#
+
+env = Environment(ENV=os.environ)
+env.Tool('config', toolpath=['config'], options=options)
+
+#
+# Definition of our error function
+#
+
+def UWExit( self ):
+   print '\n'
+   print '***************************************'
+   print 'If you require help, send the files:'
+   print '\tconfig.log'
+   print '\tconfig.cfg (if it exists)'
+   print 'to: development@underworldproject.org'
+   print '************************************'
+   env.Exit()
+
+env.AddMethod( UWExit )
+
+#
+# Declare which packages we're going to use.
+#
+
+env.UsePackage(packages.Underworld)
+env.UsePackage(packages.PETSc, required=False)
+env.UsePackage(packages.HDF5)
+
+#
+# Perform configuration.
+#
+if not (GetOption('help') or GetOption('clean')):
+
+    if env.get('CC', None) is not None:
+        cc.apply_cc(env, env['CC'])
+    # Switch off auto compilers if we were given one.
+    if '--cc' in ARGUMENTS:
+        env['packages'][packages.MPI].try_compilers = False
+
+    if env.get('prefix', None) is None:
+        env['prefix'] = env.GetLaunchDir()
+
+    env['save_vars'] += ['shared_libs', 'static_libs']
+    if env.get('lib_type', None) == 'shared':
+        env['shared_libs'] = 1
+        env['static_libs'] = 0
+    elif env.get('lib_type', None) == 'static':
+        env['shared_libs'] = 0
+        env['static_libs'] = 1
+        #env.MergeFlags('-static')
+        #env.AppendUnique(LINKFLAGS=['-static'])
+        Package.static = True
+    else:
+        print 
+        print '****  ERROR ****'
+        print 'Invalid option \'--lib-type\''
+        env.UWExit()
+
+    # enable all warnings.
+    if env.get('with_warnings', None):    
+        env.MergeFlags('-Wall')
+    if env.get('CC', None) == 'icc':
+        env.MergeFlags('-wd869 -wd1419')
+
+    # Copies base environment
+    base_env = env.Clone()
+
+    env.ConfigurePackage(packages.libXML2)
+    env.ConfigurePackage(packages.MPI)
+    env.ConfigurePackage(packages.HDF5,  required=False)
+    env.ConfigurePackage(packages.PETSc)
+    env.ConfigurePackage(packages.Underworld)
+
+    #Set debug and optimise settings last to override any from PETSc
+    if env.get('optimisation_flag', None) == 'default':
+       if env.get('with_debugging', None):
+           env.MergeFlags('-g -DDEBUG -O0')
+       else:
+           env.MergeFlags('-O2 -DNDEBUG')
+    else:
+       if env.get('with_debugging', None):
+           env.MergeFlags('-g -DDEBUG '+env.get('optimisation_flag', None))
+       else:
+           env.MergeFlags('-DNDEBUG '+env.get('optimisation_flag', None))
+
+    if env.get('with_profiling'):
+      env.MergeFlags('-DUSE_PROFILE -DENABLE_STGERMAIN_LOG')
+
+    # Save environment
+    uw_env = env
+
+env.PrintSummary()
+env.SaveConfig()
+
+#
+# Print success message.
+#
+
+print
+print '***************************************'
+print '* Successfully configured.            *'
+print '* Now run \'./scons.py\' to build.      *'
+print '***************************************'
+print
+
+

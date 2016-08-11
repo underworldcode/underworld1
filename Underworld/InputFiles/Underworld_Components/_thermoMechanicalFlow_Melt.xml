@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+  <include>StgFEM/ConstantMesh.xml             </include>
+  <include>StgFEM/LinearMesh.xml               </include>
+  <include>StgFEM/VelocityField.xml            </include>
+  <include>StgFEM/PressureField.xml            </include>
+  <include>Underworld/GaussSwarm.xml           </include>
+  <include>StgFEM/TimeIntegrator.xml           </include>
+  <include>PICellerator/MaterialPointSwarm.xml </include>
+  <include>Underworld/StokesFlowUzawaCompressible.xml   </include>
+  <include>StgFEM/TemperatureField.xml       </include>
+  <include>StgFEM/TempAdvDiff.xml            </include>
+
+  <struct name="components" mergeType="merge">
+    <!-- The Ppc Manager-->
+    <struct name="default_ppcManager">
+      <param name="Type">PpcManager</param>
+      <param name="MaterialSwarm"> materialSwarm </param>
+      <param name="IntegrationSwarm"> picIntegrationPoints </param>
+      <param name="Mesh"> linearMesh </param>
+      <param name="Gravity"> Gravity </param>
+      <list name="Properties">
+        <struct>
+          <param name="PropertyName"> DensityLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> DiffusivityLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> CpLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> ThermalExpansivityLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> RadiogenicHeatProductionLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> LatentHeatFusionLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> EntropyChangeLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> MeltExpansionLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> MeltFractionLabel </param>
+          <param name="StoreOnParticles"> True </param>
+          <param name="StoreOnMesh"> True </param>
+          <param name="StorePreviousValue"> True </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> PressureLabel </param>
+          <param name="StoreOnMesh"> True </param>
+        </struct>
+      </list>
+    </struct>
+
+    <!-- Density and gravity based on ppc -->
+    <struct type="struct" name="buoyancyForceTerm" mergeType="replace">
+      <param name="Type">BuoyancyForceTermPpc</param>
+      <param name="ForceVector">mom_force</param>
+      <param name="Swarm">picIntegrationPoints</param>
+      <param name="Manager">default_ppcManager</param>
+    </struct>
+
+    <!--
+
+    This is how a rhs term, other than Buoyancy would be defined on stokes,
+    currently "sourceTerm_stokesEqn" is not defined
+
+    <struct type="struct" name="_sourceTerm_stokesEqn" mergeType="replace">
+      <param name="Type">VectorAssemblyTerm_NA__F</param>
+      <param name="ForceVector">mom_force</param>
+      <param name="functionLabel">sourceTerm_stokesEqn</param>
+      <param name="Swarm">picIntegrationPoints</param>
+      <param name="Manager">default_ppcManager</param>
+    </struct>
+
+    <struct name="sourceTerm_stokesEqn">
+      <param name="Type">Ppc...</param>
+    </struct>
+    -->
+
+    <struct type="struct" name="defaultResidualForceTerm" mergeType="replace">
+      <param name="Type">SUPGAdvDiffTermPpc</param>
+      <param name="ForceVector">residual</param>
+      <param name="EnergyEqn">EnergyEqn</param>
+      <param name="Swarm">picIntegrationPoints</param>
+      <param name="VelocityField">VelocityField</param>
+      <param name="PhiField">TemperatureField</param>
+    </struct>
+
+    <struct type="struct" name="_sourceTerm_thermalEqn" mergeType="replace">
+      <param name="Type">VectorAssemblyTerm_NA__F</param>
+      <param name="ForceVector">residual</param>
+      <param name="functionLabel">sourceTerm_thermalEqn</param>
+      <param name="Swarm">picIntegrationPoints</param>
+      <param name="Manager">default_ppcManager</param>
+    </struct>
+
+    <struct name="sourceTerm_thermalEqn">
+      <param name="Type">Ppc_Constant</param>
+      <param name="Value">0</param>
+    </struct>
+    <struct name="default_temperature_ppc">
+      <param name="Type">Ppc_Variable</param>
+      <param name="FieldVariable">TemperatureField</param>
+    </struct>
+  </struct>
+</StGermainData>

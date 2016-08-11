@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<list name="FieldVariablesToCheckpoint" mergeType="merge">
+		<param> VelocityField </param>
+		<param> TemperatureField </param>
+		<!-- TemperatureField-phiDotField is never explicitly made in xml, 
+		but in the AdvectionDiffusionSLE.c, it's a necessary field for restarting. -->
+		<param> TemperatureField-phiDotField </param>
+	</list>
+
+	<struct name="components" mergeType="merge">
+		<struct name="residual">
+			<param name="Type">ForceVector</param>
+			<param name="FeVariable">TemperatureField</param>
+		</struct>
+		<!-- lumped mass matrix terms -->
+		<struct name="lumpedMassMatrix">
+			<param name="Type">ForceVector</param>
+			<param name="FeVariable">TemperatureField</param>
+		</struct>
+		<struct name="lumpedMassMatrixForceTerm">
+			<param name="Type">LumpedMassMatrixForceTerm</param>
+			<param name="Swarm">gaussSwarm</param>
+			<param name="ForceVector">lumpedMassMatrix</param>
+		</struct>
+		<!-- full mass matrix terms -->
+		<struct name="massMatrixStiffnessMatrix">
+			<param name="Type">StiffnessMatrix</param>
+			<param name="RowVariable">TemperatureField</param>
+			<param name="ColumnVariable">TemperatureField</param>
+			<param name="RHS">mmRHS</param>
+		</struct>
+		<struct name="massMatrix">
+			<param name="Type">MassMatrixTerm</param>
+			<param name="Swarm">gaussSwarm</param>
+			<param name="field">TemperatureField</param>
+			<param name="StiffnessMatrix">massMatrixStiffnessMatrix</param>
+		</struct>
+		<struct name="mmRHS">
+			<param name="Type">ForceVector</param>
+			<param name="FeVariable">TemperatureField</param>
+		</struct>
+		<struct name="predictorMulticorrector">
+			<param name="Type">AdvDiffMulticorrector</param>
+			<param name="multiCorrectorIterations">2</param>
+		</struct>
+		<struct name="EnergyEqn">
+			<param name="Type">AdvectionDiffusionSLE</param>
+			<param name="SLE_Solver">predictorMulticorrector</param> 
+			<param name="Context">context</param>
+			<param name="PhiField">TemperatureField</param>
+			<param name="Residual">residual</param>
+			<param name="MassMatrix">lumpedMassMatrix</param> <!-- must use lumped OR full mass matrix -->
+			<param name="courantFactor">courantFactor</param>
+		</struct>
+		<struct name="defaultResidualForceTerm" mergeType="merge">
+			<param name="Type">GeothermalAdvDiffResidualForceTerm</param>
+			<param name="Swarm">gaussSwarm</param>
+			<param name="ForceVector">residual</param>
+			<param name="ExtraInfo">EnergyEqn</param>
+			<param name="VelocityField">VelocityField</param>
+			<param name="defaultDiffusivity">defaultDiffusivity</param>
+			<!-- UpwindXiFunction can be 'Exact', 'DoublyAsymptoticAssumption' or 'CriticalAssumption' -->
+			<param name="UpwindXiFunction">DoublyAsymptoticAssumption</param>
+			<param name="densityFluid">densityFluid</param>
+			<param name="densitySolid">densitySolid</param>  
+			<param name="specificHeatFluid">specificHeatFluid</param>
+			<param name="specificHeatSolid">specificHeatSolid</param>  
+			<param name="thermalConductivityFluid">thermalConductivityFluid</param>
+			<param name="thermalConductivitySolid">thermalConductivitySolid</param>
+         <param name="porosity">porosity</param>
+         <param name="specificVelocity">true</param>
+		</struct>                          
+	</struct>
+
+</StGermainData>

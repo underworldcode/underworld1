@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<list name="import">
+		<param>Experimental</param>
+		<param>PDERework</param>
+		<param>Geothermal</param>
+	</list>
+
+	<list name="plugins">
+		<struct>
+			<param name="Type">StgFEM_FrequentOutput</param>
+			<param name="Context">context</param>
+		</struct>
+		<struct>
+			<param name="Type">StgFEM_CPUTime</param>
+			<param name="Context">context</param>
+		</struct>
+		<struct>
+			<param name="Type">StgFEM_StandardConditionFunctions</param>
+			<param name="Context">context</param>
+		</struct>
+	</list>
+
+	<include>StgFEM/TimeIntegrator.xml</include>
+	<include>Experimental/Geothermal/GeothermalComponents/LinearMesh.xml</include>
+	<include>Experimental/Geothermal/GeothermalComponents/TemperatureField.xml</include>
+	<!--include>Experimental/Geothermal/GeothermalComponents/StaticMaterialPointSwarm.xml</include-->
+	<include>Experimental/Geothermal/GeothermalComponents/GaussMaterialLayout.xml</include>
+	<include>Experimental/Geothermal/GeothermalComponents/GaussBorderSwarm.xml</include>
+	<include>Experimental/Geothermal/GeothermalComponents/IrregularSurfaceMesh.xml</include>
+	<include>Experimental/Geothermal/GeothermalComponents/HeightField.xml</include>
+	<include>Experimental/Geothermal/Milestone2/TemperatureBCsField.xml</include>
+	<include>Experimental/Geothermal/Milestone2/refactored_solver.xml</include>
+	<include>Experimental/Geothermal/Milestone2/SurfaceAdaptor.xml</include>
+
+	<struct name="components" mergeType="merge">
+		<struct name="context">
+			<param name="Type">UnderworldContext</param>
+		</struct>
+		<struct name="backgroundShape">
+			<param name="Type">Everywhere</param>
+		</struct>
+		<struct name="nowhereShape">
+			<param name="Type">BelowPlane</param>
+			<param name="offset">-1.0e10</param>
+		</struct>
+		<struct name="thermalDataMaterial">
+			<param name="Type">ThermalDataMaterial</param>
+			<param name="filename">/usr/local/underworldGeothermalInput/lv_bm_public_2008.csv</param>
+			<param name="step">100</param>
+			<param name="Mesh">linearMesh</param>
+			<param name="Material">coal</param>
+			<param name="Swarm">materialSwarm</param>
+		</struct>
+		<struct name="background">
+			<param name="Type">Material</param>
+			<param name="Shape">backgroundShape</param>
+			<!--param name="diffusion">1.0</param-->
+			<param name="diffusivity">1.91</param>
+			<list name="materialExtensions">
+				<param>1.91</param>
+				<param>0.0</param>
+			</list>
+		</struct>
+		<struct name="coal">
+			<param name="Type">Material</param>
+			<param name="Shape">nowhereShape</param>
+			<!--param name="diffusion">0.0</param-->
+			<param name="diffusivity">0.40</param>
+			<list name="materialExtensions">
+				<param>0.40</param>
+				<param>0.0</param>
+			</list>
+		</struct>
+	</struct>
+
+	<param name="outputPath">./output</param>
+	<param name="dumpEvery">1</param>
+	<param name="checkpointEvery">1</param>
+
+	<!--   choose what to checkpoint   -->
+	<list name="FieldVariablesToCheckpoint">
+		<param>TemperatureField</param>
+	</list>
+	<!---->
+
+	<param name="journal.info.Context-verbose">True</param>
+	<param name="journal-level.info.Stg_ComponentFactory">2</param>
+	<param name="journal.debug">t</param>
+	<param name="journal-enable-branch.debug.StgFEM">t</param>
+	<param name="journal-level-branch.debug.StgFEM"> 2 </param>
+	<param name="journal-enable-branch.debug.StgDomain">t</param>
+	<param name="journal-level-branch.debug.StgDomain"> 4 </param>
+  
+	<param name="elementMesh">linearMesh</param>
+	<param name="dim"> 3 </param>
+	<param name="elementResI"> 36 </param>
+	<param name="elementResJ"> 24 </param>
+	<param name="elementResK"> 36 </param>
+	<param name="shadowDepth"> 1 </param>
+	<param name="minX">  418453.848 </param>
+	<param name="minY">  -10000.000 </param>
+	<param name="minZ"> 5717716.470 </param>
+	<param name="maxX">  509196.344 </param>
+	<param name="maxY">       0.000 </param>
+	<param name="maxZ"> 5808643.966 </param>
+<!--
+	<param name="minX">  419500 </param>
+	<param name="minY">   -4000 </param>
+	<param name="minZ"> 5.734e6 </param>
+	<param name="maxX">  519500 </param>
+	<param name="maxY">       0 </param>
+	<param name="maxZ"> 5.794e6 </param>
+-->
+
+	<param name="particlesPerCell">12</param>
+
+	<struct name="temperatureBCs">
+		<param name="type">CompositeVC</param>
+		<list name="vcList">
+			<struct>
+				<param name="type">WallVC</param>
+				<param name="wall">top</param>
+				<list name="variables">
+					<struct>
+						<param name="name">temperature</param>
+						<param name="type">double</param>
+						<param name="value">291.15</param>
+					</struct>
+				</list>
+			</struct>
+<!--
+-->
+			<struct>
+				<param name="type">DiscreetPointsVC</param>
+				<param name="name">temperature</param>
+				<list name="discreetBCs">
+<param>485543.000000</param><param>-242.827805</param><param>5749800.000000</param><param>304.049999</param>
+<param>490489.000000</param><param>-168.538879</param><param>5751188.000000</param><param>292.420000</param>
+<param>493853.000000</param><param>-284.372681</param><param>5751801.000000</param><param>292.190001</param>
+<param>494244.000000</param><param>-188.038757</param><param>5755634.000000</param><param>291.059999</param>
+<param>442875.000000</param><param>-221.394287</param><param>5756893.000000</param><param>313.500000</param>
+<param>486426.000000</param><param>-298.962982</param><param>5757557.000000</param><param>307.080002</param>
+<param>473516.000000</param><param>-70.411789</param><param>5759407.000000</param><param>298.969999</param>
+<param>488525.000000</param><param>-159.435928</param><param>5759789.000000</param><param>298.719999</param>
+<param>473851.000000</param><param>-28.174072</param><param>5761608.000000</param><param>303.000000</param>
+<param>446625.000000</param><param>-276.482330</param><param>5761842.000000</param><param>321.310001</param>
+<param>446645.000000</param><param>-346.387695</param><param>5761842.000000</param><param>324.000000</param>
+<param>450044.000000</param><param>-495.499725</param><param>5762458.000000</param><param>329.860001</param>
+<param>445177.000000</param><param>-939.190063</param><param>5762690.000000</param><param>338.480003</param>
+<param>467904.000000</param><param>-332.748413</param><param>5763559.000000</param><param>299.000000</param>
+<param>456779.000000</param><param>-216.486679</param><param>5763769.000000</param><param>318.900002</param>
+<param>457814.000000</param><param>-204.793930</param><param>5764290.000000</param><param>309.000000</param>
+<param>450500.000000</param><param>-504.165405</param><param>5764468.000000</param><param>329.000000</param>
+<param>479583.000000</param><param>-265.579773</param><param>5765280.000000</param><param>310.820000</param>
+<param>479601.000000</param><param>-223.198685</param><param>5765285.000000</param><param>308.560001</param>
+<param>461493.000000</param><param>-1630.788574</param><param>5766123.000000</param><param>358.669998</param>
+<param>470628.000000</param><param>-392.544586</param><param>5766258.000000</param><param>314.500000</param>
+<param>445086.000000</param><param>-248.932114</param><param>5767863.000000</param><param>329.000000</param>
+<param>461380.000000</param><param>-382.014282</param><param>5768250.000000</param><param>318.400002</param>
+<param>471490.000000</param><param>-345.568176</param><param>5768650.000000</param><param>295.580000</param>
+<param>487559.000000</param><param>-217.652039</param><param>5768900.000000</param><param>297.870001</param>
+<param>441781.000000</param><param>-205.065491</param><param>5769339.000000</param><param>317.619999</param>
+<param>501231.000000</param><param>-633.978943</param><param>5770499.000000</param><param>325.689999</param>
+<param>452195.000000</param><param>-723.453979</param><param>5771346.000000</param><param>343.000000</param>
+<param>459810.000000</param><param>-802.015503</param><param>5773111.000000</param><param>346.389999</param>
+<param>451445.000000</param><param>-487.444000</param><param>5773871.000000</param><param>346.389999</param>
+<param>467779.000000</param><param>-794.675049</param><param>5774283.000000</param><param>337.349998</param>
+<param>450997.000000</param><param>-468.919403</param><param>5774506.000000</param><param>343.000000</param>
+<param>469052.000000</param><param>-713.322571</param><param>5774569.000000</param><param>332.849998</param>
+<param>492048.000000</param><param>-230.445557</param><param>5775167.000000</param><param>295.000000</param>
+<param>483813.000000</param><param>-835.316528</param><param>5775342.000000</param><param>326.060001</param>
+<param>445586.000000</param><param>-326.011780</param><param>5775373.000000</param><param>320.419998</param>
+<param>496144.000000</param><param>-1143.069946</param><param>5775664.000000</param><param>324.930000</param>
+<param>476233.000000</param><param>-668.190430</param><param>5775700.000000</param><param>333.970001</param>
+<param>493861.000000</param><param>-1140.890137</param><param>5776207.000000</param><param>338.480003</param>
+<param>485774.000000</param><param>-886.044250</param><param>5776930.000000</param><param>320.110001</param>
+<param>456791.000000</param><param>-513.462097</param><param>5777442.000000</param><param>336.799999</param>
+<param>482267.000000</param><param>-691.322754</param><param>5780157.000000</param><param>343.220001</param>
+<param>467744.000000</param><param>-585.676575</param><param>5780952.000000</param><param>325.060001</param>
+<param>501624.000000</param><param>-876.658569</param><param>5781360.000000</param><param>320.000000</param>
+<param>490997.000000</param><param>-845.621399</param><param>5782344.000000</param><param>333.180000</param>
+<param>476288.000000</param><param>-702.704651</param><param>5782370.000000</param><param>335.099998</param>
+<param>493952.000000</param><param>-751.288696</param><param>5782883.000000</param><param>331.709999</param>
+<param>495065.000000</param><param>-710.189270</param><param>5782930.000000</param><param>333.970001</param>
+<param>503972.000000</param><param>-967.210693</param><param>5785734.000000</param><param>320.980000</param>
+<param>487258.000000</param><param>-847.475708</param><param>5786531.000000</param><param>335.500000</param>
+				</list>
+			</struct>
+		</list>
+	</struct>
+	<struct name="temperatureICs">
+		<param name="type">CompositeVC</param>
+		<list name="vcList">
+			<struct>
+				<param name="type"> AllNodesVC </param>
+				<list name="variables">
+					<struct>
+						<param name="name">temperature</param>
+						<param name="type">double</param>
+						<param name="value">0</param>
+					</struct>
+				</list>
+			</struct>
+		</list>
+	</struct>
+
+	<param name="DiscreetVC_FieldVariable">TemperatureBCsField</param>
+
+	<include>StgFEM/GaussSwarm.xml</include>
+	<include>StgFEM/ConstantMesh.xml</include>
+
+<!--   <struct name="components" mergeType="merge"> -->
+<!--     <struct name="camera" mergeType="replace"> -->
+<!--       <param name="Type">lucCamera</param> -->
+<!--       <param name="CentreFieldVariable">TemperatureField</param> -->
+<!--       <param name="coordZ">1</param> -->
+<!--     </struct> -->
+<!--     <struct name="temperatureColourMap"> -->
+<!--       <param name="Type">lucColourMap</param> -->
+<!--       <param name="colours">#0B0133 White #B7210B</param> -->
+<!--       <param name="dynamicRange">true</param> -->
+<!--     </struct> -->
+<!--     <struct name="materialColourMap2"> -->
+<!--       <param name="Type">lucColourMap</param> -->
+<!--       <param name="colours">Violet Yellow Green Orange Blue Red</param> -->
+<!--       <param name="dynamicRange">False</param> -->
+<!--       <param name="minimum">0</param> -->
+<!--       <param name="maximum">7</param> -->
+<!--     </struct> -->
+<!--     <struct name="temperatureMap"> -->
+<!--       <param name="Type">lucScalarField</param> -->
+<!--       <param name="FieldVariable">TemperatureField</param> -->
+<!--       <param name="ColourMap">temperatureColourMap</param> -->
+<!--     </struct> -->
+<!--     <struct name="temperatureIsosurface"> -->
+<!--       <param name="Type">lucIsosurface</param> -->
+<!--       <param name="IsosurfaceField">TemperatureField</param> -->
+<!--       <param name="ColourMap">temperatureColourMap</param> -->
+<!--       <param name="isovalue">0.5</param> -->
+<!--       <param name="drawWalls">false</param> -->
+<!--     </struct> -->
+<!--     <struct name="particleMaterialDots"> -->
+<!--       <param name="Type">lucSwarmViewer</param> -->
+<!--       <param name="Swarm">materialSwarm</param> -->
+<!--       <param name="ColourVariable">materialSwarm-MaterialIndex</param> -->
+<!--       <param name="ColourMap">materialColourMap2</param> -->
+<!--       <param name="pointSize">2.0</param> -->
+<!--     </struct> -->
+<!--     <struct name="pMaterialBorder" mergeType="replace"> -->
+<!--       <param name="Type">lucFieldVariableBorder</param> -->
+<!--       <param name="FieldVariable">TemperatureField</param> -->
+<!--     </struct> -->
+<!--     <struct name="temperatureColourBar"> -->
+<!--       <param name="Type">lucColourBar</param> -->
+<!--       <param name="ColourMap">temperatureColourMap</param> -->
+<!--     </struct> -->
+<!--     <struct name="border" mergeType="replace"> -->
+<!--       <param name="Type">lucFieldVariableBorder</param> -->
+<!--       <param name="FieldVariable">TemperatureField</param> -->
+<!--     </struct> -->
+<!--     <struct name="TemperatureVP"> -->
+<!--       <param name="Type">lucViewport</param> -->
+<!--       <param name="Camera">camera</param> -->
+<!--       <list name="DrawingObject"> -->
+<!-- 	<param>temperatureMap</param> -->
+<!-- 	<param>temperatureIsosurface</param> -->
+<!-- 	<param>border</param> -->
+<!-- 	<param>temperatureColourBar</param> -->
+<!--       </list> -->
+<!--     </struct> -->
+<!--   </struct> -->
+
+<!--   <include>gLucifer/window.xml</include> -->
+<!--   <struct name="components" mergeType="merge"> -->
+<!--     <struct name="window" mergeType="merge"> -->
+<!--       <param name="height" mergeType="replace">600</param> -->
+<!--       <param name="width" mergeType="replace">1200</param> -->
+<!--       <list name="Viewport"> -->
+<!-- 	<param>TemperatureVP</param> -->
+<!--       </list>	 -->
+<!--     </struct> -->
+<!--   </struct> -->
+
+</StGermainData>

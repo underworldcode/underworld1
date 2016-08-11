@@ -1,0 +1,39 @@
+Notes that came up while doing Sci benchmark improvement
+-------------------------------
+
+For SysTests (XML record writing):
+ - define a dict/list of "specification" elements (and a dict/list
+    of "results" aspects?)
+  - then these can be queried, auto-magically saved to XML records,
+     or presented in displays by stuff like ReportLab
+
+Make test Suite stuff a "Register" factory process like StGermain, where
+CREDO manages a global register of test cases that have been set up:
+ - e.g. testSuite.credo.SysTestSuite("Underworld", "SciBench-ThermalConv")
+ - and then you could add appropriate tests easily, and if your master
+    script involves importing multiple benchmark scripts,
+    they will all be in same suite
+ - Hmmm - neat but maybe too "magical" so user has to learn behind scenes?   
+
+Test result and analytic test generation:
+-----------------------------------------
+
+Refactoring test and analytic components to be simpler
+^^^^^^^^^^
+
+Refactor CREDO so Analysis Ops and Test components are in the same directory ...
+ thus you can easily define a new Analysis Op, and then a test component
+ based upon it.
+
+And perhaps allow much simpler generation of Analysis Op classes
+and TestComponents:
+
+N.B. really the bare minimum for a new CREDO test component is:
+
+(Optional) set up analysis ops
+ (e.g. may be just an XML snippet).
+
+A bit of code to do a check and:
+ - return a result status
+ - a result message to print to XML
+ - and an XML snippet (currently in ETree format) to add.

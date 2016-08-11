@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<!-- Requires the following toolboxes -->
+	<list name="import" mergeType="merge">
+		<param>Geothermal</param>
+	</list>
+
+	<!-- Default minimum plugins
+	     REALLY IMPORTANT:
+	     This code ASSUMES the drill core plugin the 4th (i.e. [3])
+	     plugin (but wouldn't have to if list item names were used
+	     in [] references), done by include of importDrillCores.xml
+	     below. -->
+	<list name="plugins">
+		<struct>
+			<param name="Type">StgFEM_FrequentOutput</param>
+			<param name="Context">context</param>
+		</struct>
+		<struct>
+			<param name="Type">StgFEM_CPUTime</param>
+			<param name="Context">context</param>
+		</struct>
+		<struct>
+			<param name="Type">StgFEM_StandardConditionFunctions</param>
+			<param name="Context">context</param>
+		</struct>
+	</list>
+
+	<!-- The component model (product configuration) -->
+	<include>StgFEM/ConstantMesh.xml</include>
+	<include>Geothermal/_LinearMesh.xml</include>
+	<include>StgFEM/TimeIntegrator.xml</include>
+	<include>Geothermal/_TemperatureField.xml</include>
+	<include>Geothermal/_GaussMaterialLayout.xml</include>
+	<include>Geothermal/_GaussBorderSwarm.xml</include>
+	<struct name="components" mergeType="merge">
+		<struct name="context">
+			<param name="Type">UnderworldContext</param>
+		</struct>
+
+	</struct>
+
+	<!-- Default simulation parameters -->
+	<param name="outputPath">./output</param>
+	<param name="dumpEvery">1</param>
+	<param name="checkpointEvery">1</param>
+	<param name="journal.info.Context-verbose">f</param>
+	<param name="journal-level.info.Stg_ComponentFactory">1</param>
+	<param name="journal.debug">f</param>
+	<param name="journal-enable-branch.debug.StgFEM">f</param>
+	<param name="journal-level-branch.debug.StgFEM">1</param>
+	<param name="journal-enable-branch.debug.StgDomain">f</param>
+	<param name="journal-level-branch.debug.StgDomain">1</param>
+
+	<!-- Mesh details & resolutions -->
+	<param name="dim"> 3 </param>
+	<param name="elementResI"> 16 </param>
+	<param name="elementResJ"> 16 </param>
+	<param name="elementResK"> 16 </param>
+	<param name="minX"> -0.5 </param>
+	<param name="minY"> -0.5 </param>
+	<param name="minZ"> -0.5 </param>
+	<param name="maxX">  0.5 </param>
+	<param name="maxY">  0.5 </param>
+	<param name="maxZ">  0.5 </param>
+	<param name="upperTemp">  0. </param>
+	<param name="lowerTemp">  1. </param>
+
+	<!-- Default boundary conditions... 0 on top, 1 on bottom -->
+	<struct name="temperatureBCs">
+		<param name="type">CompositeVC</param>
+		<list name="vcList">
+			<struct>
+				<param name="type">WallVC</param>
+				<param name="wall">top</param>
+				<list name="variables">
+					<struct>
+						<param name="name">temperature</param>
+						<param name="type">double</param>
+						<param name="value">@upperTemp</param>
+					</struct>
+				</list>
+			</struct>
+			<struct>
+				<param name="type">WallVC</param>
+				<param name="wall">bottom</param>
+				<list name="variables">
+					<struct>
+						<param name="name">temperature</param>
+						<param name="type">double</param>
+						<param name="value">@lowerTemp</param>
+					</struct>
+				</list>
+			</struct>
+		</list>
+	</struct>
+
+	<!-- Default initial conditions... 0 every where -->
+	<struct name="temperatureICs">
+		<param name="type">CompositeVC</param>
+		<list name="vcList">
+			<struct>
+				<param name="type"> AllNodesVC </param>
+				<list name="variables">
+					<struct>
+						<param name="name">temperature</param>
+						<param name="type">double</param>
+						<param name="value">0</param>
+					</struct>
+				</list>
+			</struct>
+		</list>
+	</struct>
+
+	<!-- Other discretisation details -->
+	<param name="elementMesh">linearMesh</param>
+	<param name="particlesPerCell">12</param>
+	<param name="gaussParticlesX">2</param>
+	<param name="gaussParticlesY">2</param>
+	<param name="gaussParticlesZ">2</param>
+	<param name="shadowDepth"> 1 </param>
+
+</StGermainData>

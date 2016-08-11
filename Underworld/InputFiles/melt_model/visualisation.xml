@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+  <!-- Viewport stuff -->
+  <!-- definitions for viewing the viscosity field -->
+  <include>Underworld/ViscosityField.xml </include>
+  <include>Underworld/Viewports/ViscosityVP.xml</include>
+
+  <include>Underworld/Viewports/PressureVP.xml</include>
+  <include>Underworld/Viewports/TemperatureAndVelocityArrowsVP.xml</include>
+  <include>Underworld/Viewports/ParticleMaterialAndNodalVelocityVP.xml</include>
+  <include>Underworld/Viewports/StrainRateInvariantVP.xml</include>
+  <include>Underworld/Viewports/ParticleMeltFlagVP.xml</include>
+  <include>gLucifer/window.xml</include>
+  <include>gLucifer/BuildMovies.xml</include>
+  <struct name="components" mergeType="merge">
+    <struct name="camera" mergeType="replace">
+      <param name="Type">lucCamera</param>
+      <param name="CentreFieldVariable">VelocityField</param>
+      <param name="autoZoomTimestep">0</param>
+    </struct>
+    <struct name="particleMeltFlagSwarmViewer" mergeType="merge">
+      <param name="Swarm" mergeType="replace">materialSwarm</param>
+      <param name="ColourVariable" mergeType="replace">materialSwarm-MeltFractionLabel</param>
+    </struct>
+   <struct name="meltFlagColourMap" mergeType="merge">
+      <param name="minimum" mergeType="replace">0.0</param>
+      <param name="maximum" mergeType="replace">0.3</param>
+      <param name="logScale" mergeType="replace">False</param>
+    </struct>
+    <struct name="meltFlagColourBar">
+      <param name="Type">lucColourBar</param>
+      <param name="ColourMap">meltFlagColourMap</param>
+    </struct>
+    <struct name="ParticleMeltFlagVP" mergeType="merge">
+      <list name="DrawingObject" mergeType="replace">
+         <param>particleMeltFlagSwarmViewer</param>
+         <param>meltFlagColourBar</param>
+      </list>
+    </struct>
+    <!-- DEBUGGING VIZ
+    <struct name="particleDots">
+      <param name="Type">lucSwarmViewer</param>
+      <param name="Swarm">materialSwarm</param>
+      <param name="ColourVariable">materialSwarm-MaterialIndex</param>
+      <param name="ColourMap">materialColourMap2</param>
+      <param name="MaskVariable">materialSwarm-MaterialIndex</param>
+      <param name="maskType">EqualTo</param>
+      <param name="maskValue">4</param>
+      <param name="pointSize">1.0</param>
+   </struct>
+   <struct name="PressureVP" mergeType="merge">
+    <list name="DrawingObject" mergeType="merge">
+      <param> particleDots </param>
+    </list>
+   </struct>
+   -->
+    <struct name="window" mergeType="merge">
+    <!--
+      <param name="Database"> db </param>
+      -->
+      <list name="Viewport">
+        <param>TemperatureAndVelocityArrowsVP </param>
+        <!--
+        -->
+        <param>ParticleMeltFlagVP</param>
+        <param>ParticleMaterialAndNodalVelocityVP</param>
+        <param>ViscosityVP</param>
+        <param>PressureVP</param>
+      </list>
+    </struct>
+  </struct>
+</StGermainData>

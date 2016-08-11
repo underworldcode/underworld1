@@ -1,0 +1,7 @@
+<StgModelResult>
+  <modelName>TempDiffusion-highResReferenceTest-np1-createReference</modelName>
+  <outputPath>/home/psunter/AuScopeCodes/stgUnderworldE-PETSc-2.3.3-CREDOWork/StgFEM/SysTest/RegressionTests/HRexpected/TempDiffusion-highResReferenceTest</outputPath>
+  <jobMetaInfo>
+    <simtime>0.0</simtime>
+  </jobMetaInfo>
+</StgModelResult>

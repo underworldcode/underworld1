@@ -1,0 +1,21 @@
+<StgModelRun>
+  <name>RayTay-basicBenchmark</name>
+  <modelInputFiles>
+    <inputFile>RayleighTaylorBenchmark.xml</inputFile>
+  </modelInputFiles>
+  <outputPath>output/raytay-scibench-credo-basic</outputPath>
+  <jobParams>
+    <nproc>1</nproc>
+  </jobParams>
+  <simParams>
+    <restartstep>None</restartstep>
+    <stoptime>60.0</stoptime>
+    <nsteps>None</nsteps>
+    <dumpevery>1</dumpevery>
+    <cpevery>1</cpevery>
+  </simParams>
+  <paramOverrides>
+    <param modelPath="gravity" paramVal="1" />
+  </paramOverrides>
+  <analysis />
+</StgModelRun>

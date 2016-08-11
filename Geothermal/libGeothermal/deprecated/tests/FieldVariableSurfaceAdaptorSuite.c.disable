@@ -1,0 +1,252 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**
+** Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+**
+** Authors:
+**   Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+**   Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+**   Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+**   Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+**   Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+**   Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+**
+**  This library is free software; you can redistribute it and/or
+**  modify it under the terms of the GNU Lesser General Public
+**  License as published by the Free Software Foundation; either
+**  version 2.1 of the License, or (at your option) any later version.
+**
+**  This library is distributed in the hope that it will be useful,
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+**  Lesser General Public License for more details.
+**
+**  You should have received a copy of the GNU Lesser General Public
+**  License along with this library; if not, write to the Free Software
+**  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** Role:
+**   Tests the FieldVariableSurfaceAdaptorSuite
+**
+**
+**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "pcu/pcu.h"
+#include <StGermain/StGermain.h>
+#include <StgDomain/StgDomain.h>
+#include <StgFEM/StgFEM.h>
+#include <PICellerator/PICellerator.h>
+#include <Underworld/Underworld.h>
+#include <PDERework/PDERework.h>
+#include <Geothermal/Geothermal.h>
+#include "FieldVariableSurfaceAdaptorSuite.h"
+
+#define FIELD_TOLERANCE 0.01
+#define MESH_TOLERANCE 0.1
+
+typedef struct {
+} FieldVariableSurfaceAdaptorSuiteData;
+
+double f( double x, double y ) { return 1.0 + sin( M_PI*x )*sin( M_PI*y ); }
+
+double HeightFieldError( FeVariable* heightField, Swarm* gaussSwarm ) {
+	FeMesh*			feMesh		= heightField->feMesh;
+	GaussParticleLayout*	particleLayout 	= (GaussParticleLayout*)gaussSwarm->particleLayout;
+	Index			lElement_I, lCell_I;
+	unsigned		nDims		= Mesh_GetDimSize( feMesh );
+	unsigned		numMeshElements	= Mesh_GetLocalSize( feMesh, nDims );
+	double			elementError;
+	double			lErrorSq	= 0.0;
+	double			lAnalyticSq 	= 0.0;
+	double			gErrorSq, gAnalyticSq, gErrorNorm;
+	IntegrationPoint*	gaussPoint;
+	unsigned		gaussPoint_I, numGaussPoints;
+	double			height, analytic;
+	double			elErrorSq, elAnalyticSq;
+	ElementType*		elementType;
+	double			detJac;
+	double			gCoord[2];
+
+	for( lElement_I = 0; lElement_I < numMeshElements; lElement_I++ ) {
+		lCell_I = CellLayout_MapElementIdToCellId( gaussSwarm->cellLayout, lElement_I );
+		numGaussPoints = _GaussParticleLayout_InitialCount( particleLayout, NULL, lCell_I );
+
+		elementType = FeMesh_GetElementType( feMesh, lElement_I );
+
+		elErrorSq = 0.0;
+		elAnalyticSq = 0.0;
+
+		for( gaussPoint_I = 0; gaussPoint_I < numGaussPoints; gaussPoint_I++ ) {
+			gaussPoint = (IntegrationPoint*) Swarm_ParticleInCellAt( gaussSwarm, lCell_I, gaussPoint_I );
+			FeVariable_InterpolateWithinElement( heightField, lElement_I, gaussPoint->xi, &height );
+			FeMesh_CoordLocalToGlobal( feMesh, lElement_I, gaussPoint->xi, gCoord );
+			analytic = f( gCoord[0], gCoord[1] );
+
+			detJac = ElementType_JacobianDeterminant( elementType, feMesh, lElement_I, gaussPoint->xi, nDims );
+
+			elErrorSq += ( height - analytic ) * ( height - analytic ) * gaussPoint->weight * detJac;
+			elAnalyticSq += ( analytic * analytic ) * gaussPoint->weight * detJac;
+		}
+
+		elementError = sqrt( elErrorSq ) / sqrt( elAnalyticSq );
+
+		lErrorSq += elErrorSq;
+		lAnalyticSq += elAnalyticSq;
+	}
+
+	MPI_Allreduce( &lErrorSq, &gErrorSq, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD );
+	MPI_Allreduce( &lAnalyticSq, &gAnalyticSq, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD );
+
+	gErrorNorm = sqrt( gErrorSq ) / sqrt( gAnalyticSq );
+
+	return gErrorNorm;
+}
+
+double MeshTopError( FeMesh* mesh ) {
+	const Sync*	sync			= IGraph_GetDomain( mesh->topo, MT_VERTEX );
+	Grid*		grid;
+	double		error 			= 0.0;
+	double		nodeError, gError;
+	double		analytic;
+	unsigned	node_i, gNode, inds[3];
+
+	grid = *(Grid**)ExtensionManager_Get( mesh->info, mesh, ExtensionManager_GetHandle( mesh->info, (Name)"vertexGrid" ) );
+
+	for( node_i = 0; node_i < Sync_GetNumDomains( sync ); node_i++  ) {
+		gNode = Sync_DomainToGlobal( sync, node_i );
+		Grid_Lift( grid, gNode, inds );
+		if( inds[J_AXIS] == grid->sizes[J_AXIS] - 1 ) {
+			analytic = 1.0/*maxY before deformation*/ + f( mesh->verts[node_i][I_AXIS], mesh->verts[node_i][K_AXIS] );
+			nodeError = ( mesh->verts[node_i][J_AXIS] - analytic )*( mesh->verts[node_i][J_AXIS] - analytic );
+			nodeError /= analytic * analytic;
+			error += nodeError;
+		}
+	}
+
+	MPI_Allreduce( &error, &gError, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD );
+	return gError;
+}
+
+void FieldVariableSurfaceAdaptorSuite_Setup( FieldVariableSurfaceAdaptorSuiteData* data ) {
+}
+
+void FieldVariableSurfaceAdaptorSuite_Teardown( FieldVariableSurfaceAdaptorSuiteData* data ) {
+}
+
+void FieldVariableSurfaceAdaptorSuite_Test( FieldVariableSurfaceAdaptorSuiteData* data ) {
+	Stg_ComponentFactory* 	cf;
+	FeMesh*			feMesh;
+	FeVariable*		heightField;
+	Swarm*			gaussSwarm;
+	double			heightFieldError;
+	double			meshError;
+	
+	cf = stgMainInitFromXML( "Geothermal/Base/input/testFieldVariableSurfaceAdaptor.xml", MPI_COMM_WORLD, NULL );
+	stgMainBuildAndInitialise( cf );
+
+	feMesh = (FeMesh*)LiveComponentRegister_Get( cf->LCRegister, (Name)"linearMesh" );
+	heightField = (FeVariable* )LiveComponentRegister_Get( cf->LCRegister, (Name)"HeightField" );
+	gaussSwarm = (Swarm* )LiveComponentRegister_Get( cf->LCRegister, (Name)"gaussSwarm"  );
+
+	heightFieldError = HeightFieldError( heightField, gaussSwarm );
+	pcu_check_true( heightFieldError < FIELD_TOLERANCE );
+
+	meshError = MeshTopError( feMesh );
+	pcu_check_true( meshError < MESH_TOLERANCE );
+
+	stgMainDestroy( cf );
+}
+
+void FieldVariableSurfaceAdaptorSuite_MeshAdaptionTest( FieldVariableSurfaceAdaptorSuiteData* data ) {
+	Stg_ComponentFactory* 	cf;
+	FeMesh*			feMesh;
+	Grid**			grid;
+	unsigned		i, j, k, lNode_I;
+	IJK			ijk;
+	double			prevCoord;
+	Bool			okay;
+	
+	cf = stgMainInitFromXML( "Geothermal/Base/input/testFieldVariableSurfaceAdaptor_MeshAdaption.xml", MPI_COMM_WORLD, NULL );
+	stgMainBuildAndInitialise( cf );
+
+	feMesh = (FeMesh*)LiveComponentRegister_Get( cf->LCRegister, (Name)"linearMesh" );
+	grid = (Grid**)ExtensionManager_Get( feMesh->info, feMesh, ExtensionManager_GetHandle( feMesh->info, "vertexGrid" ) );
+
+	/* z-axis test */
+	okay = True;
+	for( i = 0; i < (*grid)->sizes[I_AXIS]; i++ ) {
+		for( j = 0; j < (*grid)->sizes[J_AXIS]; j++ ) {
+			ijk[I_AXIS] = i;
+			ijk[J_AXIS] = j;
+			ijk[K_AXIS] = 0;
+			//lNode_I = Grid_Project( *grid, ijk );
+			Mesh_GlobalToDomain( feMesh, MT_VERTEX, Grid_Project( *grid, ijk ), &lNode_I );
+			prevCoord = feMesh->verts[lNode_I][K_AXIS];
+			for( k = 1; k < (*grid)->sizes[K_AXIS]; k++ ) {
+				ijk[K_AXIS] = k;
+				Mesh_GlobalToDomain( feMesh, MT_VERTEX, Grid_Project( *grid, ijk ), &lNode_I );
+				if( prevCoord >= feMesh->verts[lNode_I][K_AXIS] )
+					okay = False;
+				prevCoord = feMesh->verts[lNode_I][K_AXIS];	
+			}
+		}
+	}
+	pcu_check_true( okay );
+
+	/* y-axis test */
+	okay = True;
+	for( i = 0; i < (*grid)->sizes[I_AXIS]; i++ ) {
+		for( k = 0; k < (*grid)->sizes[K_AXIS]; k++ ) {
+			ijk[I_AXIS] = i;
+			ijk[J_AXIS] = 0;
+			ijk[K_AXIS] = k;
+			//lNode_I = Grid_Project( *grid, ijk );
+			Mesh_GlobalToDomain( feMesh, MT_VERTEX, Grid_Project( *grid, ijk ), &lNode_I );
+			prevCoord = feMesh->verts[lNode_I][J_AXIS];
+			for( j = 1; j < (*grid)->sizes[J_AXIS]; j++ ) {
+				ijk[J_AXIS] = j;
+				//lNode_I = Grid_Project( *grid, ijk );
+				Mesh_GlobalToDomain( feMesh, MT_VERTEX, Grid_Project( *grid, ijk ), &lNode_I );
+				if( prevCoord >= feMesh->verts[lNode_I][J_AXIS] )
+					okay = False;
+				prevCoord = feMesh->verts[lNode_I][J_AXIS];	
+			}
+		}
+	}
+	pcu_check_true( okay );
+
+	/* z-axis test */
+	okay = True;
+	for( j = 0; j < (*grid)->sizes[J_AXIS]; j++ ) {
+		for( k = 0; k < (*grid)->sizes[K_AXIS]; k++ ) {
+			ijk[I_AXIS] = 0;
+			ijk[J_AXIS] = j;
+			ijk[K_AXIS] = k;
+			//lNode_I = Grid_Project( *grid, ijk );
+			Mesh_GlobalToDomain( feMesh, MT_VERTEX, Grid_Project( *grid, ijk ), &lNode_I );
+			prevCoord = feMesh->verts[lNode_I][I_AXIS];
+			for( i = 1; i < (*grid)->sizes[I_AXIS]; i++ ) {
+				ijk[I_AXIS] = i;
+				//lNode_I = Grid_Project( *grid, ijk );
+				Mesh_GlobalToDomain( feMesh, MT_VERTEX, Grid_Project( *grid, ijk ), &lNode_I );
+				if( prevCoord >= feMesh->verts[lNode_I][I_AXIS] )
+					okay = False;
+				prevCoord = feMesh->verts[lNode_I][I_AXIS];	
+			}
+		}
+	}
+	pcu_check_true( okay );
+
+	stgMainDestroy( cf );
+}
+
+void FieldVariableSurfaceAdaptorSuite( pcu_suite_t* suite ) {
+   pcu_suite_setData( suite, FieldVariableSurfaceAdaptorSuiteData );
+   pcu_suite_setFixtures( suite, FieldVariableSurfaceAdaptorSuite_Setup, FieldVariableSurfaceAdaptorSuite_Teardown );
+   pcu_suite_addTest( suite, FieldVariableSurfaceAdaptorSuite_Test );
+   pcu_suite_addTest( suite, FieldVariableSurfaceAdaptorSuite_MeshAdaptionTest );
+}
+
+

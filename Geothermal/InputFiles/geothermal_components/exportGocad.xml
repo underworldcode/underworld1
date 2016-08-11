@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<list name="plugins" mergeType="merge">
+                <struct>
+                        <param name="Type">Geothermal_GOCADOutput</param>
+                        <param name="Context">context</param>
+                        <param name="TemperatureField">TemperatureField</param>
+                        <param name="Swarm">picIntegrationPoints</param>
+                        <param name="MaterialManager">diffusionMaterial</param>
+			<param name="enabled">True</param>
+                </struct>
+	</list>
+
+</StGermainData>

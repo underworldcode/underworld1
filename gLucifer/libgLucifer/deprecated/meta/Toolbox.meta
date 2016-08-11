@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<!-- Note: suffixing the name by "_Toolbox" is important here! -->
+<param name="Name">gLucifer_Toolbox</param>
+<param name="Author">...</param>
+<param name="Organisation">Monash University</param>
+<param name="Project">gLucifer</param>
+<param name="Location">gLucifer/libgLucifer/Toolbox</param>
+<param name="Project Web">http://www.stgermainproject.org/gLucifer.html</param>
+<param name="Copyright">Copyright (C) 2004-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License v2.1 - http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</param>
+<param name="Parent">StgDomain</param>
+<param name="Summary">...</param>
+<param name="Description">gLucifer Toolbox</param>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Type">StgDomain</param>
+		<param name="Name">StgDomain</param>
+		<param name="Essential">True</param>
+		<param name="Description">StgDomain is required</param>
+	</struct>
+</list>
+
+</StGermainData>

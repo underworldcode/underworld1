@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<list name="FieldVariablesToCheckpoint" mergeType="merge">
+		<param> TemperatureField </param>
+		<param> phiDotField </param>
+	</list>
+
+	<include>Geothermal/GeothermalComponents/aField.xml</include>
+
+	<struct name="components" mergeType="merge">
+		<struct name="sVector">
+			<param name="Type">SolutionVector</param>
+			<param name="FeVariable">TemperatureField</param>
+		</struct>
+		
+		<struct name="fVector">
+			<param name="Type">BlockSubRHSVector</param>
+			<param name="FeVariable">TemperatureField</param>
+			<list name="operators">
+				<struct>
+					<param name="opType">flux_iU</param>
+					<param name="BorderSwarm">gaussBorderSwarm</param>
+					<param name="value_y">-0.065</param>
+					<param name="NeumannBoundary_bottom">true</param>
+				</struct>
+			</list>
+		</struct>
+
+		<struct name="diffusionMaterial">
+			<param name="Type">BuoyancyMaterial</param>
+			<param name="Swarm">picIntegrationPoints</param>
+		</struct>
+		<struct name="kMatrix">
+			<param name="Type">BlockSubMatrix</param>
+			<param name="RowVariable">TemperatureField</param>
+			<param name="ColumnVariable">TemperatureField</param>	
+			<param name="RHS">fVector</param>
+			<param name="allowZeroElementContributions">True</param>
+			<list name="operators">
+				<struct>
+					<param name="opType">a_F_D_iD_jU</param>
+					<param name="Swarm">picIntegrationPoints</param>
+					<param name="Function">diffusionFromMaterial</param>
+					<param name="BuoyancyMaterial">diffusionMaterial</param>
+					<param name="a">aField</param>
+				</struct>
+			</list>
+		</struct>
+
+		<struct name="LaplacesEqn">
+			<param name="Type">SLE</param>
+			<param name="Context">context</param>
+			<list name="solutionVectorEntries">
+				<param>S_0</param><param>sVector</param>
+			</list>
+			<list name="bsRHSVectorEntries">
+				<param>F_0</param><param>fVector</param>
+			</list>
+			<list name="systemOfEquationsMatrixEntries">
+				<param>A_00</param><param>kMatrix</param>
+			</list>
+			<param name="solverType">linear</param>
+		</struct>
+	</struct>
+
+</StGermainData>

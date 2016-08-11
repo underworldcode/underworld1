@@ -1,0 +1,710 @@
+=========================================
+Mercurial commits made during CREDO 0.1.1
+=========================================
+
+changeset:   268:9476fdce23ff
+tag:         tip
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 15:48:09 2010 +1000
+files:       doc/examples/run-modify-systest-direct.rst
+description:
+Updated the section about running and modifying system tests directly, to
+take into account recent interface changes.
+
+
+changeset:   267:1467e9ae6398
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 15:47:35 2010 +1000
+files:       doc/examples/configure-scibenchmark.rst
+description:
+Updated the sci benchmark example with correct include location.
+
+
+changeset:   266:3f815252406d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 15:00:04 2010 +1000
+files:       uwa/systest/api.py uwa/systest/systestrunner.py
+description:
+Updating a couple of references in docstrings.
+
+
+changeset:   265:8bef8689d24d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 13:24:33 2010 +1000
+files:       doc/index.rst doc/uwa-whatsnew.rst
+description:
+Added a "what's new" section summarising major changes in each version.
+
+changeset:   264:f62178c8530c
+tag:         tip
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 12:34:06 2010 +1000
+files:       doc/examples/run-modify-systest-direct.rst doc/examples/run-systest-scons.rst
+description:
+A little more docs about system test example updates.
+
+
+changeset:   263:8b39a2d65a8b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 12:21:13 2010 +1000
+files:       doc/examples/SConsOutput/scons-PICellerator-suite.txt doc/examples/run-modify-systest-direct.rst doc/examples/run-systest-scons.rst doc/examples/run-systest.rst doc/uwa-examples.rst
+description:
+Updated the UWA Docs about system tests:
+ - Separated the Systest section into part about running via SCons, versus
+   part about running directly, and added description and examples of the
+   former.
+
+
+changeset:   262:6cb9409116ea
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 11:25:03 2010 +1000
+files:       doc/uwa-install.rst
+description:
+Updated install docs with new SCons info.
+
+
+changeset:   261:d2a4bb33bc6a
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 27 10:29:20 2010 +1000
+files:       scons/uwasystest.py
+description:
+Removed the temporary Touch command in UWA SCons, as now summary files are
+being created properly.
+
+
+changeset:   260:00185ef991d2
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 26 16:19:11 2010 +1000
+files:       uwa/systest/api.py uwa/systest/systestrunner.py
+description:
+Added some printing of XML info for the SysTestRunner, so we have a record that
+Bitten can parse.
+
+
+changeset:   259:9d3d0c5b056f
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 26 16:18:43 2010 +1000
+files:       uwa/systest/tests/systestrunnersuite.py
+description:
+Added a runPath setting for the skelTest systestrunner suite, so it works.
+
+
+changeset:   258:c23da9b76f06
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 26 14:52:56 2010 +1000
+files:       scons/testAll.py
+description:
+Removed testAll.py script in SCons, since functionality already integrated
+into other modules (uwa.systest, and SCons file).
+
+
+changeset:   257:39ef71e88a7c
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 26 14:45:38 2010 +1000
+files:       uwa/systest/fieldCvgWithScaleTest.py
+description:
+Updated the fieldCvgWithScaleTest, so it prints the CVG info for fields that
+ don't have a criterion applied, even if it can't formally test them.
+
+
+changeset:   256:74d525a39c16
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 22 21:14:01 2010 +1000
+files:       scons/uwasystest.py
+description:
+Adding to UWA SCons:
+ - Now finds StGermain as a dependency of running any system test suite,
+  and requires it be re-built first.
+ - Is able to install the Pyc files for the system tests into the distribution.
+
+
+changeset:   255:0a12ecaaa763
+parent:      254:aa9df567d0b0
+parent:      251:99b23a0bcbdb
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 22 18:05:55 2010 +1000
+description:
+uwa merge.
+
+
+changeset:   254:aa9df567d0b0
+parent:      253:1ec8ed419dc8
+parent:      249:8a884b24ecdf
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 22 17:47:59 2010 +1000
+description:
+Merge.
+
+
+changeset:   253:1ec8ed419dc8
+parent:      252:4d9cb04c8eb4
+parent:      245:1b47a8181c54
+user:        JulianGiordani
+date:        Wed Jul 21 10:10:37 2010 +1000
+files:       uwa/systest/fieldCvgWithScaleTest.py
+description:
+merge
+
+
+changeset:   252:4d9cb04c8eb4
+parent:      204:349629e85104
+user:        JulianGiordani
+date:        Wed Jul 21 10:10:03 2010 +1000
+files:       uwa/systest/fieldCvgWithScaleTest.py
+description:
+Adding the expected convergence rates from the REP and SPR fields - currently with linear elements and no discontinuities inside the elements the convergence test will pass if the convergence rates is > 1.6 and the correlation is > 0.99
+
+
+changeset:   251:99b23a0bcbdb
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 22 17:37:01 2010 +1000
+files:       scons/uwasystest.py
+description:
+Updated the SCons toolkit of UWA to allow using summary features:
+ * The RunSuites builder allows running a set of suites, and printing a
+ full summary. (TODO next is get it to output an XML file).
+ * New targets set up to add various types of test:- that update master
+ lists of suites, and also set up individual suite targets.
+
+
+changeset:   250:c5ae49512a4f
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 22 15:44:26 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+New function to run a set of sys test suites, given the name of the Python
+modules the suites reside within.
+
+
+changeset:   249:8a884b24ecdf
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 22 14:42:29 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Get the SysTestRunner to return to your original starting directory.
+
+
+changeset:   248:88f070481b63
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 21 16:58:52 2010 +1000
+files:       scons/testAll.py
+description:
+Added a testAll.py script: a work-in-progress towards being able to import
+an arbitrary set of test modules, and run via SCons. Needs to be fully
+integrated.
+
+
+changeset:   247:b92c90144d70
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 21 15:13:15 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Just added extra heading line to testrunner multi-suite print.
+
+
+changeset:   246:f4113b70f628
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 21 13:43:11 2010 +1000
+files:       scons/uwasystest.py
+description:
+Moved help function about testing here.
+
+
+changeset:   245:1b47a8181c54
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 21 09:26:07 2010 +1000
+files:       scons/uwasystest.py
+description:
+Updated the UWA SCons stuff to prepend the UWA directories onto PATH and
+PYTHONPATH, just to be safe in case the user has set these to own values:-
+we want SCons to control which to use in this case.
+
+
+changeset:   244:748d580e3c20
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 21 09:15:03 2010 +1000
+files:       scons/uwasystest.py
+description:
+After poring through SCons manual, have worked out how to set external
+environment variables properly: use the env['ENV'] dictionary.
+
+This updated the UWA Scons stuff so these variables are set, meaning you
+can run "scons check" commands without having to pre-load anything for UWA
+in your own shell and it'll work.
+
+
+changeset:   243:896758e200d7
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 20:02:58 2010 +1000
+files:       uwa/systest/api.py uwa/systest/systestrunner.py
+description:
+Updated the SysTestSuite and SysTestRunner to have a basic ability to run tests
+when invoked from another directory (by saving the original added path in
+addStdTest).
+
+Works for now but need to make consinstent across modelRuns etc.
+
+
+changeset:   242:9e02530716ad
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 19:52:03 2010 +1000
+files:       uwa/systest/api.py
+description:
+The addStdTest function of test suites now does some checking to handle standard
+ paths of XML files, and relative paths.
+
+
+changeset:   241:6571fea3637c
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 19:50:22 2010 +1000
+files:       uwa/io/stgpath.py uwa/io/tests/stgpathsuite.py
+description:
+- Added stgpath functions to update XML locations to be relative.
+- Added a basic unit test suite for stgpath.
+
+
+changeset:   240:a2d95ecb12f8
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 18:12:43 2010 +1000
+files:       uwa/io/tests/testAll.py
+description:
+A test for all IO tests in uwa.io.tests
+
+
+changeset:   239:02f866b8b74f
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 16:51:33 2010 +1000
+files:       scons/uwasystest.py
+description:
+Removing pdb imports from scons check.
+
+
+changeset:   238:2177bcc0e753
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 16:47:23 2010 +1000
+files:       uwa/systest/api.py uwa/systest/tests/systestsuitesuite.py
+description:
+Added a short-hand method for creating sub-suites.
+
+
+changeset:   237:05d0a6bc74d9
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 16:23:03 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Cleaned up some docstrings.
+
+
+changeset:   236:b382b04f8292
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 16:16:11 2010 +1000
+files:       uwa/systest/systestrunner.py uwa/systest/tests/systestrunnersuite.py
+description:
+Added a runSuites method, that runs a whole group of suites.
+
+
+changeset:   235:d7d521082148
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 15:15:10 2010 +1000
+files:       scons/uwasystest.py uwa/systest/api.py uwa/systest/systestrunner.py uwa/systest/tests/systestrunnersuite.py uwa/systest/tests/systestsuitesuite.py uwa/systest/tests/testAll.py
+description:
+- Added ability for sub-suites in SysTestSuite
+- Added handling of this to SysTestRunner, and improved printed summaries.
+
+
+changeset:   234:ffe05fedb87b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 12:00:05 2010 +1000
+files:       uwa/systest/api.py uwa/systest/systestrunner.py uwa/systest/tests/systestrunnersuite.py uwa/systest/tests/systestsuitesuite.py
+description:
+Updated UWA System testing:
+ * Added a new class, SysTestSuite, to handle an aggregated set of SysTests
+   (Largely following design of Python unittest (PyUnit))
+ * Updated the SysTestRunner suite so it can operate with this class.
+
+
+changeset:   233:540e3e716aee
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 20 11:58:05 2010 +1000
+files:       doc/examples/configure-scibenchmark.rst
+description:
+Updated an include path of RayTay benchmakring script.
+
+
+changeset:   232:9386ce6decef
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 17:02:55 2010 +1000
+files:       uwa/systest/tests/skeletonSysTest.py uwa/systest/tests/systestrunnersuite.py
+description:
+Improving the tests for systestrunner.
+
+
+changeset:   231:b1e37904e157
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 17:02:10 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Marginal improvement to printing from systestrunner.py
+
+
+changeset:   230:5b18bb70df8c
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:49:27 2010 +1000
+files:       uwa/systest/tests/systestrunnersuite.py uwa/systest/tests/testAll.py
+description:
+* A new unit test for the systestrunnersuite
+* A testAll.py for the uwa/systests dir.
+
+
+changeset:   229:ebc4675f2884
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:39:39 2010 +1000
+files:       uwa/systest/tests/skeletonSysTest.py
+description:
+Needed fix to skeleton sys test.
+
+
+changeset:   228:e022ad1d4c1e
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:39:01 2010 +1000
+files:       uwa/systest/tests/systestapisuite.py
+description:
+Added another systest to the API suite.
+
+
+changeset:   227:ae5ea514f085
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:35:45 2010 +1000
+files:       uwa/systest/api.py
+description:
+Basename of XMLs in test naming.
+
+
+changeset:   226:072d11e17760
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:07:24 2010 +1000
+files:       uwa/systest/api.py
+description:
+- static methods of test results
+- adding an assertion check on test naming function.
+
+
+changeset:   225:e69d95b153db
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:06:18 2010 +1000
+files:       uwa/systest/tests/testAll.py
+description:
+Test all for this package.
+
+
+changeset:   224:bddeda518290
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:06:04 2010 +1000
+files:       uwa/systest/tests/systestapisuite.py
+description:
+new simple tests of sys test api.
+
+
+changeset:   223:6194d09b88ab
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:05:40 2010 +1000
+files:       uwa/systest/tests/analytictestsuite.py
+description:
+Minor formatting change to analytictestsuite.py
+
+
+changeset:   222:c508c1a09b2d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 19 16:04:05 2010 +1000
+files:       uwa/systest/tests/input/TempDiffusion.xml uwa/systest/tests/skeletonSysTest.py uwa/systest/tests/systestrunnersuite.py
+description:
+Initial work on a systestrunner suite.
+
+
+changeset:   221:abb8cdacfed1
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 15 12:37:08 2010 +1000
+files:       scons/uwasystest.py
+description:
+Moved the System test-controlling SCons commands into UWA, from PCU.
+
+
+changeset:   220:9a483a980c64
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 15 10:59:31 2010 +1000
+files:       uwa/systest/api.py
+description:
+Re-ordered some parameter setting in SysTest constructor to fix a bug (if user
+gives just a single string, rather than a list).
+
+
+changeset:   219:3b65fb5f16b7
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 14 16:18:39 2010 +1000
+files:       doc/uwa-install.rst
+description:
+Updated the install docs to account for new environment variables.
+
+
+changeset:   218:3c47ab716357
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 14 16:07:11 2010 +1000
+files:       uwa/io/stgpath.py uwa/modelrun.py uwa/systest/api.py
+description:
+* Added new functions in uwa.io.stgpath to check if input files exist in the
+StGermain standard paths.
+* Got the ModelRun and SysTest to use this function to check the input files
+specified by the user do actually exist.
+
+
+changeset:   217:68117908ea95
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 14 09:47:39 2010 +1000
+files:       uwa/io/stgpath.py
+description:
+Added an io/stgpath module, for common manipulations of StGermain-related
+paths needed.
+
+
+changeset:   216:b929456f2984
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 14 09:46:37 2010 +1000
+files:       uwa/modelrun.py uwa/modelsuite.py uwa/systest/systestrunner.py
+description:
+SysTest runner now cleans all log files before running (involved small refactor
+of log capabilities to make cleaner).
+
+
+changeset:   215:f169e3cbe430
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Jul 14 09:32:59 2010 +1000
+files:       uwa/modelrun.py
+description:
+Added a printout of where the stdout and stderr logs were saved to after
+a model run.
+
+
+changeset:   214:12a55489eceb
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 13 19:26:09 2010 +1000
+files:       doc/api/io.rst uwa/modelrun.py uwa/modelsuite.py uwa/systest/analytic.py uwa/systest/analyticMultiRes.py uwa/systest/api.py uwa/systest/reference.py uwa/systest/restart.py uwa/systest/scibenchmark.py uwa/systest/systestrunner.py uwa/utils.py
+description:
+Updates to naming of system tests, and also logging:
+ - Log files are now properly written of the model's stdout and stderr. Current
+   default location is the "log" sub-directory.
+ - SysTests are now named the same way the output path is named, that is
+   with number of processors and suffix set correctly.
+ - Removed duplicat stuff from uwa.utils.
+
+
+changeset:   213:e426cab7d57d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Jul 13 16:01:26 2010 +1000
+files:       uwa/analysis/fields.py uwa/io/stgxml.py uwa/modelrun.py uwa/utils.py
+description:
+Refactor: moved some path-related stuff from uwa.utils into uwa.io.stgpath
+(Neater, and allows expanding on this stuff in future).
+
+
+changeset:   212:ece9ad957c66
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 12 16:43:09 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Adding the ability to specify a suffix to use for SysTest output dirs when
+adding via the SysTestRunner's addStdTest method.
+
+This is useful for e.g. saving all "rep" versions of tests with a particular
+suffix.
+
+
+changeset:   211:d2b938bc4674
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 12 16:26:25 2010 +1000
+files:       uwa/systest/analytic.py uwa/systest/analyticMultiRes.py uwa/systest/api.py uwa/systest/reference.py uwa/systest/restart.py uwa/systest/scibenchmark.py
+description:
+Updated the SysTests to refactor creation of ModelRun objects into a helper
+function on the SysTest base class: to save updating the interface so much.
+
+
+changeset:   210:7b9487497657
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 12 16:09:38 2010 +1000
+files:       uwa/modelrun.py
+description:
+Fixed some docs things.
+
+
+changeset:   209:63807b1dddea
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 12 16:00:00 2010 +1000
+files:       uwa/modelrun.py uwa/systest/analytic.py uwa/systest/analyticMultiRes.py uwa/systest/api.py uwa/systest/fieldCvgWithScaleTest.py uwa/systest/fieldWithinTolTest.py uwa/systest/reference.py uwa/systest/restart.py uwa/systest/scibenchmark.py
+description:
+Some small refactorings:
+ - added a "solverOpts" parameter to the ModelRun, that allows you to specify
+ (and auto-record) a filename of PETSc options that should be used.
+ - changed the "analysis" parameter name in the ModelRun to "analysisOps".
+
+
+changeset:   208:7d75d3606263
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 08 19:20:08 2010 +1000
+files:       doc/conf.py
+description:
+Got rid of the unnecessary hard-coded absoulute path in Uwa doc conf.py
+
+
+changeset:   207:90da243ed0c9
+parent:      206:d7571f93e6ba
+parent:      205:babf03120bec
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 08 19:13:26 2010 +1000
+description:
+Merging uwa.
+
+
+changeset:   206:d7571f93e6ba
+parent:      204:349629e85104
+user:        JericoRevote
+date:        Thu Jul 08 18:14:26 2010 +1000
+files:       doc/conf.py
+description:
+Commenting these other sphinx extensions that aren't currently needed
+and aren't currently working on shinkou.
+Pat to review them later on.
+
+
+changeset:   205:babf03120bec
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 08 19:09:39 2010 +1000
+files:       uwa/systest/analytic.py uwa/systest/reference.py uwa/systest/restart.py uwa/systest/systestrunner.py
+description:
+Updated the Systests to allow user to specify a different default tolerance
+for fields from the constructor (and updated API documentation on this).
+
+
+changeset:   204:349629e85104
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 18:50:52 2010 +1000
+files:       uwa/systest/fieldCvgWithScaleTest.py
+description:
+Removed a note from the docs that's no longer relevant.
+
+
+changeset:   203:76d7244ca70e
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 18:45:56 2010 +1000
+files:       doc/publishToDropbox.sh
+description:
+Dropbox publishing script.
+
+
+changeset:   202:5b8d0047ce82
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 18:06:26 2010 +1000
+files:       uwa/systest/fieldCvgWithScaleTest.py uwa/systest/tests/fieldcvgwithscaletestsuite.py
+description:
+Refactored the behaviour of fieldCvgTests slightly, to be able to skip
+fields that don't have a cvg criterion provided. This follows behaviour
+of existing SYS testing system.
+
+Also made the interface a little more modular.
+
+
+changeset:   201:0d3d753b0c31
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 15:20:02 2010 +1000
+files:       doc/uwa-architecture.rst
+description:
+Minor URL fixup.
+
+
+changeset:   200:c89bcfc9e7ac
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 15:07:40 2010 +1000
+files:       uwa/analysis/fields.py uwa/modelrun.py
+description:
+Updated the Field Comparison XML stuff:
+ - Even if using "fromXML" mode, it writes down XML commands in Analysis file
+    necessary to ensure the comparison output is actually written to disk.
+    (And thus necessary for testing).
+Updated the cpFieldsList control of field checkpointing to use merge mode,
+ instead of replace.
+
+
+changeset:   199:9eed726b7004
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 15:05:22 2010 +1000
+files:       uwa/io/stgxml.py
+description:
+Minor reformatting.
+
+
+changeset:   198:e41af14b37fe
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 12:24:17 2010 +1000
+files:       uwa/systest/reference.py
+description:
+* Fixed a bug in the reference SysTest where paramOverrides weren't being
+passed through to the ModelRun properly.
+* Added ability to override the prefix of the expected soln path for
+  reference checking.
+
+
+changeset:   197:849a2bcf6f89
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 12:21:05 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Sorted the param overrideds when determining output path name.
+
+
+changeset:   196:d290266c4a14
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 11:25:54 2010 +1000
+files:       uwa/analysis/fields.py uwa/systest/fieldCvgWithScaleTest.py
+description:
+Adding in some checking wrt fieldComparisons, that the XML actually has
+appending to analysis files enabled properly.
+
+
+changeset:   195:a93296d66489
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 11:25:06 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Added ability of systestrunner addStdTest function to handle a single string
+XML Input file argument, rather than a list.
+
+
+changeset:   194:a7f6ef50a82b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 11:24:10 2010 +1000
+files:       uwa/io/stgxml.py
+description:
+Added a function to convert strings to bools, in the same way StGermain does.
+
+
+changeset:   193:2620561909b6
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Jul 05 09:36:33 2010 +1000
+files:       doc/examples/run-systest.rst
+description:
+Updating an include in UWA docs for filename change.
+
+
+changeset:   192:31b06133eec6
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 01 16:55:46 2010 +1000
+files:       uwa/systest/systestrunner.py
+description:
+Updated the systest runner to append canonical versions of param overrides
+to directory names, to reduce chance of collisions in output dirs.
+
+
+changeset:   191:fe5181d07bff
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Jul 01 11:25:17 2010 +1000
+files:       doc/uwa-intro.rst
+description:
+Updated the Intro doc to make some links "live".

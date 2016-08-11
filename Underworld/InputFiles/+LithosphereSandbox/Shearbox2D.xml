@@ -1,0 +1,592 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<list name="import">
+		<param> Experimental </param>
+	</list>
+
+	<!-- <include> Underworld/BaseApps/ExtensionBaseApp.xml </include> -->
+
+	<include> Underworld/BaseApps/ShearXYBaseApp.xml </include>
+	<include> Underworld/REP_Setup.xml </include>
+	<include> Underworld/VariableConditions/velocityBCs.shear2D.xml </include> 
+	
+	
+
+	<list name="plugins" mergeType="merge">
+	
+		<struct>
+			<param name="Type">StgFEM_FrequentOutput</param>	
+			<param name="Context">context</param>
+		</struct>
+		<struct>
+			<param name="Type">Underworld_Vrms</param>	
+			<param name="Context">context</param>
+			<param name="GaussSwarm">gaussSwarm</param>
+			<param name="VelocityField">VelocityField</param>
+		</struct>
+		<struct>
+			<param name="Type">Underworld_MaxVelocity</param>	
+			<param name="Context">context</param>
+			<param name="GaussSwarm">gaussSwarm</param>
+			<param name="VelocityField">VelocityField</param>
+		</struct>
+		<struct>
+			<param name="Type">StgFEM_CPUTime</param>	
+			<param name="Context">context</param>
+		</struct>
+		<struct>
+         	<param name="Type">Experimental_REPViscoelasticAware</param>
+         	<param name="Context">context</param>
+     	</struct>
+		<struct>
+         	<param name="Type">StgFEM_SwarmVariableList</param>
+         	<param name="Context">context</param>
+     	</struct>
+	</list>
+
+
+
+	<struct name="components" mergeType="merge">
+		
+		<struct name="default_scaling">
+		      <param name="Type">Scaling</param>
+		      <!--	<param name="spaceCoefficient_meters"> 1.0e+6 </param>
+					<param name="timeCoefficient_seconds"> 3.3000033e-5 </param>
+					<param name="massCoefficient_kilograms"> 3.3000033e+21 </param>
+					<param name="temperatureCoefficient_kelvin"> 1 </param>  -->
+		      <param name="spaceCoefficient_meters"> 1.0 </param>
+		      <param name="timeCoefficient_seconds"> 1.0 </param>
+		      <param name="massCoefficient_kilograms"> 1.0 </param>
+		      <param name="temperatureCoefficient_kelvin"> 1.0 </param>
+		    </struct> 
+	
+		<!-- The Ppc Manager-->
+		
+ 		<struct name="default_ppcManager">
+		  <param name="Type">PpcManager</param>
+		  <param name="MaterialSwarm"> materialSwarm </param>
+		  <param name="IntegrationSwarm"> picIntegrationPoints </param>
+		  <param name="Mesh"> linearMesh </param>
+		  <param name="Gravity"> 0.0 </param>
+		  <list name="Properties">
+		    <struct>
+		      <param name="PropertyName"> DensityLabel </param>
+		      <param name="StoreOnParticles"> True </param>
+		      <param name="StoreOnMesh"> True </param>
+		    </struct>
+		  </list>
+		</struct>
+	
+	
+		<struct name="MaterialRepresentationField">
+			<param name="Type">SwarmVariableField</param> 
+			<param name="swarmVariable">materialSwarm-MaterialIndex</param>
+			<param name="MaterialSwarm">materialSwarm</param>
+			<param name="Swarm">picIntegrationPoints</param>
+			<param name="Mesh">linearMesh</param>
+		</struct>
+	
+		<struct name="PostFailureWeakeningField">
+			<param name="Type">SwarmVariableField</param>
+			<param name="swarmVariable">materialSwarm-PostFailureWeakening</param>
+			<param name="MaterialSwarm">materialSwarm</param>
+			<param name="Swarm">picIntegrationPoints</param>
+			<param name="Mesh">linearMesh</param>
+		</struct>
+
+		<struct name="HasYieldedField">
+			<param name="Type">SwarmVariableField</param>
+			<param name="swarmVariable">materialSwarm-HasYielded</param>
+			<param name="MaterialSwarm">materialSwarm</param>
+			<param name="Swarm">picIntegrationPoints</param>
+			<param name="Mesh">linearMesh</param>
+		</struct>
+
+		<!-- this ensures that materialSwarm-Viscosity is created -->
+		<struct name="storeVisc">
+			<param name="Type"> StoreVisc </param>
+			<param name="MaterialPointsSwarm">materialSwarm</param>
+		</struct>
+		
+		<struct name="ViscosityField">
+			<param name="Type">SwarmVariableField</param>
+			<param name="swarmVariable">materialSwarm-Viscosity</param>
+			<param name="MaterialSwarm">materialSwarm</param>
+			<param name="Swarm">picIntegrationPoints</param>
+			<param name="Mesh">linearMesh</param>
+		</struct>
+
+		
+		<!-- Shape Stuff -->
+		<struct name="backgroundShape">
+				<param name="Type">Box</param>
+				<param name="startX"> minX </param> <param name="endX"> maxX </param>
+				<param name="startY"> minY </param> <param name="endY"> maxY </param>
+				<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>	
+		
+		<struct name="substrateShape">
+			<param name="Type">Box</param>
+			<param name="startX"> minX </param> <param name="endX"> maxX </param>
+			<param name="startY"> minY </param>  <param name="endY"> 0.5 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+
+		<struct name="shearBlockShape1">
+			<param name="Type">Box</param>
+			<param name="startX"> minX </param> <param name="endX"> maxX </param>
+			<param name="startY"> 0.9 </param>  <param name="endY"> 1.0 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+
+		<struct name="shearBlockShape2">
+			<param name="Type">Box</param>
+			<param name="startX"> minX </param> <param name="endX"> maxX </param>
+			<param name="startY"> 0.0 </param>  <param name="endY"> 0.1 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="shearBlockToothShape1">
+			<param name="Type">Box</param>
+			<param name="startX"> -1.0 </param> <param name="endX"> -0.8 </param>
+			<param name="startY"> 0.0 </param>  <param name="endY"> 0.15 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="shearBlockToothShape2">
+			<param name="Type">Box</param>
+			<param name="startX"> 0.0 </param> <param name="endX">  0.2 </param>
+			<param name="startY"> 0.0 </param>  <param name="endY"> 0.15 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="shearBlockToothShape3">
+			<param name="Type">Box</param>
+			<param name="startX"> 1.0 </param> <param name="endX">  1.2 </param>
+			<param name="startY"> 0.0 </param>  <param name="endY"> 0.15 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+				
+		<struct name="shearBlockToothShape4">
+			<param name="Type">Box</param>
+			<param name="startX"> -1.2 </param> <param name="endX"> -1.0 </param>
+			<param name="startY"> 0.85 </param>  <param name="endY"> 1.0 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="shearBlockToothShape5">
+			<param name="Type">Box</param>
+			<param name="startX"> -0.2 </param> <param name="endX">  0.0 </param>
+			<param name="startY"> 0.85 </param>  <param name="endY"> 1.0 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="shearBlockToothShape6">
+			<param name="Type">Box</param>
+			<param name="startX"> 0.8 </param> <param name="endX">  1.0 </param>
+			<param name="startY"> 0.85 </param>  <param name="endY"> 1.0 </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		
+		
+		
+		<struct name="box">
+			<param name="Type">Box</param>
+			<param name="startX"> minX </param> <param name="endX"> maxX </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+
+		<struct name="paddingarea1">
+			<param name="Type">Box</param>
+			<param name="startX"> minX </param> <param name="endX"> -1.7 </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+
+		<struct name="paddingarea2">
+			<param name="Type">Box</param>
+			<param name="startX"> 1.7 </param> <param name="endX"> maxX </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		
+		<struct name="stripe1">
+			<param name="Type">Box</param>
+			<param name="startX"> -1.1 </param> <param name="endX"> -1.0 </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="stripe2">
+			<param name="Type">Box</param>
+			<param name="startX"> -0.6 </param> <param name="endX"> -0.5 </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="stripe3">
+			<param name="Type">Box</param>
+			<param name="startX"> 0.0 </param> <param name="endX"> 0.1 </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="stripe4">
+			<param name="Type">Box</param>
+			<param name="startX"> 0.5 </param> <param name="endX"> 0.6 </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+		<struct name="stripe5">
+			<param name="Type">Box</param>
+			<param name="startX"> 1.0 </param>  <param name="endX"> 1.1 </param>
+			<param name="startY"> minY </param> <param name="endY"> maxY </param>
+			<param name="startZ"> minZ </param> <param name="endZ"> maxZ </param>
+		</struct>
+		
+	
+				
+			
+		<!-- Weak notches -->		
+				
+		<struct name="weakNotchShape1">
+			<param name="Type">Box</param>
+			<param name="startX"> 0.4 </param>  <param name="endX"> 0.45 </param>
+			<param name="startY"> 0.3 </param>  <param name="endY"> 0.35 </param>
+			<param name="startZ"> 0.0 </param>  <param name="endZ"> maxZ </param>
+		</struct>	
+				
+		<struct name="weakNotchShape2">
+			<param name="Type">Box</param>
+			<param name="startX"> -0.45 </param> <param name="endX"> -0.4 </param>
+			<param name="startY"> 0.3 </param>   <param name="endY"> 0.35 </param>
+			<param name="startZ"> minZ </param>  <param name="endZ"> 0.0 </param>
+		</struct>	
+		
+		<struct name="weakNotchShape">
+			<param name="Type">Union</param>
+			<list name="shapes">
+				<param>weakNotchShape1</param>
+				<param>weakNotchShape2</param>
+			</list>
+		</struct>		
+					
+		<struct name="testSampleShape">
+			<param name="Type">Intersection</param>
+			<list name="shapes">
+				<param>box</param>
+				<!-- <param>!weakNotchShape</param> -->
+				<!-- <param>!weakSeedsShape</param> -->
+				<param>!weakZoneShape</param>
+			</list>
+		</struct>
+		
+		<struct name="testSampleStripesShape">
+			<param name="Type">Union</param>
+			<list name="shapes">
+				<param>stripe1</param>
+				<param>stripe2</param>
+				<param>stripe3</param>
+				<param>stripe4</param>
+				<param>stripe5</param>
+			</list>
+		</struct>
+				
+		<struct name="weakZoneShape">
+			<param name="Type">Union</param>
+			<list name="shapes">
+				<param>paddingarea1</param>
+				<param>paddingarea2</param>
+			</list>
+		</struct>	
+		
+		<struct name="sideBlocksShape">
+			<param name="Type">Union</param>
+			<list name="shapes">
+				<param>shearBlockShape1</param>
+				<param>shearBlockShape2</param>
+				<param>shearBlockToothShape1</param>
+				<param>shearBlockToothShape2</param>
+				<param>shearBlockToothShape3</param>
+				<param>shearBlockToothShape4</param>
+				<param>shearBlockToothShape5</param>
+				<param>shearBlockToothShape6</param>
+			</list>
+		</struct>	
+		
+				
+		<struct name="backgroundViscosity">
+			<param name="Type">MaterialViscosity</param>
+			<param name="eta0">1.0</param>
+		</struct>
+
+		<struct name="testSampleViscosity">
+			<param name="Type">MaterialViscosity</param>
+			<param name="eta0">100.0</param>
+		</struct>	
+		
+		<struct name="shearBlockViscosity">
+			<param name="Type">MaterialViscosity</param>
+			<param name="eta0">100.0</param>
+		</struct>	
+		
+		<struct name="weakZoneViscosity">
+			<param name="Type">MaterialViscosity</param>
+			<param name="eta0">10.0</param>
+		</struct>
+
+		<struct name="background">
+			<param name="Type">RheologyMaterial</param>
+			<param name="Shape">backgroundShape</param>
+			<param name="DensityLabel"> 0.0 </param>
+			<!-- <param name="Compressible">compressibility</param> -->
+			<list name="Rheology">
+				<param>backgroundViscosity  </param>
+			</list>
+		</struct>
+
+
+		<struct name="testSample">
+			<param name="Type">RheologyMaterial</param>
+			<param name="Shape">testSampleShape</param>
+			<param name="DensityLabel"> 1.0 </param>
+			<list name="Rheology">
+				<param>testSampleViscosity  </param>
+				<param>viscoelasticRheology </param>				
+				<param>DruckerPragerSNES</param>
+				<param>storeVisc</param>
+			</list>
+		</struct>
+		
+		<struct name="testSampleStripes">
+			<param name="Type">RheologyMaterial</param>
+			<param name="Shape">testSampleStripesShape</param>
+			<param name="DensityLabel"> 1.0 </param>
+			<list name="Rheology">
+				<param>testSampleViscosity  </param>
+				<param>viscoelasticRheology </param>				
+				<param>DruckerPragerSNES</param>
+				<param>storeVisc</param>
+			</list>
+		</struct>
+
+		<struct name="weakZone">
+			<param name="Type">RheologyMaterial</param>
+			<param name="Shape">weakZoneShape</param>
+			<param name="DensityLabel"> 1.0 </param>
+			<list name="Rheology">
+				<param>weakZoneViscosity     </param>
+				<param>storeVisc</param>
+			</list>
+		</struct>
+
+		<struct name="shearBlocks">
+			<param name="Type">RheologyMaterial</param>
+			<param name="Shape">sideBlocksShape</param>
+			<param name="DensityLabel"> 1.0 </param>
+			<list name="Rheology">
+				<param>shearBlockViscosity </param>
+				<!-- <param>viscoelasticRheology</param> -->
+				<!-- <param>DruckerPragerVEweak</param> -->
+				<param>storeVisc</param>
+			</list>
+		</struct>
+
+	
+		<!-- Viscoelasticity -->
+		
+		<struct name="viscoelasticForceTerm">
+				<param name="Type">ViscoelasticForceTerm</param>
+				<param name="ForceVector">mom_force</param>
+				<param name="Swarm">picIntegrationPoints</param>
+				<param name="ConstitutiveMatrix">constitutiveMatrix</param>
+				<param name="MaterialPointsSwarm">materialSwarm</param>
+				<param name="StrainRateField">StrainRateField</param>
+				<param name="VorticityField">VorticityField</param>
+				<param name="StoreVisc">storeVisc</param>
+				<param name="largeDef">True</param>
+				<param name="JaumannRotator">jaumannRotator</param>
+		</struct>
+		
+		<struct name="viscoelasticRheology">
+			<param name="Type">ViscoelasticRheology</param>
+			<param name="elasticTimeStep">1.0e-3</param>
+			<param name="mu">1.0e10</param>
+			<param name="ViscoelasticForceTerm">viscoelasticForceTerm</param>
+		</struct>	
+		
+		<struct name="jaumannRotator">
+				<param name="Type">JaumannRotator</param>
+				<param name="TimeIntegrator">timeIntegrator</param>
+				<param name="VorticityField">VorticityField</param>
+				<param name="MaterialPointsSwarm">materialSwarm</param>
+				<param name="allowFallBackToFirstOrder">True</param>
+			</struct>	
+			
+	
+		<!-- Unfortunately DP for SNES and Picard have different interfaces at the moment -->
+	
+		<struct name="DruckerPragerSNES">
+		  <param name="Type">DruckerPragerXXVE</param>
+		  <param name="StrainRateField">StrainRateField</param>
+		  <param name="PressureField">PressureField</param>
+		  <param name="MaterialPointsSwarm">materialSwarm</param>
+		  <param name="IntegrationSwarm">picIntegrationPoints</param>
+		  <param name="Context">context</param>
+		  <param name="cohesion">Cohesion</param>
+		  <param name="frictionCoeff">FrictionCoeff</param>
+		  <!-- Strain weakening is built in ! -->
+		  <param name="alpha">2.0</param>
+		  <param name="beta">0.0</param>
+		  <param name="kappa">0.8</param>
+		  <param name="alphaB">0.0</param>
+		  <param name="betaB">0.0</param>
+		  <param name="kappaB">1.0</param>
+		  <param name="ViscoelasticForceTerm">viscoelasticForceTerm</param>
+		  <param name="ViscoelasticRheology">viscoelasticRheology</param>
+		</struct>    
+	
+		<struct name="DruckerPragerVE">
+			<param name="Type">DruckerPragerVE</param>
+			<param name="ViscoelasticForceTerm">viscoelasticForceTerm</param>
+			<param name="ViscoelasticRheology">viscoelasticRheology</param>
+			<param name="StrainRateField">StrainRateField</param>
+			<param name="PressureField">PressureField</param>
+			<param name="MaterialPointsSwarm">materialSwarm</param>
+            <param name="IntegrationSwarm">picIntegrationPoints</param>
+            <param name="Context">context</param>
+            <param name="StrainWeakening">strainWeakening</param>
+            <param name="cohesion">Cohesion</param>
+            <param name="cohesionAfterSoftening">Cohesion2</param>
+            <param name="frictionCoefficient">FrictionCoeff</param>
+            <param name="frictionCoefficientAfterSoftening">FrictionCoeff2</param>
+            <param name="minimumViscosity">0.1</param>
+		</struct>
+
+		<struct name="DruckerPragerVEweak">
+			<param name="Type">DruckerPragerVE</param>
+			<param name="ViscoelasticForceTerm">viscoelasticForceTerm</param>
+			<param name="ViscoelasticRheology">viscoelasticRheology</param>
+			<param name="StrainRateField">StrainRateField</param>
+			<param name="PressureField">PressureField</param>
+			<param name="MaterialPointsSwarm">materialSwarm</param>
+            <param name="IntegrationSwarm">picIntegrationPoints</param>
+            <param name="Context">context</param>
+            <param name="StrainWeakening">strainWeakening</param>
+            <param name="cohesion">Cohesion</param>
+            <param name="cohesionAfterSoftening">Cohesion</param>
+            <param name="frictionCoefficient">0.0</param>
+            <param name="frictionCoefficientAfterSoftening">0.0</param>
+            <param name="minimumViscosity">0.1</param>
+		</struct>
+		
+		<struct name="strainWeakening">
+            <param name="Type">StrainWeakening</param>
+            <param name="TimeIntegrator">timeIntegrator</param>
+            <param name="MaterialPointsSwarm">materialSwarm</param>
+            <param name="softeningStrain">0.1</param>
+            <param name="initialDamageFraction">0.5</param>
+            <param name="initialDamageWavenumberCosI">0.25</param>
+            <param name="initialDamageWavenumberSinI">0.0</param>
+            <param name="initialDamageWavenumberCosJ">0.0</param>
+            <param name="initialDamageWavenumberSinJ">1.0</param>
+            <param name="initialDamageFactor">1.0</param>
+            <param name="healingRate">1.0</param>
+        </struct>
+   
+	<!-- Density and gravity based on ppc -->
+	    <struct type="struct" name="buoyancyForceTerm" mergeType="replace">
+	      <param name="Type">BuoyancyForceTermPpc</param>
+	      <param name="ForceVector">mom_force</param>
+	      <param name="DensityLabel">DensityLabel</param>
+	      <param name="Swarm">picIntegrationPoints</param>
+	      <param name="Manager">default_ppcManager</param>
+	    </struct> 
+		
+		<!-- /COMPONENTS -->		
+	</struct>
+	
+	<!-- Simulation control -->
+	<param name="maxTimeSteps"> 200000 </param>
+	<param name="outputPath"> ./output </param>
+	<param name="dumpEvery"> 1 </param>	
+	<param name="checkpointEvery"> 0 </param>
+	<param name="saveEvery"> 10 </param>
+	
+	<param name="FrictionCoeff">  0.0 </param>
+	<param name="FrictionCoeff2"> FrictionCoeff </param>
+	
+	
+
+	<!--   choose which field variables to save -->
+	<list name="FieldVariablesToSave">
+		<param>VelocityField</param>
+		<param>PressureField</param>
+		<param>StrainRateInvariantField</param>
+		<param>recoveredStrainRateInvariantField</param>
+		<param>recoveredDeviatoricStressInvariantField</param>
+		<param>recoveredPressureField</param>
+		<param>MaterialRepresentationField</param>
+		<param>PostFailureWeakeningField </param>
+		<param>HasYieldedField</param>
+		<param>ViscosityField</param>
+	</list> 
+	
+	<!--   choose which field variables to checkpoint -->
+	<list name="FieldVariablesToCheckpoint" mergeType="replace">
+		<param>VelocityField</param>
+		<param>PressureField</param>
+		<param>StrainRateInvariantField</param>
+		<param>recoveredStrainRateInvariantField</param>
+		<param>recoveredDeviatoricStressInvariantField</param>
+		<param>recoveredPressureField</param>
+		<param>MaterialRepresentationField</param>
+		<param>PostFailureWeakeningField </param>
+		<param>HasYieldedField</param>
+		<param>ViscosityField</param>
+	</list>  
+	
+
+	<!-- Non-linear stuff -->
+	<param name="nonLinearMaxIterations"> 500 </param>	
+	
+	<!-- Journal Control -->
+	<param name="journal.info.Context-verbose">True</param>
+	<param name="journal-level.info.Stg_ComponentFactory">2</param>
+	<param name="journal.debug">t</param>
+	<param name="journal-enable-branch.debug.StgFEM">t</param>
+	<param name="journal-level-branch.debug.StgFEM"> 2 </param>	
+	
+	<!-- Geometry & Mesh setup -->
+	<param name="dim"> 2 </param>
+	<param name="elementResI"> 64 </param>
+	<param name="elementResJ"> 32 </param>
+	<param name="elementResK"> 1 </param>
+	<param name="shadowDepth"> 1 </param>
+	<param name="minX"> -1.0 </param>
+	<param name="minY"> 0.0 </param>
+	<param name="minZ"> 0.0 </param>
+	<param name="maxX"> 1.0 </param>
+	<param name="maxY"> 1.0 </param>
+	<param name="maxZ"> 0.0 </param>
+	<param name="allowUnbalancing"> True </param>
+	
+	<param name="particlesPerCell"> 20 </param>
+	<param name="SeedBaseY"> 0.3 </param>
+	<param name="SeedTopY"> 0.3 </param>
+	<param name="SeedStartZ"> -0.05 </param>
+	<param name="SeedEndZ">    0.05 </param>
+	
+	<param name="timeIntegratorOrder">2</param>
+    
+
+	
+
+</StGermainData>

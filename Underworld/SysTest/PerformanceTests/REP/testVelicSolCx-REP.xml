@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <include>Underworld/REP_Setup.xml</include>
+
+   <struct name="components" mergeType="merge">
+      <struct name="AnalyticrecoveredStressField">
+         <param name="Type">AnalyticFeVariable</param>
+         <param name="NumericField">recoveredStressField</param>
+         <param name="Function">Underworld_Velic_solCx_StressFunction</param>
+      </struct>
+      <struct name="AnalyticrecoveredStressField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">AnalyticrecoveredStressField</param>
+      </struct>
+      <struct name="ErrorrecoveredStressField">
+         <param name="Type">ErrorFeVariable</param>
+         <param name="NumericField">recoveredStressField</param>
+         <param name="ConstantMesh">constantMesh</param>
+      </struct>
+      <struct name="ErrorrecoveredStressField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">ErrorrecoveredStressField</param>
+      </struct>
+      <struct name="AnalyticrecoveredPressureField">
+         <param name="Type">AnalyticFeVariable</param>
+         <param name="NumericField">recoveredPressureField</param>
+         <param name="Function">Underworld_Velic_solCx_PressureFunction</param>
+      </struct>
+      <struct name="AnalyticrecoveredPressureField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">AnalyticrecoveredPressureField</param>
+      </struct>
+      <struct name="ErrorrecoveredPressureField">
+         <param name="Type">ErrorFeVariable</param>
+         <param name="NumericField">recoveredPressureField</param>
+         <param name="ConstantMesh">constantMesh</param>
+      </struct>
+      <struct name="ErrorrecoveredPressureField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">ErrorrecoveredPressureField</param>
+      </struct>
+      <struct name="AnalyticrecoveredStrainRateField">
+         <param name="Type">AnalyticFeVariable</param>
+         <param name="NumericField">recoveredStrainRateField</param>
+         <param name="Function">Underworld_Velic_solCx_StrainRateFunction</param>
+      </struct>
+      <struct name="AnalyticrecoveredStrainRateField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">AnalyticrecoveredStrainRateField</param>
+      </struct>
+      <struct name="ErrorrecoveredStrainRateField">
+         <param name="Type">ErrorFeVariable</param>
+         <param name="NumericField">recoveredStrainRateField</param>
+         <param name="ConstantMesh">constantMesh</param>
+      </struct>
+      <struct name="ErrorrecoveredStrainRateField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">ErrorrecoveredStrainRateField</param>
+      </struct>
+      <struct name="FieldTest" mergeType="merge">
+         <list name="FieldMappings" mergeType="merge">
+            <struct>
+               <param name="NumericField">recoveredStressField</param>
+               <param name="AnalyticField">AnalyticrecoveredStressField</param>
+               <param name="AnalyticMagnitudeField">AnalyticrecoveredStressField-Mag</param>
+               <param name="ErrorField">ErrorrecoveredStressField</param>
+               <param name="ErrorMagnitudeField">ErrorrecoveredStressField-Mag</param>
+            </struct>
+            <struct>
+               <param name="NumericField">recoveredPressureField</param>
+               <param name="AnalyticField">AnalyticrecoveredPressureField</param>
+               <param name="AnalyticMagnitudeField">AnalyticrecoveredPressureField-Mag</param>
+               <param name="ErrorField">ErrorrecoveredPressureField</param>
+               <param name="ErrorMagnitudeField">ErrorrecoveredPressureField-Mag</param>
+            </struct>
+            <struct>
+               <param name="NumericField">recoveredStrainRateField</param>
+               <param name="AnalyticField">AnalyticrecoveredStrainRateField</param>
+               <param name="AnalyticMagnitudeField">AnalyticrecoveredStrainRateField-Mag</param>
+               <param name="ErrorField">ErrorrecoveredStrainRateField</param>
+               <param name="ErrorMagnitudeField">ErrorrecoveredStrainRateField-Mag</param>
+            </struct>
+         </list>
+      </struct>
+   </struct>
+</StGermainData>

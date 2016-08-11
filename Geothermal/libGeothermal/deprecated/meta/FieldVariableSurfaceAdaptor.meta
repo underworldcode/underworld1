@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">FieldVariableSurfaceAdaptor</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">Experimental</param>
+<param name="Location">./Experimental/Geothermal/src/</param>
+<param name="Project Web">http://www.stgermainproject.org/StgDomain.html</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License v2.1 - http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</param>
+<param name="Parent">MeshAdaptor</param>
+<param name="Summary">A type of MeshAdaptor that lets you modify the top surface of a mesh without altering the underlying layers.</param>
+<param name="Description"><p>SurfaceAdaptor is a type of MeshAdaptor.  It allows for the initial y-coordinate of every node NOT ON THE BOTTOM SURFACE to be changed according to a height map which is loaded in via a FeVariable</p>
+</param>
+
+<list name="Params">
+</list>
+
+<list name="Dependencies">
+</list>
+
+<param name="Example">
+<![CDATA[
+		<struct name="linearMesh-sineUpperSurface">
+			<param name="Type"> SurfaceAdaptor </param>
+			<param name="mesh"> linearMesh </param>
+			<param name="sourceGenerator"> linearMeshGenerator </param>
+			<param name="surfaceType"> wedge </param>
+			<param name="gradient"> 0.5 </param>
+			<param name="gradientZ"> 0.3 </param>
+		</struct>
+]]>
+</param>
+
+</StGermainData>

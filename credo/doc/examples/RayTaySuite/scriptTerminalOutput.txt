@@ -1,0 +1,111 @@
+> python credo-rayTaySuite.py 
+Running the 12 modelRuns specified in the suite
+Doing run 1/12 (index 0), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.02-gravity_0.7"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.02-gravity_0.7):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.02 --gravity=0.7 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 2/12 (index 1), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.02-gravity_0.8"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.02-gravity_0.8):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.02 --gravity=0.8 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 3/12 (index 2), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.02-gravity_0.9"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.02-gravity_0.9):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.02 --gravity=0.9 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 4/12 (index 3), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.02-gravity_1.0"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.02-gravity_1.0):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.02 --gravity=1.0 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 5/12 (index 4), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.04-gravity_0.7"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.04-gravity_0.7):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.04 --gravity=0.7 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 6/12 (index 5), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.04-gravity_0.8"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.04-gravity_0.8):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.04 --gravity=0.8 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 7/12 (index 6), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.04-gravity_0.9"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.04-gravity_0.9):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.04 --gravity=0.9 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 8/12 (index 7), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.04-gravity_1.0"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.04-gravity_1.0):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.04 --gravity=1.0 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 9/12 (index 8), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.07-gravity_0.7"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.07-gravity_0.7):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.07 --gravity=0.7 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 10/12 (index 9), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.07-gravity_0.8"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.07-gravity_0.8):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.07 --gravity=0.8 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 11/12 (index 10), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.07-gravity_0.9"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.07-gravity_0.9):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.07 --gravity=0.9 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Doing run 12/12 (index 11), of name 'RayTay-basic':
+ModelRun description: "lightLayerAmplitude_0.07-gravity_1.0"
+Generating analysis XML:
+Running the Model (saving results in output/raytay-suite/lightLayerAmplitude_0.07-gravity_1.0):
+Running model 'RayTay-basic' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --components.lightLayerShape.amplitude=0.07 --gravity=1.0 > logFile.txt' ...
+Model ran successfully.
+Doing post-run tidyup:
+Post-process result 0: with gravity=0.7, init perturbation=0.02
+	Maximum value of Vrms was 0.000204, at time 62
+Post-process result 1: with gravity=0.8, init perturbation=0.02
+	Maximum value of Vrms was 0.000262, at time 68
+Post-process result 2: with gravity=0.9, init perturbation=0.02
+	Maximum value of Vrms was 0.000295, at time 60
+Post-process result 3: with gravity=1, init perturbation=0.02
+	Maximum value of Vrms was 0.000365, at time 64
+Post-process result 4: with gravity=0.7, init perturbation=0.04
+	Maximum value of Vrms was 0.000450, at time 66
+Post-process result 5: with gravity=0.8, init perturbation=0.04
+	Maximum value of Vrms was 0.000548, at time 64
+Post-process result 6: with gravity=0.9, init perturbation=0.04
+	Maximum value of Vrms was 0.000658, at time 62
+Post-process result 7: with gravity=1, init perturbation=0.04
+	Maximum value of Vrms was 0.000778, at time 60
+Post-process result 8: with gravity=0.7, init perturbation=0.07
+	Maximum value of Vrms was 0.000837, at time 63
+Post-process result 9: with gravity=0.8, init perturbation=0.07
+	Maximum value of Vrms was 0.001038, at time 61
+Post-process result 10: with gravity=0.9, init perturbation=0.07
+	Maximum value of Vrms was 0.001306, at time 61
+Post-process result 11: with gravity=1, init perturbation=0.07
+	Maximum value of Vrms was 0.001603, at time 60
+

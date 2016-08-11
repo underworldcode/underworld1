@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<struct name="components" mergeType="merge">
+	<!-- recoveredStrainRateVP setup -->
+	<struct name="strainRateInvariantColourMap">
+		<param name="Type">lucColourMap</param>
+		<param name="colours">Purple Blue Green Yellow Orange Red</param>
+		<param name="dynamicRange">true</param>
+	</struct>
+	<struct name="strainRateInvariantMap">
+		<param name="Type">lucScalarField</param>
+		<param name="FieldVariable">recoveredStrainRateInvariantField</param>
+		<param name="ColourMap">strainRateInvariantColourMap</param>
+	</struct>
+	<struct name="strainRateInvariantTitle" mergeType="replace">
+		<param name="Type">lucTitle</param>
+		<param name="string">Recovered StrainRate Invariant (via REP)</param>
+	</struct>
+
+	<struct name="strainRateInvariantColourBar">
+		<param name="Type">lucColourBar</param>
+		<param name="ColourMap">strainRateInvariantColourMap</param>
+	</struct>
+
+	<struct name="recoveredStrainRateInvariantVP">
+		<param name="Type">lucViewport</param>
+		<param name="Camera">camera</param>
+		<list name="DrawingObject">
+			<param>strainRateInvariantMap</param>
+			<param>border</param>
+			<param>strainRateInvariantTitle</param>
+			<param>strainRateInvariantColourBar</param>
+		</list>
+	</struct>
+
+	<struct name="strainRateXXColourMap">
+		<param name="Type">lucColourMap</param>
+		<param name="colours">Purple Blue Green Yellow Orange Red</param>
+		<param name="dynamicRange">true</param>
+	</struct>
+	<struct name="strainRateXXMap">
+		<param name="Type">lucScalarField</param>
+		<param name="FieldVariable">recoveredStrainRateXXField</param>
+		<param name="ColourMap">strainRateXXColourMap</param>
+	</struct>
+	<struct name="strainRateXXTitle" mergeType="replace">
+		<param name="Type">lucTitle</param>
+		<param name="string">Recovered StrainRate Invariant (via REP)</param>
+	</struct>
+
+	<struct name="strainRateXXColourBar">
+		<param name="Type">lucColourBar</param>
+		<param name="ColourMap">strainRateXXColourMap</param>
+	</struct>
+
+	<struct name="StrainRateXXVP">
+		<param name="Type">lucViewport</param>
+		<param name="Camera">camera</param>
+		<list name="DrawingObject">
+			<param>strainRateXXMap</param>
+			<param>border</param>
+			<param>strainRateXXTitle</param>
+			<param>strainRateXXColourBar</param>
+		</list>
+	</struct>
+
+	<struct name="strainRateYYColourMap">
+		<param name="Type">lucColourMap</param>
+		<param name="colours">Purple Blue Green Yellow Orange Red</param>
+		<param name="dynamicRange">true</param>
+	</struct>
+	<struct name="strainRateYYMap">
+		<param name="Type">lucScalarField</param>
+		<param name="FieldVariable">recoveredStrainRateYYField</param>
+		<param name="ColourMap">strainRateYYColourMap</param>
+	</struct>
+	<struct name="strainRateYYTitle" mergeType="replace">
+		<param name="Type">lucTitle</param>
+		<param name="string">Recovered StrainRate Invariant (via REP)</param>
+	</struct>
+
+	<struct name="strainRateYYColourBar">
+		<param name="Type">lucColourBar</param>
+		<param name="ColourMap">strainRateYYColourMap</param>
+	</struct>
+
+	<struct name="StrainRateYYVP">
+		<param name="Type">lucViewport</param>
+		<param name="Camera">camera</param>
+		<list name="DrawingObject">
+			<param>strainRateYYMap</param>
+			<param>border</param>
+			<param>strainRateYYTitle</param>
+			<param>strainRateYYColourBar</param>
+		</list>
+	</struct>
+
+	<struct name="strainRateXYColourMap">
+		<param name="Type">lucColourMap</param>
+		<param name="colours">Purple Blue Green Yellow Orange Red</param>
+		<param name="dynamicRange">true</param>
+	</struct>
+	<struct name="strainRateXYMap">
+		<param name="Type">lucScalarField</param>
+		<param name="FieldVariable">recoveredStrainRateXYField</param>
+		<param name="ColourMap">strainRateXYColourMap</param>
+	</struct>
+	<struct name="strainRateXYTitle" mergeType="replace">
+		<param name="Type">lucTitle</param>
+		<param name="string">Recovered recoveredStrainRate Invariant (via REP)</param>
+	</struct>
+
+	<struct name="strainRateXYColourBar">
+		<param name="Type">lucColourBar</param>
+		<param name="ColourMap">strainRateXYColourMap</param>
+	</struct>
+
+	<struct name="recoveredStrainRateXYVP">
+		<param name="Type">lucViewport</param>
+		<param name="Camera">camera</param>
+		<list name="DrawingObject">
+			<param>strainRateXYMap</param>
+			<param>border</param>
+			<param>strainRateXYTitle</param>
+			<param>strainRateXYColourBar</param>
+		</list>
+	</struct>
+	
+</struct>
+</StGermainData>

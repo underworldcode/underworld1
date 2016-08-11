@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<!-- Assumes _HeatFlowSolver.xml already loaded -->
+	
+	<struct name="components" mergeType="merge">
+		<struct name="fVector" mergeType="merge">
+			<list name="operators" mergeType="merge">
+				<struct>
+					<param name="opType">flux_iU</param>
+					<param name="BorderSwarm">gaussBorderSwarm</param>
+					<param name="value_y">-0.065</param>
+					<param name="NeumannBoundary_bottom">true</param>
+				</struct>
+			</list>
+		</struct>
+	</struct>
+
+</StGermainData>

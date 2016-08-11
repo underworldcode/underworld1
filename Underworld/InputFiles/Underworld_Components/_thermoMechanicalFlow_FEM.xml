@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<!--
+  Setup for a FEM only model 
+  Only using GaussPoints (static quadrature points) for integrating the discretised Stokes Flow and Heat Flow equations
+  -->
+
+  <include>StgFEM/ConstantMesh.xml             </include>
+  <include>StgFEM/LinearMesh.xml               </include>
+  <include>StgFEM/VelocityField.xml            </include>
+  <include>StgFEM/PressureField.xml            </include>
+  <include>Underworld/GaussSwarmWithGaussMaterialSwarm.xml </include>
+  <include>Underworld/StokesFlowUzawa.xml      </include>
+  <include>StgFEM/TemperatureField.xml         </include>
+  <include>StgFEM/TempAdvDiff.xml              </include>
+
+  <list name="import" mergeType="merge">
+    <param> Underworld </param>
+  </list>
+
+  <struct name="components" mergeType="merge">
+
+    <struct name="default_scaling">
+      <param name="Type">Scaling</param>
+      <param name="spaceCoefficient_meters">       1.0    </param>
+      <param name="timeCoefficient_seconds">       1.0    </param>
+      <param name="massCoefficient_kilograms">     1.0    </param>
+      <param name="temperatureCoefficient_kelvin"> 1.0    </param>
+    </struct>
+
+    <!-- The Ppc Manager-->
+    <struct name="default_ppcManager">
+      <param name="Type">PpcManager</param>
+      <param name="MaterialSwarm"> gaussMaterialSwarm </param>
+      <param name="IntegrationSwarm"> gaussSwarm </param>
+      <param name="Scaling"> theScaling </param>
+      <param name="Mesh"> linearMesh </param>
+      <param name="Gravity"> Gravity </param>
+      <list name="Properties">
+        <struct>
+          <param name="PropertyName"> DensityLabel </param>
+        </struct>
+        <struct>
+          <param name="PropertyName"> Viscosity </param>
+        </struct>
+      </list>
+    </struct>
+
+    <!-- Density and gravity based on ppc -->
+    <struct type="struct" name="buoyancyForceTerm">
+      <param name="Type">VectorAssemblyTerm_NA__F</param>
+      <param name="functionLabel">bodyForce</param>
+      <param name="ForceVector">mom_force</param>
+      <param name="Swarm">gaussSwarm</param>
+    </struct>
+
+    <struct name="bodyForce">
+      <param name="Type">Ppc_a_Vector</param>
+      <param name="ForceVector">mom_force</param>
+      <param name="Swarm">gaussSwarm</param>
+      <param name="Manager">thePpcManager</param>
+      <param name="Alpha">scaledRHS</param>
+      <param name="vi">0</param>
+      <param name="vj">1</param> <!-- is +ve because of scaled equation -->
+      <param name="vk">0</param>
+    </struct>
+
+    <struct name="scaledRHS">
+      <param name="Type">Ppc_Operation</param>
+      <param name="Operation"> * </param>
+      <list name="Properties">
+        <param>RayleighNumber</param>
+        <param>default_temperature_ppc</param>
+      </list>
+    </struct>
+
+    <struct name="default_temperature_ppc">
+      <param name="Type">Ppc_Variable</param>
+      <param name="FieldVariable">TemperatureField</param>
+    </struct>
+  </struct>
+
+  <list name="plugins" mergeType="merge">
+    <struct>
+      <param name="Type">Underworld_Nusselt</param>
+      <param name="Context">context</param>
+      <param name="GaussSwarm">gaussSwarm</param>
+    </struct>
+  </list>
+
+</StGermainData>

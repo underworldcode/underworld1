@@ -1,0 +1,11 @@
+Issues:
+
+- Custom XSLT stylesheets for each System test and TestComponent type?
+  - Do we save XSLT files for each of these, then template them together?
+  - How do we apply the correct stylesheet based on the SysTest type?
+    (And is there "inheritance" of styles?)
+
+- How do we refer to these stylesheets from different locations?
+
+- Do we want a stylesheet for providing a basic summary, and one for more
+  details? (and perhaps only the details one is generated on the fly?)

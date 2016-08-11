@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+	
+	<struct name="temperatureBCs">
+		<param name="type">CompositeVC</param>
+		<list name="vcList">
+			<struct>
+				<param name="type"> WallVC </param>
+				<param name="wall"> top </param>
+				<list name="variables">
+					<struct>
+						<param name="name">temperature</param>
+						<param name="type">double</param>
+						<param name="value" units="K"> 293.15 </param>
+					</struct>
+				</list>
+			</struct>				
+         <!--
+         <struct>
+				<param name="type"> WallVC </param>
+				<param name="wall"> bottom </param>
+				<list name="variables">
+					<struct>
+						<param name="name">temperature</param>
+						<param name="type">double</param>
+						<param name="value" units="K"> 1200 </param>
+					</struct>
+				</list>
+			</struct>
+         -->
+		</list>
+	</struct>
+	<struct name="components" mergeType="merge">
+      <struct name="thermalFluxBC">
+         <param name="Type">VectorSurfaceAssemblyTerm_NA__Fi__ni</param>
+         <param name="ForceVector">residual</param>
+         <param name="Swarm">borderGaussSwarm</param>
+         <param name="wall">bottom</param>
+         <param name="functionLabel" units="K*m/s">6.5282e-9</param> <!-- (heat_flow) / (mantel_density * specific heat capacity) -->
+       </struct>
+       <struct name="borderCellLayout">
+         <param name="Type">SingleCellLayout</param>
+       </struct>
+       <struct name="borderParticleLayout">
+         <param name="Type">GaussBorderParticleLayout</param>
+       </struct>
+       <struct name="borderGaussSwarm">
+         <param name="Type">IntegrationPointsSwarm</param>
+         <param name="CellLayout">borderCellLayout</param>
+         <param name="ParticleLayout">borderParticleLayout</param>
+         <param name="FeMesh">elementMesh</param>
+         <param name="TimeIntegrator">timeIntegrator</param>
+         <param name="IntegrationPointMapper">borderGaussMapper</param>
+       </struct>
+       <struct name="borderGaussMapper">
+         <param name="Type">GaussMapper</param>
+         <param name="IntegrationPointsSwarm">borderGaussSwarm</param>
+         <param name="MaterialPointsSwarm">borderGaussMaterialSwarm</param>
+       </struct>
+       <struct name="borderBackgroundLayout">
+         <param name="Type">BackgroundParticleLayout</param>
+       </struct>
+       <struct name="borderGaussMSwarmMovementHandler">
+         <param name="Type">ParticleMovementHandler</param>
+       </struct>
+       <struct name="borderGaussMaterialSwarm">
+         <param name="Type">MaterialPointsSwarm</param>
+         <param name="CellLayout">borderCellLayout</param>
+         <param name="ParticleLayout">borderBackgroundLayout</param>
+         <param name="FeMesh">elementMesh</param>
+         <list name="ParticleCommHandlers">
+            <param>borderGaussMSwarmMovementHandler</param>
+         </list>
+       </struct>
+    </struct>
+</StGermainData>

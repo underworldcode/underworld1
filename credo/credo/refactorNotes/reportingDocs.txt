@@ -1,0 +1,49 @@
+Notes:
+
+ - RST seems a good option for code-generation, because then it can be further marked-up as HTML, Latex, etc (and then on to PDF)
+
+ - Looking like a good framework may be:
+  - Using wrapper-classes around low-level reporting 'primitives' e.g. headers, paras, that return "elements" (may be just strings), that a final Parser produces at the end.
+
+  - Qtn: mid-level elements to create basic report structures based on key objects, e.g. ModelRun, ModelSuite, SysTest
+
+  - And then people can write top-level report-composing 'scripts', which are
+  preferably output-indenpendent? (but can have details over-written if need
+  be by power user.)
+
+  (OR instead of above ... should I tend to standardise on RST, and let people learn how to extend this?)
+
+- http://www.siafoo.net/help/math
+- http://openalea.gforge.inria.fr/doc/openalea/doc/_build/html/source/sphinx/rest_syntax.html#colored-boxes-note-seealso-todo-and-warnings
+- http://www.programmerq.net/rsttricks.html
+- http://people.ee.ethz.ch/~creller/web/tricks/reST.html#math
+
+20110-03-11:
+------------
+
+Completed:
+ D top-level interface in benchmarks to easily specify which reports to create (and update all b-marks to use, possibly standard suites also)
+
+Stuff still TODO:
+ - TODO: better standardise the modelImagesToDisplay[] etc data members.
+   (Idea: Save the postproc report images created for modelruns on the modelrun
+   objects themselves.)
+ - Document and better unit tests
+
+Ideas/todos:
+ - Similarly, save suite-wide reported images on some sort of "suite result"
+    image
+ (THese can then be saved to XML)
+ (And buys the ability to write scripts to e.g. clean up checkpoints and images
+   not needed as part of key reports).
+
+Output path handling of suites (after fact)
+-------------------------------------------
+
+Perhaps need new rule:
+ - Model Runs in a suite always have output paths as sub-path of suite O.P. base
+
+This would then allow nice funcs to update that outputPathBase, and 
+automatically update all sub-paths.
+(This could be implemented as a Python property).
+

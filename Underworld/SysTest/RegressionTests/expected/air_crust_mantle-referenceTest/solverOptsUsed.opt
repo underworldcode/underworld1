@@ -1,0 +1,2 @@
+-Uzawa_velSolver_ksp_type preonly
+-Uzawa_velSolver_pc_type lu

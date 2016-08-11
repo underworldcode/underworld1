@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="import" mergeType="merge">
+      <param>Underworld</param>
+   </list>
+   
+   <!-- Component Stuff -->
+   <include>StgFEM/ConstantMesh.xml</include>
+   <include>StgFEM/LinearMesh.xml</include>
+   <include>StgFEM/VelocityField.xml</include>
+   <include>StgFEM/PressureField.xml</include>
+   <include>StgFEM/GaussSwarm.xml</include>
+   <include>StgFEM/TimeIntegrator.xml</include>
+   <include>PICellerator/MaterialPointSwarm.xml</include>
+   <include>Underworld/StokesFlowUzawaPIC.xml</include>
+   <include>Underworld/StressField2D.xml</include>
+   <include>Underworld/ViscosityField.xml</include>
+
+   <list name="plugins" mergeType="merge">
+      <struct>
+         <param name="Type">Underworld_NonNewtonianShearSolution</param>
+         <param name="Context">context</param>
+      </struct>
+      <struct>
+         <param name="Type">StgFEM_FrequentOutput</param>
+         <param name="Context">context</param>
+      </struct>
+      <struct>
+         <param name="Type">Underworld_Vrms</param>
+         <param name="Context">context</param>
+         <param name="GaussSwarm">gaussSwarm</param>
+         <param name="VelocityField">VelocityField</param>
+      </struct>
+      <struct>
+         <param name="Type">StgFEM_CPUTime</param>
+         <param name="Context">context</param>
+      </struct>
+   </list>
+
+   <!-- Rheology Components -->
+   <struct name="components" mergeType="merge">
+      <struct name="context">
+         <param name="Type">UnderworldContext</param>
+      </struct>
+      <!-- Geometry -->
+      <struct name="backgroundShape">
+         <param name="Type">Everywhere</param>
+      </struct>
+      <!-- Rheology -->
+      <struct name="layerViscosity">
+         <param name="Type">MaterialViscosity</param>
+         <param name="eta0">1.0e2</param>
+      </struct>
+      <struct name="nonNewtonianRheology">
+         <param name="Type">NonNewtonian</param>
+         <param name="stressExponent">stressExponent</param>
+      </struct>
+      <struct name="material">
+         <param name="Type">RheologyMaterial</param>
+         <param name="Shape">backgroundShape</param>
+         <list name="Rheology">
+            <param>layerViscosity</param>
+            <param>nonNewtonianRheology</param>
+         </list>
+      </struct>
+      <!-- Periodic boundary conditions -->
+      <struct name="velocityLinkedDofs">
+         <param name="Type">LinkedDofInfo</param>
+         <param name="Mesh">linearMesh</param>
+         <param name="DofLayout">velocityDofLayout</param>
+         <list name="linkSpecifications">
+            <struct>
+               <param name="wallPair">left-right</param>
+               <param name="dof">0</param>
+            </struct>
+            <struct>
+               <param name="wallPair">left-right</param>
+               <param name="dof">1</param>
+            </struct>
+         </list>
+      </struct>
+      <struct name="periodicBCsManager">
+         <param name="Type">PeriodicBoundariesManager</param>
+         <param name="mesh">linearMesh</param>
+         <param name="Swarm">materialSwarm</param>
+         <param name="TimeIntegrator">timeIntegrator</param>
+         <list name="PeriodicBoundaries">
+            <param>I_AXIS</param>
+         </list>
+      </struct>
+      <struct name="weights" mergeType="replace">
+         <param name="Type">MomentBalanceWeights</param>
+      </struct>
+      <struct name="AnalyticVelocityField">
+         <param name="Type">AnalyticFeVariable</param>
+         <param name="NumericField">VelocityField</param>
+         <param name="Function">NonNewtonianShearSolution_VelocityFunction</param>
+      </struct>
+      <struct name="AnalyticVelocityField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">AnalyticVelocityField</param>
+      </struct>
+      <struct name="ErrorVelocityField">
+         <param name="Type">ErrorFeVariable</param>
+         <param name="NumericField">VelocityField</param>
+         <param name="ConstantMesh">constantMesh</param>
+      </struct>
+      <struct name="ErrorVelocityField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">ErrorVelocityField</param>
+      </struct>
+      <struct name="AnalyticStrainRateField">
+         <param name="Type">AnalyticFeVariable</param>
+         <param name="NumericField">StrainRateField</param>
+         <param name="Function">NonNewtonianShearSolution_StrainRateFunction</param>
+      </struct>
+      <struct name="AnalyticStrainRateField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">SymmetricTensor_Invariant</param>
+         <param name="Operand">AnalyticStrainRateField</param>
+      </struct>
+      <struct name="ErrorStrainRateField">
+         <param name="Type">ErrorFeVariable</param>
+         <param name="NumericField">StrainRateField</param>
+         <param name="ConstantMesh">constantMesh</param>
+      </struct>
+      <struct name="ErrorStrainRateField-Mag">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">SymmetricTensor_Invariant</param>
+         <param name="Operand">ErrorStrainRateField</param>
+      </struct>
+      <struct name="FieldTest">
+         <param name="Type">FieldTest</param>
+         <param name="IntegrationSwarm">gaussSwarm</param>
+         <param name="ElementMesh">linearMesh</param>
+         <param name="normaliseByAnalyticSolution">False</param>
+         <param name="useReferenceSolutionFromFile">False</param>
+         <param name="appendToAnalysisFile">True</param>
+         <list name="FieldMappings">
+            <struct>
+               <param name="NumericField">VelocityField</param>
+               <param name="AnalyticField">AnalyticVelocityField</param>
+               <param name="AnalyticMagnitudeField">AnalyticVelocityMagField</param>
+               <param name="ErrorField">ErrorVelocityField</param>
+               <param name="ErrorMagnitudeField">ErrorVelocityMagField</param>
+            </struct>
+            <struct>
+               <param name="NumericField">StrainRateField</param>
+               <param name="AnalyticField">AnalyticStrainRateField</param>
+               <param name="AnalyticMagnitudeField">AnalyticStrainRateMagField</param>
+               <param name="ErrorField">ErrorStrainRateField</param>
+               <param name="ErrorMagnitudeField">ErrorStrainRateMagField</param>
+            </struct>
+         </list>
+      </struct>
+   </struct>
+
+   <param name="VelocityField-Tolerance">1e-6</param>
+   <param name="StrainRateField-Tolerance">1e-5</param>
+   <param name="StressField-Tolerance">1e-5</param>
+   <param name="ViscosityField-Tolerance">1e-4</param>
+   <param name="stressExponent">3</param>
+   
+   <param name="isPeriodicI">t</param>
+
+   <!-- Simulation control -->
+   <param name="maxTimeSteps">3</param>
+
+   <param name="outputPath">./output</param>
+   <param name="dumpEvery">1</param>
+
+   <param name="particlesPerCell">20</param>
+
+   <!-- Non-linear stuff -->
+   <param name="nonLinearMaxIterations">5000</param>
+   <param name="nonLinearTolerance">1e-6</param>
+   
+   <!-- Geometry & Mesh setup -->
+   <param name="dim">2</param>
+   <param name="elementResI">20</param>
+   <param name="elementResJ">20</param>
+   <param name="elementResK">1</param>
+   <param name="shadowDepth">1</param>
+   <param name="minX">0.0</param>
+   <param name="minY">0.0</param>
+   <param name="minZ">0.0</param>
+   <param name="maxX">1.0</param>
+   <param name="maxY">1.0</param>
+   <param name="maxZ">1.0</param>
+   <param name="allowUnbalancing">True</param>
+
+   <!-- Velocity BCs -->
+   <struct name="velocityBCs" mergeType="replace">
+      <param name="type">CompositeVC</param>
+      <list name="vcList">
+         <struct>
+            <param name="type">WallVC</param>
+            <param name="wall">bottom</param>
+            <list name="variables">
+               <struct>
+                  <param name="name">vy</param>
+                  <param name="type">double</param>
+                  <param name="value">0</param>
+               </struct>
+               <struct>
+                  <param name="name">vx</param>
+                  <param name="type">double</param>
+                  <param name="value">0</param>
+               </struct>
+            </list>
+         </struct>
+         <struct>
+            <param name="type">WallVC</param>
+            <param name="wall">top</param>
+            <list name="variables">
+               <struct>
+                  <param name="name">vx</param>
+                  <param name="type">func</param>
+                  <param name="value">ShearTrigger</param>
+               </struct>
+               <struct>
+                  <param name="name">vy</param>
+                  <param name="type">double</param>
+                  <param name="value">0</param>
+               </struct>
+            </list>
+         </struct>
+      </list>
+   </struct>
+   
+   <!-- Integration Scheme configuration -->
+   <param name="gaussParticlesX">2</param>
+   <param name="gaussParticlesY">2</param>
+   <param name="gaussParticlesZ">2</param>
+ 
+</StGermainData>

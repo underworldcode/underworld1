@@ -1,0 +1,14 @@
+This is the list of test scripts & XMLs here that may be worth looking at and
+deciding whether to incorporate into UWA:
+
+Checkpointing:
+
+* Anisotropic
+
+Other:
+
+* DepthDepVisc3d - Isoviscous, Linear
+* ExtensionFMM.xml 
+* Slab Subduction (benchmark?)
+* ExtensionWithPopControl
+* Trubitsyn2006 - Model 1, 2, 3

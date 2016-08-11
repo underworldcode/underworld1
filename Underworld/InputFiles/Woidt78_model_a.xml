@@ -1,0 +1,143 @@
+<!-- 
+   This model is taken from 
+   Woidt W,D, "Finite Element Calculations Applied to salt dome analysis", Tectonophysics, 1978
+
+   Here Scaling is used to allow for dimensional input values, serach for SCALING to see the important declaration
+   See the .tex document at ~/StGermain/Utils/src/unitParser/unitsParser.tex for valid scaling strings
+-->
+
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="import">
+      <param>Underworld</param>
+   </list>
+
+   <include>Underworld/BaseApps/RayleighTaylor.xml</include>
+
+   <list name="plugins" mergeType="merge">
+      <struct>
+         <param name="Type">StgFEM_FrequentOutput</param>
+         <param name="Context">context</param>
+      </struct>
+      <struct>
+         <param name="Type">Underworld_Vrms</param>
+         <param name="Context">context</param>
+         <param name="GaussSwarm">gaussSwarm</param>
+         <param name="VelocityField">VelocityField</param>
+      </struct>
+      <struct>
+         <param name="Type">StgFEM_CPUTime</param>
+         <param name="Context">context</param>
+      </struct>
+   </list>
+
+   <struct name="components" mergeType="merge">
+      <struct name="context">
+         <param name="Type">UnderworldContext</param>
+      </struct>
+      <!-- SCALING: A Scaling component definition -->
+      <struct name="default_scaling">
+         <param name="Type">Scaling</param>
+         <param name="spaceCoefficient_meters">1.0e-2</param>
+         <param name="timeCoefficient_seconds">1.0e-2</param>
+         <param name="massCoefficient_kilograms">1.0e-4</param>
+         <param name="temperatureCoefficient_kelvin">2044</param>
+       </struct>
+      <struct name="everywhere">
+         <param name="Type">Everywhere</param>
+      </struct>
+      <struct name="saltShape">
+         <param name="Type">BelowCosinePlane</param>
+         <param name="offset" units="cm">1</param>
+         <param name="amplitude" units="cm">0.148</param>
+         <param name="wavelength" units="cm">2.96</param>
+         <param name="phase">3.1416</param>
+      </struct>
+      <struct name="overburdenViscosity">
+          <param name="Type">MaterialViscosity</param>
+          <param name="eta0" units="Pa*s">0.1</param>
+       </struct>
+      <struct name="overburden">
+         <param name="Type">RheologyMaterial</param>
+         <param name="Shape">everywhere</param>
+         <param name="density" units="g*cm^-3">1.0</param>
+         <param name="Rheology">overburdenViscosity</param>
+      </struct>
+      <struct name="saltViscosity">
+         <param name="Type">MaterialViscosity</param>
+         <param name="eta0" units="Pa*s">10</param>
+      </struct>
+      <struct name="saltLayer">
+         <param name="Type">RheologyMaterial</param>
+         <param name="Shape">saltShape</param>
+         <param name="density" units="g*cm^-3">0.0</param>
+         <param name="Rheology">saltViscosity</param>
+      </struct>
+      <!-- SCALING: 'outputUnits' for the StrainRateInvariantField in 1/seconds -->
+      <struct name="StrainRateInvariantField" mergeType="merge">
+         <param name="outputUnits" mergeType="replace">s^-1</param>
+      </struct>
+   </struct>
+
+   <param name="gravity" units="m/s^2">9.8</param>
+
+   <!-- general simulation parameters -->
+   <param name="maxTimeSteps">60</param>
+   <param name="dumpEvery">1</param>
+   <param name="outputPath">./output/ </param>
+   <param name="checkpointEvery">0</param>
+
+   <!--   choose what to checkpoint
+   <list name="FieldVariablesToCheckpoint">
+      <param>VelocityField</param>
+      <param>VelocityGradientsField</param>
+   </list>
+   -->
+
+   <!--  restart from a previous checkpoint 
+   <param name="restartTimestep">10</param>
+   -->
+   
+   <!-- domain parameters -->
+   <param name="dim">2</param>
+   <param name="minX" units="cm">0.0</param>
+   <param name="minY" units="cm">0.0</param>
+   <param name="minZ" units="cm">0.0</param>
+   <param name="maxX" units="cm">2.96</param>
+   <param name="maxY" units="cm">7.0</param>
+   <param name="maxZ" units="cm">0.0</param>
+
+   <!-- mesh parameters -->
+   <param name="elementResI">32</param>
+   <param name="elementResJ">64</param>
+   <param name="elementResK">1</param>
+
+   <!-- general decomposition parameters -->
+   <param name="shadowDepth">1</param>
+   <param name="allowUnbalancing">True</param>
+   <param name="buildElementNodeTbl">True</param>
+   
+   <!-- Swarm parameters -->
+   <param name="particleLayoutType">random</param>
+   <param name="particlesPerCell">20</param>
+   <param name="seed">13</param>
+
+   <!-- Boundary conditions -->
+   <include>Underworld/VariableConditions/velocityBCs.freeSlipSidesTop_noSlipBottom.xml</include>
+
+   <!-- Visualisation stuff -->
+   <include>Underworld/Viewports/ParticleMaterialAndNodalVelocityVP.xml</include>
+   <include>Underworld/Viewports/StrainRateInvariantVP.xml</include>
+   <include>gLucifer/window.xml</include>
+   <struct name="components" mergeType="merge">
+      <!-- SCALING: the 'outputUnits' for the timestep, in seconds-->
+      <struct name="timeStep" mergeType="merge">
+         <param name="outputUnits">s</param>
+      </struct>
+      <struct name="window" mergeType="merge">
+         <param name="Viewport">ParticleMaterialAndNodalVelocityVP StrainRateInvariantVP</param>
+      </struct>
+   </struct>
+
+</StGermainData>

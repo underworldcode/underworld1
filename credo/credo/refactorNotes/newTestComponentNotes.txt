@@ -1,0 +1,62 @@
+1) Test that your new code works, e.g. just write a basic Python script
+(Use Docstrings, and ideally list arguments of your functions).
+
+2) Write a credo.analysis component to perform your operation
+2a) Remember to add the CREDO header/licence note (provide a link)
+
+2) Write a new credo.systest.TestComponent, in credo.systest
+- specify members needed by the class in the "init" function
+- Fill out the "check" function
+- Save specification in the _writeXMLCustomSpec() function
+- Save results in the _writeXMLCustomResult() function
+
+TODO: Document attributes properly
+
+3) Write a Python unittest that your new test component works
+
+Done: though writing of the XML checking functionality isn't easy
+
+4) (Optional) Write a new SysTest component that simply creates a SysTest,
+  attaches your new TestComponent, and passes relevant images through.
+
+5) Add the new Systest and Test component to the credo.systest.__init__.py
+lists so they can be easily imported.
+
+6) add your new modules to the Sphinx doc-generator, to be auto
+   generated. E.g. for images:
+
+To file credo/doc/api/analysis.rst, added section:
+
+:mod:`credo.analysis.images`
+============================
+
+.. automodule:: credo.analysis.images
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TODO: also add to the main inheritance diagrams for SysTests and TestComponents
+
+--------------------------
+
+N.B. really the bare minimum for a new CREDO test component is:
+
+(Optional) set up analysis ops
+ (e.g. may be just an XML snippet).
+
+A bit of code to do a check and:
+ - return a result status
+ - a result message to print to XML
+ - and an XML snippet (currently in ETree format) to add.
+
+Idea:
+
+Refactor CREDO so Analysis Ops and Test components are in the same directory ...
+ thus you can easily define a new Analysis Op, and then a test component
+ based upon it.
+
+XML recording of test results:
+
+... is a lot harder than it should be. Ideas to improve:
+a) Have a "specDict" and "resultsDict" on test components, then provide method
+  to very easily write these out to XML.

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">BelowHeightField</param>
+<param name="Author">...</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">Underworld</param>
+<param name="Location">./Underworld/Base/src/</param>
+<param name="Project Web">http://www.stgermainproject.org/StgDomain.html</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License v2.1 - http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</param>
+<param name="Parent">Stg_Shape</param>
+<param name="Reference">...</param>
+<param name="Summary">...</param>
+<param name="Description">This shape function returns true for points located below height values determined from a fieldvariable which the user passes in</param>
+
+<!--Now the interesting stuff-->
+
+<list name="Params">
+
+<!--Check component _AssignFromXML routine for details of parameters-->
+
+</list>
+
+<!-- Add an exmaple XML if possible -->
+<param name="Example">
+<![CDATA[
+		<struct name="belowTopofLFBShape">
+			<param name="Type">BelowHeightField</param>
+			<param name="HeightField">SPHHeightField_TopofLFB</param>
+		</struct>
+]]>
+</param>
+
+
+</StGermainData>

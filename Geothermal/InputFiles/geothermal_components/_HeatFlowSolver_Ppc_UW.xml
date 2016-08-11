@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <include>StgFEM/TempDiffusionSolver.xml</include>
+
+	<struct name="components" mergeType="merge">
+		<struct name="default_scaling">
+			<param name="Type">Scaling</param>
+			<param name="spaceCoefficient_meters">       1.0    </param>
+			<param name="timeCoefficient_seconds">       1.0    </param>
+			<param name="massCoefficient_kilograms">     1.0    </param>
+			<param name="temperatureCoefficient_kelvin"> 1.0    </param>
+		</struct>
+		<struct name="default_ppcManager">
+			<param name="Type">PpcManager</param>
+			<param name="MaterialSwarm"> materialSwarm </param>
+			<param name="IntegrationSwarm"> picIntegrationPoints </param>
+			<param name="Mesh"> linearMesh </param>
+			<list name="Properties">
+				<struct>
+					<param name="PropertyName"> thermalConductivity </param>
+				</struct>
+				<struct>
+					<param name="PropertyName"> heatProduction </param>
+				</struct>
+			</list>
+		</struct>
+
+	   <struct name="ConductivityField">
+         <param name="Type">PpcFeVariable</param>
+         <param name="Context">context</param>
+         <param name="Swarm">picIntegrationPoints</param>
+         <param name="Mesh">elementMesh</param>
+         <param name="PpcManager">default_ppcManager</param>
+         <param name="functionLabel">thermalConductivity</param>
+         <param name="isCheckpointedAndReloaded">True</param>
+      </struct>
+	
+      <struct name="HeatSourceTerm" >
+         <param name="Type">VectorAssemblyTerm_NA__F</param>
+         <param name="ForceVector">fVector</param>
+         <param name="Swarm">picIntegrationPoints</param>
+         <param name="functionLabel">heatProduction</param>
+      </struct>
+
+      <struct name="laplacian" mergeType="merge">
+         <param name="Type" mergeType="replace" >MatrixAssemblyTerm_NA_i__NB_i__F</param>
+			<param name="functionLabel">thermalConductivity</param>
+         <param name="Swarm" mergeType="replace" >picIntegrationPoints</param>
+      </struct>
+
+      <!-- need to create this zombie for compatibility -->
+      <struct name="LaplacesEqn" mergeType="replace">
+         <param name="Type" >DummyComponent</param>
+      </struct>
+	</struct>
+
+</StGermainData>

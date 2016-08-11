@@ -1,0 +1,761 @@
+===================================================================
+Mercurial commits made during CREDO development from 0.1.2 to 0.1.3
+===================================================================
+
+changeset:   318:aa0094c2776f
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Aug 25 10:20:38 2010 +1000
+files:       credo/systest/fieldCvgWithScaleTest.py
+description:
+Added a check for recovered strain rate field.
+
+
+changeset:   319:fb88338e7ec0
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Aug 27 14:32:20 2010 +1000
+files:       credo/modelrun.py credo/modelsuite.py credo/systest/api.py credo/systest/systestrunner.py
+description:
+Updated "maxTime" arg to "maxRunTime" in modelrun, and saved the value of
+"timeout" param to XML for Sys Tests.
+
+
+changeset:   320:0c0f8e1f3fed
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 30 11:57:45 2010 +1000
+files:       credo/systest/api.py
+description:
+Updated timeout to print in XML as a hh:mm:ss string, rather than just the plain seconds count, in SysTest summaries.
+
+
+changeset:   321:88651f960b85
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 30 15:09:14 2010 +1000
+files:       credo/systest/api.py
+description:
+Fixed an issue so that if there is no timeout set for a given SysTest, the
+XML writing still works.
+
+
+changeset:   322:3f3d7630479d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 31 14:55:59 2010 +1000
+files:       credo/modelrun.py
+description:
+Updated ModelRun running so that MPI jobs can be killed properly if they
+time out.
+
+
+changeset:   323:b2d91aa2d39a
+parent:      321:88651f960b85
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 30 15:21:24 2010 +1000
+files:       credo/jobrunner/__init__.py credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py credo/modelresult.py credo/modelrun.py credo/tests/modelresultsuite.py
+description:
+First version of refactor to use a JobRunner class to run jobs, rather
+than just a function in the modelresult module.
+
+Thus far, just MPIJobRunner basic implementation provided. Future will allow
+PBS job runner etc.
+
+Also did a small refactor/cleanup of how ModelResult XML records are written,
+to make this a method on the ModelResult class, rather than a separate
+function.
+
+
+changeset:   324:0999dd0aa83b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Aug 30 19:43:14 2010 +1000
+files:       credo/jobrunner/__init__.py credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py credo/modelrun.py credo/modelsuite.py credo/systest/api.py credo/systest/systestrunner.py credo/tests/modelrunsuite.py credo/tests/modelsuitesuite.py
+description:
+Improvements of the JobRunner refactor of CREDO, so that:
+* IT works for tests
+* It handles directories and paths of jobs to run in a cleaner manner.
+
+
+changeset:   325:f4a0e48a88e1
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 31 16:57:40 2010 +1000
+files:       credo/jobrunner/mpijobrunner.py
+description:
+Fixed a bug for suites using cmd line options per run:- passed these through
+properly.
+
+
+changeset:   326:d1eb69429c7a
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Aug 31 18:47:48 2010 +1000
+files:       credo/analysis/fields.py credo/io/stgpath.py credo/io/tests/stgpathsuite.py credo/modelrun.py credo/modelsuite.py credo/systest/analytic.py credo/systest/analyticMultiRes.py credo/systest/api.py credo/systest/fieldCvgWithScaleTest.py credo/systest/fieldWithinTolTest.py credo/systest/reference.py credo/systest/restart.py credo/systest/scibenchmark.py
+description:
+Improved the handling of pathing for system tests and models :- should now be able to run scripts from
+arbitrary paths by default.
+
+
+changeset:   327:f0a9198e6567
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 01 10:16:16 2010 +1000
+files:       credo/jobrunner/mpijobrunner.py credo/modelrun.py
+description:
+Importing ModelRunError as needed for the JobRunner to create an error.
+
+
+changeset:   328:b3b448147138
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 01 12:15:04 2010 +1000
+files:       credo/systest/systestrunner.py
+description:
+Get the sysTestRunner to change and restore directories at start and end, to be
+on the safe side if ModelRun stuff doesn't handle this correctly (eg if it
+crashes or raises an error mid-way through.
+
+
+changeset:   329:aad922d97ef8
+parent:      328:b3b448147138
+parent:      322:3f3d7630479d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 01 12:24:30 2010 +1000
+files:       credo/jobrunner/mpijobrunner.py credo/modelrun.py
+description:
+Merge of credo work improving MPI process management made recently
+(Functionality has moved from modelrun to jobrunner in this changeset group).
+
+
+changeset:   330:99ffb7818035
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 01 12:29:36 2010 +1000
+files:       doc/api/jobrunner.rst doc/credo-apidocs.rst
+description:
+Added auto-generation of JobRunner module documentation.
+
+
+changeset:   331:1589e683df90
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 08 14:44:55 2010 +1000
+files:       scons/credosystest.py
+description:
+Added new CREDO SCons methods/vars to be able to define science benchmark tests.
+
+
+changeset:   332:853a5a781b6a
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 08 15:44:15 2010 +1000
+files:       doc/examples/configure-scibenchmark.rst
+description:
+Minor update to sci benchmark example doc.
+
+
+changeset:   333:dce71d3bad2b
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 16 12:36:43 2010 +1000
+files:       credo/modelrun.py
+description:
+Added a missing include to ModelRun.
+
+
+changeset:   334:4104f5061cbb
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 16 12:47:10 2010 +1000
+files:       credo/systest/tests/skeletonSysTest.py
+description:
+Updated the SkeletonSysTest used for testing purposes to comply to new basePath
+interface added recently to handle pathing better.
+
+
+changeset:   335:4b8acedf0924
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 16 12:52:08 2010 +1000
+files:       credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py credo/modelrun.py credo/systest/systestrunner.py
+description:
+Refactored the ModelRunError and ModelRunTimeoutError into the JobRunner API
+from modelrun module, as this seems more logical place.
+
+
+changeset:   336:8c21ca35feab
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Sep 17 15:04:59 2010 +1000
+files:       credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py
+description:
+Refactored the ModelRunError exception hierarchy a bit so we can now be a lot more
+user-friendly if the user's selected MPI command isn't found.
+
+
+changeset:   337:a444c8a31da3
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Fri Sep 17 15:24:06 2010 +1000
+files:       scripts/credo-analyticTest.py scripts/credo-analyticTestMultiResCvg.py scripts/credo-referenceTest.py scripts/credo-restartTest.py
+description:
+Updating CREDO cmd-line run scripts to work again given new API>.
+
+
+changeset:   338:55b71fc25850
+parent:      335:4b8acedf0924
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Sep 20 12:13:02 2010 +1000
+files:       credo/modelsuite.py credo/tests/modelsuiteexample.py credo/tests/modelsuitesuite.py
+description:
+* Updated the modelsuite so that runs can be generated based on different
+  iterators than a "product".
+* Added a test example of using the "izip" operator.
+
+
+changeset:   339:e7bd09cf3aa3
+parent:      337:a444c8a31da3
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Sep 20 12:17:59 2010 +1000
+files:       scripts/credo-analyticTest.py
+description:
+Remove blank in run script.
+
+
+changeset:   340:bad1d7173923
+parent:      339:e7bd09cf3aa3
+parent:      338:55b71fc25850
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Sep 20 12:18:31 2010 +1000
+description:
+Merge.
+
+
+changeset:   341:6f3837cfe2ec
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Sep 20 14:11:11 2010 +1000
+files:       credo/tests/modelsuitesuite.py
+description:
+Removing half-written test from modelsuitesuite
+
+
+changeset:   342:12892c29737d
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Sep 20 14:28:05 2010 +1000
+files:       credo/io/stgxml.py credo/modelrun.py credo/tests/input/testModel.xml credo/tests/modelrunsuite.py updatePyPathLocal.sh
+description:
+Added capability to export a flattened XML file of a CREDO ModelRun.
+
+
+changeset:   343:b94b488674ce
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Sep 21 21:14:34 2010 +1000
+files:       credo/io/stgcmdline.py credo/io/stgpath.py credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py credo/modelrun.py credo/modelsuite.py credo/tests/modelsuiteexample.py
+description:
+Several CREDO refactors:
+ - Created a io.stgcmdline module for simple command-line generation utilities,
+   and got other modules to use where appropriate.
+ - Updated the ModelSuite XML Variant capabilities quite a bit:
+   - Refactored out the variant generating facilities into separate modular
+     functions from the ModelSuite where appropriate
+   - Added the ability to generate a list of output directories to use, and
+     also a list of cmd line override strings.
+   - Updated the "tests/modelsuiteexample.py" file to show more of these.
+
+
+changeset:   344:7036db18c687
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Sep 21 21:15:17 2010 +1000
+files:       doc/api/io.rst
+description:
+Update the CREDO doc generator to create docs for the new IO cmdline utils
+module.
+
+
+changeset:   345:ecb60ab25158
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 22 14:13:46 2010 +1000
+files:       credo/systest/systestrunner.py
+description:
+Added a new printout, so that if a test result is CREDO_ERROR, it prints the
+detailed error message straight away, as well as at the end of the set of Sys
+tests.
+
+
+changeset:   346:0ad08d04c057
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 22 14:24:56 2010 +1000
+files:       credo/tests/modelsuitesuite.py
+description:
+Updated the modelsuite unit tests for recent interface change.
+
+
+changeset:   347:3df529b6f141
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 23 11:22:43 2010 +1000
+files:       doc/credo-faq.rst doc/credo-install.rst doc/index.rst
+description:
+Adding a FAQ section to the docs, and improving docs on environment variables.
+
+The FAQ contains answers so far on commonly reported issues when running CREDO.
+
+
+changeset:   348:8edd2829c8f8
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 23 12:58:02 2010 +1000
+files:       doc/credo-faq.rst
+description:
+Made a FAQ message more specific to the actual error that occurs.
+
+
+changeset:   349:b0dcc2695889
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 23 13:13:08 2010 +1000
+files:       credo/io/stgcvg.py
+description:
+Made a more specific exception handling message for when problems arise reading
+CVG files. The error msg now directs people to the FAQ.
+
+
+changeset:   350:513f85d1d703
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 23 13:30:14 2010 +1000
+files:       doc/credo-faq.rst
+description:
+Updated the CREDO FAQ to reflect new better error message being generated.
+
+
+changeset:   351:37f14e208957
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Mon Sep 27 16:25:07 2010 +1000
+files:       credo/modelsuite.py
+description:
+First commit of several refactored functions into CREDO.
+
+
+changeset:   352:ead38673a7a5
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Tue Sep 28 21:30:14 2010 +1000
+files:       credo/systest/systestrunner.py
+description:
+Added a new function in systestrunner to return a set of suites from a given
+list of modules to import.
+
+
+changeset:   353:0e6f16b70691
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 29 19:53:59 2010 +1000
+files:       doc/index.rst
+description:
+Documentation notes: adding references to Underworld in CREDO manual.
+
+
+changeset:   354:132a6f6fe33e
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 29 19:54:55 2010 +1000
+files:       credo/modelrun.py
+description:
+Added a hook for custom post-run cleanup (not well doco'd currently, using in
+Geothermal).
+
+
+changeset:   355:cdb63398b571
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Wed Sep 29 19:55:44 2010 +1000
+files:       credo/modelsuite.py
+description:
+Improving the naming of runs in ModelSuite - and also adding a couple of useful
+little funcs for looking up model runs in the suite.
+
+
+changeset:   356:9012fd2a43b3
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 30 15:13:45 2010 +1000
+files:       credo/systest/api.py
+description:
+Fixed an issue in _createDefaultModelRun so paramOverride lists are not accidentally modified.
+
+
+changeset:   357:04b7c0cde52f
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 30 15:43:11 2010 +1000
+files:       credo/systest/reference.py
+description:
+Fixed up the setup() function of the ReferenceTest
+
+
+changeset:   358:b601936e8765
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 30 15:44:44 2010 +1000
+files:       credo/systest/__init__.py credo/systest/fieldWithinTolTest.py credo/systest/highResReference.py
+description:
+Added a new System test, HighResReference, based on code Wendy Sharples sent
+through.
+
+This also required updating the field interface to know about the
+highResReference option of hte FieldTest plugin.
+
+
+changeset:   359:232c7843ac98
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 30 15:45:19 2010 +1000
+files:       credo/analysis/fields.py
+description:
+Updated the field analysis interface to know about high res reference options.
+
+
+changeset:   360:af9144403d95
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 30 17:35:03 2010 +1000
+files:       credo/systest/highResReference.py credo/systest/reference.py
+description:
+Minor tidy-ups.
+
+
+changeset:   361:427c4ed2e2ce
+user:        PatrickSunter <patdevelop@gmail.com>
+date:        Thu Sep 30 17:36:39 2010 +1000
+files:       scripts/credo-highResReferenceTest.py
+description:
+Adding a script to run the high res ref test from the command line.
+
+
+changeset:   362:5629062ef2e1
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Oct 08 10:14:20 2010 +1100
+files:       scons/credosystest.py
+description:
+In the CREDO SCons module, changing to avoid problems compiling code on systems with old Python:
+ - Moved the actual import of the rest of CREDO to inside the runTests func
+ - If it fails to import, prints an error message about version of Python needed.
+
+
+changeset:   363:d85a097b8726
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Oct 08 15:09:57 2010 +1100
+files:       doc/credo-intro.rst
+description:
+Updated the CREDO intro section to remove the % scaling - seems to cause problems on older versions of Sphinx.
+
+
+changeset:   364:1aab5dbf1926
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 18 17:05:36 2010 +1100
+files:       doc/credo-install.rst
+description:
+Note about how to install Matplotlib on Mac.
+
+
+changeset:   365:35531f1b66e4
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 18 17:06:16 2010 +1100
+files:       README.txt doc/credo-appendix.rst doc/index.rst
+description:
+Adding notes about how to build documentation in CREDO.
+
+
+changeset:   366:30ef375aedfa
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Tue Oct 19 16:53:47 2010 +1100
+files:       credo/modelsuite.py
+description:
+Minor update to allow various ModelSuite funcs to work if files are in a non-standard path.
+
+
+changeset:   367:5e720effcf2e
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Thu Oct 21 16:47:50 2010 +1100
+files:       credo/modelsuite.py
+description:
+Added new function to allow better post-processing of existing ModelSuite results, readResultsFromPath.
+
+
+changeset:   368:9a40ee861507
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Thu Oct 21 18:10:28 2010 +1100
+files:       credo/analysis/images.py credo/analysis/tests/imagessuite.py credo/analysis/tests/input/testImages/window.00001.png credo/analysis/tests/input/testImages/window.00001_dup.png credo/analysis/tests/input/testImages/window.00002.png doc/api/analysis.rst
+description:
+Initial import of Owen's image compare functionaility.
+
+Need to finish writing a SysTest component that can use this stuff.
+
+
+changeset:   369:049c457a7b22
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Oct 22 14:40:57 2010 +1100
+files:       credo/analysis/images.py credo/analysis/tests/imagessuite.py
+description:
+Updated the images library to return the components of the image comparison,
+as well as the result.
+
+
+changeset:   370:4888131ee85c
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Oct 22 18:52:11 2010 +1100
+files:       credo/analysis/images.py credo/analysis/tests/imagessuite.py
+description:
+Moved the image checking < tol out of images.py, and returned results.
+
+
+changeset:   371:c0b8d716033e
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Oct 22 18:53:03 2010 +1100
+files:       credo/systest/imageCompTest.py credo/systest/tests/imageCompTestsuite.py credo/systest/tests/input/resultsDirs/res1/window.00001.png credo/systest/tests/input/resultsDirs/res2/window.00001.png credo/systest/tests/input/testImages/window.00001.png credo/systest/tests/input/testImages/window.00001_dup.png credo/systest/tests/input/testImages/window.00002.png credo/systest/tests/testAll.py
+description:
+Added a new TestComponent to allow comparing of images.
+
+
+changeset:   372:8a5c437e1d20
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Sun Oct 24 16:24:07 2010 +1100
+files:       doc/examples/MiscScripts/testAll-mg.py doc/examples/run-modify-systest-direct.rst
+description:
+Added to the Docs an example of running an MG-enabled script.
+
+
+changeset:   373:834865c223d1
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 15:10:07 2010 +1100
+files:       credo/systest/reference.py
+description:
+Cleaned up an initialisation of default test fields - it's not good to initialise Python lists as defualt keywords.
+
+
+changeset:   374:dcb81074125d
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 18:12:37 2010 +1100
+files:       credo/analysis/tests/imagessuite.py credo/analysis/tests/input/testImages/rayTay/window.00010_np1.png credo/analysis/tests/input/testImages/rayTay/window.00010_np2.png credo/analysis/tests/input/testImages/rayTay/window.00011_np1.png credo/analysis/tests/input/testImages/rayTay/window.00011_np2.png
+description:
+Adding a new unit test of the image compare functionality after strange results
+received while testing two images.
+
+
+changeset:   375:b6ac599fb04b
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 18:34:20 2010 +1100
+files:       credo/analysis/images.py
+description:
+Minor doc change.
+
+
+changeset:   376:521489752d07
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 18:42:52 2010 +1100
+files:       credo/systest/api.py
+description:
+Adding a new Exception for errors that occur during attempts to set up a
+Model run.
+
+
+changeset:   377:b882dfafd008
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 18:44:10 2010 +1100
+files:       credo/systest/__init__.py credo/systest/imageCompTest.py credo/systest/imageReference.py credo/systest/tests/imageCompTestsuite.py doc/api/systest.rst
+description:
+Cleaned up a few issues with the new imageCompTest for comparing images,
+and added a imageReference top-level SysTest class for comparing a group
+of images with those from a previous model run.
+
+
+changeset:   378:93cbb127f6d0
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 18:58:28 2010 +1100
+files:       credo/analysis/images.py
+description:
+Added space.
+
+
+changeset:   379:0942f50d4034
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 18:58:46 2010 +1100
+files:       credo/systest/imageCompTest.py
+description:
+fixed some autodoc stuff.
+
+
+changeset:   380:5a4e333b5267
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Oct 25 19:14:42 2010 +1100
+files:       doc/examples/MiscScripts/testAll-mg.py doc/examples/MiscScripts/testAll_mg.py doc/examples/run-modify-systest-direct.rst
+description:
+Updated the example of running the Multigrid script modification.
+
+
+changeset:   381:9a1fa0ad3124
+user:        Owen Kaluza <Owen.Kaluza@sci.monash.edu.au>
+date:        Tue Oct 26 16:56:24 2010 +1100
+files:       credo/analysis/images.py
+description:
+Tuning the image comparison functions to be less sensitive to small changes to counts of similar colours: adjusted histogram comparison to use 64 bins instead of 256 in each RGB component and return a value between 0 and 1 as the difference factor. Also modified the pixel by pixel comparison to work for any image size, still comparing at 2x2 but may be useful later.
+
+
+changeset:   382:ce800bf215c0
+branch:      1.5.x
+tag:         1.5
+user:        JulianGiordani
+date:        Wed Oct 27 16:02:42 2010 +1100
+description:
+Adding a 1.5.x branch to CREDO. 1.5.x refers to an Underworld version number, not a CREDO version number.
+
+
+changeset:   383:c85d39379c3e
+branch:      1.5.x
+user:        JulianGiordani
+date:        Wed Oct 27 16:02:48 2010 +1100
+files:       .hgtags
+description:
+Added tag 1.5 for changeset ce800bf215c0
+
+
+changeset:   384:2cb889af9873
+parent:      381:9a1fa0ad3124
+user:        pds@shinkou
+date:        Wed Oct 27 16:41:49 2010 +1100
+files:       credo/systest/__init__.py doc/api/systest.rst
+description:
+Made the loading of the ImageReferenceTest conditional on having the PIL loaded.
+
+
+changeset:   385:c1044b9d4f75
+parent:      381:9a1fa0ad3124
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Wed Oct 27 16:12:58 2010 +1100
+files:       credo/systest/api.py
+description:
+Documented the SysTest mSuite attribute, and also modified func to prepare for Sci benchmark suites.
+
+
+changeset:   386:7817ea321dc3
+parent:      385:c1044b9d4f75
+parent:      384:2cb889af9873
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Wed Oct 27 16:59:37 2010 +1100
+description:
+Merge.
+
+
+changeset:   387:c182737ec8e4
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Mon Nov 01 15:08:55 2010 +1100
+files:       doc/credo-examples.rst doc/credo-faq.rst doc/examples/PBSScripts/UW-lowres.pbs doc/examples/joblaunch-pbs.rst
+description:
+Updated CREDO docs with an example of how to launch scripts via PBS.
+
+
+changeset:   388:28834aeea6da
+branch:      1.5.x
+parent:      383:c85d39379c3e
+parent:      387:c182737ec8e4
+user:        JericoRevote
+date:        Wed Nov 03 12:33:07 2010 +1100
+description:
+Merging latest changes from trunk into 1.5.x branch (release).
+
+
+changeset:   389:b3ab3463c4fd
+branch:      1.5.x
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Wed Nov 03 16:45:57 2010 +1100
+files:       doc/conf.py
+description:
+On the CREDO Underworld release branch, setting the version in the conf script so it will appear correctly in PDFs etc.
+
+
+changeset:   390:097769447e86
+parent:      387:c182737ec8e4
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Thu Nov 04 18:07:44 2010 +1100
+files:       credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py
+description:
+Updating the jobrunner as a start of a series of refactors:
+ - Changed default MPI run command to "mpiexec" (most appropriate for PBS, newer MPICH2 etc)
+ - Started refactoring the run process into smaller functions, that several of which
+   should be moved to being members of the ModelRun class.
+   (Will promote a better inheritance hierarchy in future).
+
+
+changeset:   391:fd0d8c146470
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Thu Nov 04 18:41:00 2010 +1100
+files:       credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py credo/modelrun.py
+description:
+Moving several funcs from the JobRunner to ModelRun class to do with preparing a model.
+
+THis is in preparation for separating generic ModelRun functionality from StgModelRun.
+
+
+changeset:   392:8ec64ff0f537
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 15:06:10 2010 +1100
+files:       credo/jobrunner/api.py credo/jobrunner/mpijobrunner.py
+description:
+Cleaning up documentation of jobrunner classes.
+
+
+changeset:   393:4551c513710e
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 15:06:54 2010 +1100
+files:       credo/jobrunner/tests/jobrunnersuite.py credo/jobrunner/tests/mpijobrunnersuite.py credo/jobrunner/tests/testAll.py
+description:
+Added test cases for jobRunner classes ... at least the base class
+(used several skeleton classes to try to isolate from unrelated
+changes in ModelRun)
+
+
+changeset:   394:0ec68c8bc921
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 16:08:39 2010 +1100
+files:       credo/tests/modelrunsuite.py credo/tests/testAll.py
+description:
+Adding a testAll.py in the main credo models testing dir.
+Adding empty test functions for the expanded modelrun interface
+(want to decouple from StGermain ModelRun first).
+
+
+changeset:   395:f1cefd46c9bd
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 17:08:07 2010 +1100
+files:       doc/credo-faq.rst
+description:
+Updating the CREDO faq structure a little.
+
+
+changeset:   396:87bba46b9b81
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 17:16:00 2010 +1100
+files:       doc/appendix/buildDocs.rst doc/appendix/credo-developer-notes.rst doc/credo-appendix.rst doc/credo-developer-notes.rst doc/index.rst
+description:
+Updating the CREDO docs so that the "Appendix" section holds more extended developer docs.
+
+This included writing up a bit more about  the unittest system.
+
+
+changeset:   397:80b3687ae901
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 17:16:57 2010 +1100
+files:       doc/appendix/credo-developer-notes.rst doc/appendix/developerNotes.rst
+description:
+Doc file rename fix.
+
+
+changeset:   398:5186396f6867
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 17:39:38 2010 +1100
+files:       README.txt
+description:
+Some minor edits to README.txt in preparation for next CREDO release.
+
+
+changeset:   399:3b6442620cc1
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 17:40:58 2010 +1100
+files:       credo/modelrun.py
+description:
+JUst reordering some ModelRun methods so the order is more logical.
+
+
+changeset:   400:3a4c6df82a73
+tag:         tip
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Fri Nov 05 17:41:54 2010 +1100
+files:       credo/jobrunner/tests/mpijobrunnersuite.py
+description:
+Just initial comments for mpijobrunnersuite.
+
+changeset:   405:e9ffc96482fd
+user:        Patrick Sunter <patdevelop@gmail.com>
+date:        Tue Nov 09 23:52:30 2010 +1100
+summary:     Updated a small bug where jobrunner runSuite() func didn't follow a
+n interface update in runModel().
+
+changeset:   407:1aac8754384d
+parent:      405:e9ffc96482fd
+user:        Owen Kaluza <Owen.Kaluza@monash.edu>
+date:        Thu Nov 11 16:09:14 2010 +1100
+summary:     Updated image comparison to compare based on a 20x20 subsample for 
+higher sensitivity. Changed default tolerances. Adjusted to always dump images n
+ot just the first and last as gLucifer tests require this.

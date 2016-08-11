@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <struct name="components" mergeType="merge">
+
+      <!-- destroy the SUPG ADE solver -->
+      <struct name="residual" mergeType="replace">
+         <param name="Type">DummyComponent</param>
+      </struct>
+      <struct name="massMatrix" mergeType="replace">
+         <param name="Type">DummyComponent</param>
+      </struct>
+      <struct name="predictorMulticorrector" mergeType="replace">
+         <param name="Type">DummyComponent</param>
+      </struct>
+      <struct name="EnergyEqn" mergeType="replace">
+         <param name="Type">DummyComponent</param>
+      </struct>
+      <struct name="lumpedMassMatrixForceTerm" mergeType="replace">
+         <param name="Type">DummyComponent</param>
+      </struct>
+      <struct name="defaultResidualForceTerm" mergeType="replace">
+         <param name="Type">DummyComponent</param>
+      </struct>
+
+   </struct>
+
+</StGermainData>

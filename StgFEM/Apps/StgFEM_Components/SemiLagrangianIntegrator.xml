@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="import" mergeType="merge">
+      <param>StgFEM</param>
+   </list>
+
+   <param name="elementMesh">linearMesh</param>
+   <param name="velocityMesh">linearMesh</param>
+   <param name="temperatureMesh">linearMesh</param>
+
+   <struct name="components" mergeType="merge">
+
+      <struct name="temperatureStar">
+         <param name="Type"> MeshVariable </param>
+         <param name="Rank"> Scalar </param>
+         <param name="DataType"> Double </param>
+         <param name="mesh"> temperatureMesh </param>
+      </struct>
+      <struct name="temperatureStarDofLayout">
+         <param name="Type"> DofLayout </param>
+         <param name="mesh"> temperatureMesh </param>
+         <list name="BaseVariables">
+            <param>temperatureStar</param>
+         </list>
+      </struct>
+      <struct name="temperatureStarField">
+         <param name="Type"> FeVariable </param>
+         <param name="FEMesh"> temperatureMesh </param>
+         <param name="DofLayout"> temperatureStarDofLayout </param>
+         <param name="LinkedDofInfo"> temperatureStarLinkedDofs </param>
+      </struct>
+      <struct name="temperatureOld">
+         <param name="Type"> MeshVariable </param>
+         <param name="Rank"> Scalar </param>
+         <param name="DataType"> Double </param>
+         <param name="mesh"> temperatureMesh </param>
+      </struct>
+      <struct name="temperatureOldDofLayout">
+         <param name="Type"> DofLayout </param>
+         <param name="mesh"> temperatureMesh </param>
+         <list name="BaseVariables">
+            <param>temperatureOld</param>
+         </list>
+      </struct>
+      <struct name="temperatureOldField">
+         <param name="Type"> FeVariable </param>
+         <param name="FEMesh"> temperatureMesh </param>
+         <param name="DofLayout"> temperatureOldDofLayout </param>
+      </struct>
+
+      <struct name="integrator">
+         <param name="Type">SemiLagrangianIntegrator</param>
+         <param name="VelocityField">VelocityField</param>
+         <param name="Context">context</param>
+         <list name="fields">
+            <param>TemperatureField</param><param>temperatureStarField</param><param>temperatureOldField</param>
+         </list>
+      </struct>
+
+      <struct name="temperatureStarGradientField">
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Gradient</param>
+         <param name="Operand">temperatureStarField</param>
+      </struct>
+
+   </struct>
+
+</StGermainData>

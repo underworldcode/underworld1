@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+  <struct name="components" mergeType="merge">
+
+    <struct name="mantleShape">
+      <param name="Type">PolygonShape</param>
+      <param name="startZ" units="km">0</param>
+      <param name="endZ" units="km">360</param>
+      <list name="vertices">
+        <asciidata><columnDefinition name="x" type="double" units="km"/><columnDefinition name="y" type="double" units="km"/>
+            0 0
+            360 0
+            360 50
+            0 50
+            </asciidata>
+      </list>
+    </struct>
+    <struct name="mantleIsoViscosity">
+      <param name="Type">MaterialViscosity</param>
+      <param name="eta0" units="Pa*s">1e19</param>
+    </struct>
+    <struct name="mantle_temperature_dep_viscosity">
+      <param name="Type">ViscousCreep</param>
+      <param name="StrainRateInvariantField">StrainRateInvariantField</param>
+      <param name="TemperatureField">TemperatureField</param>
+      <param name="PressureField">PressureField</param>
+      <param name="GrainSize">1</param>
+      <param name="shear_modulus" units="Pa">1</param>
+      <param name="burgers_vector" units="m">1</param>
+      <param name="DefaultStrainRateInvariant" units="s^-1">1e-10</param>
+      <param name="enable_limit_eta">False</param>
+      <param name="enable_diffusion">False</param>
+      <param name="enable_peierls">False</param>
+
+      <param name="enable_dislocation">True</param>
+      <param name="dislocation_material_constant" units="s^-1">7.0e-14</param>
+      <param name="dislocation_activation_energy" units="J*mol^-1">5.2e5</param>
+      <param name="dislocation_stress_exponent">3</param>
+      <param name="dislocation_grainsize_exponent">0</param>
+    </struct>
+    <struct name="mantle_yielding">
+      <param name="Type">DruckerPrager</param>
+      <param name="PressureField">PressureField</param>
+      <param name="MaterialPointsSwarm">materialSwarm</param>
+      <param name="StrainRateField">StrainRateField</param>
+      <param name="cohesion" units="Pa">15e6</param>
+      <param name="frictionCoefficient">0.44</param>
+      <param name="minimumViscosity" units="Pa*s">1.0e18</param>
+      <!--
+         <param name="StrainWeakening">strainWeakening</param>
+         -->
+    </struct>
+    <struct name="mantle">
+      <param name="Type">RheologyMaterial</param>
+      <param name="Shape">mantleShape</param>
+      <list name="Rheology">
+        <!--
+            <param>mantleIsoViscosity</param>
+         -->
+        <param>mantle_temperature_dep_viscosity</param>
+        <param>viscosityLimiter</param>
+        <param>mantle_yielding</param>
+      </list>
+
+      <param name="DensityLabel">mantleDensity</param>
+      <param name="ThermalExpansivityLabel" units="K^-1">2.8e-5</param>
+      <param name="DiffusivityLabel">defaultDiffusivity</param>
+      <param name="CpLabel">default_cp</param>
+      <param name="LatentHeatFusionLabel" units="kJ*kg^-1">0</param>
+      <param name="RadiogenicHeatProductionLabel" units="W/(m*m*m)">0.0</param>
+      <param name="MeltFractionLabel">0.0</param>
+      <param name="MeltExpansionLabel"> 0.0 </param>
+      <param name="PressureLabel"> default_pressure_ppc </param> <!-- temp debugging -->
+    </struct>
+
+    <struct name="mantleDensity">
+      <param name="Type">Ppc_LinearDensity</param>
+      <param name="ReferenceDensity" units="kg*m^-3">3370.0</param>
+      <param name="ReferenceTemperature" units="K">293.15</param>
+      <param name="ThermalExpansivity"> ThermalExpansivityLabel </param>
+      <param name="Temperature"> default_temperature_ppc </param>
+      <param name="MeltDensityChange"> MeltExpansionLabel </param>
+      <param name="MeltFraction"> MeltFractionLabel </param>
+      <param name="Compressibility"> 0 </param>
+    </struct>
+
+  </struct>
+</StGermainData>

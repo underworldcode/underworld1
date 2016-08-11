@@ -1,0 +1,32 @@
+Aim:
+----
+
+for specifying basic tests or modelRuns in Python scripts,
+user shouldn't have to add all the PBS or Grid info by default ...
+they should then be able to pass in dictionaries for Grid or PBS
+when running a Suite, and it will "upgrade" the default JobParams
+to contain any architecture-specific stuff.
+
+Steps/issues:
+-------------
+
+* Basic JobMetaInfo hierararchy
+
+* D For the PBSJobRunner, should we ideally get it to run a suite
+    submitted in parallel, rather than sequential? (Yes)
+* D Properly handle MaxRunTime as a JobParam (eg same as nProc)
+* D Ability to easily write this out to XML
+  (Does it include sub-dicts of params to write to XML automagically?
+* D Move PBS-specific stuff out of constructModelRunCommand to 
+   e.g. PBSJobParams ....
+* Deal with the "InputFilePath" stuff of Wendys ....
+
+Qtns:
+-----
+ * Do JobMetaInfo and JobParams move to JobRunner subdir?
+
+Useful links:
+-------------
+
+* http://coding.derkeiler.com/Archive/Python/comp.lang.python/2004-03/2075.html
+* 

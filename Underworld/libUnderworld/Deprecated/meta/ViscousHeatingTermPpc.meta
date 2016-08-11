@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">ViscousHeatingTermPpc</param>
+<param name="Author">JulianGiordani</param>
+<param name="Organisation">MCC</param>
+<param name="Project">Underworld</param>
+<param name="Location">./Underworld/Utils/src/</param>
+<param name="Project Web">http://mcc.monash.edu.au/Underworld</param>
+<param name="Copyright">Copyright (c) 2005, Monash Cluster Computing</param>
+<param name="License"></param>
+<param name="Parent">ForceTerm</param>
+<param name="Reference">...</param>
+<param name="Summary">...</param>
+<param name="Description">Defines a viscous (shear) heating term, that is $\frac{\tau_i_j u_i__,j}{\rho c_p}</param>
+
+<!--Now the interesting stuff-->
+
+
+<list name="Params">
+
+</list>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">StrainRateField</param>
+		<param name="Type">FeVariable</param>
+		<param name="Description">$u_i__,_j$</param>
+	</struct>
+
+<!-- PLEASE, check the above struct information is accurate, in line number 142 of the c file and then remove this comment afterwards -->
+
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">DeviatoricStressField</param>
+		<param name="Type">FeVariable</param>
+		<param name="Description">Deviatoric stress, $\tau_i_j$</param>
+	</struct>
+
+<!-- PLEASE, check the above struct information is accurate, in line number 143 of the c file and then remove this comment afterwards -->
+
+	<struct>
+			<param name="Essential">True</param>
+			<param name="Name">CpLabel</param>
+			<param name="Type">Ppc</param>
+			<param name="Description">The Ppc Label used for the specific heat capacity of the material.</param>
+		</struct>
+		<struct>
+			<param name="Essential">True</param>
+			<param name="Name">DensityLabel</param>
+			<param name="Type">Ppc</param>
+			<param name="Description">The Ppc Label used for the density of the material.</param>
+		</struct>
+		<struct>
+			<param name="Essential">True</param>
+			<param name="Name">Manager</param>
+			<param name="Type">PpcManager</param>
+			<param name="Description">The PpcManager is required to calculate the
+			ppc values. If not explicitly defined the code assumes a PpcManager exists
+			called 'default_ppcManager'</param>
+		</struct>
+
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">
+<![CDATA[
+	<struct name="default_ppcManager">
+		<param name="Type">PpcManager</param>
+		<param name="MaterialSwarm"> materialSwarm </param>
+		<param name="IntegrationSwarm"> picIntegrationPoints </param>
+		<param name="Scaling"> theScaling </param>
+		<param name="Mesh"> linearMesh </param>
+		<param name="Gravity"> gravity </param>
+		<list name="Properties">
+			<struct>
+				<param name="PropertyName"> DensityLabel </param>
+				<param name="StoreOnParticles"> True </param>
+			</struct>
+		</list>
+	</struct>
+
+	<struct type="struct" name="vh_heatingTerm">
+		<param name="Type">ViscousHeatingTermPpc</param>
+		<param name="ForceVector">residual</param>
+		<param name="Swarm">picIntegrationPoints</param>
+		<param name="Manager">thePpcManager</param>
+		<param name="StrainRateField">StrainRateField</param>
+		<param name="StressField">recoveredDeviatoricStressField</param>
+	</struct>
+]]>
+
+</param>
+
+</StGermainData>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<struct name="components" mergeType="merge">
+		<struct name="isosurfaceTemperature">
+			<param name="Type">lucIsosurface</param>
+			<param name="IsosurfaceField">TemperatureField</param>
+			<param name="ColourField">TemperatureField</param>
+			<param name="ColourMap">temperatureColourMap</param>
+			<param name="isovalue">0.5</param>
+			<param name="drawWalls">false</param>
+		</struct>
+
+		<struct name="Viewport" mergeType="merge">
+			<list name="DrawingObject" mergeType="merge">
+				<param>isosurfaceTemperature</param>
+			</list>
+		</struct>
+	</struct>
+
+</StGermainData>

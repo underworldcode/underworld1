@@ -1,0 +1,99 @@
+Simple shear deformation, shear band formation
+==============================================
+
+
+Based on the +LithosphericSandbox/Sandbox2D.xml setup.
+
+This particular example assumes access to the experimental solvers
+which are needed for the extreme cases of shear banding. These solvers
+are due to be migrated to the standard release in early 2012
+
+
+
+Run script
+----------
+
+This is the recommended launch technique for this setup. 
+The environment file and paths will need to be changed according to 
+the machine this is being run on. There is a basic definition which
+can be used for various experiments and contains the solver setup etc.
+
+The different experiments are defined as bash functions and executed as needed.
+This allows each of the experiments you run to be stored for posterity 
+
+
+		#! /bin/bash
+		source /Users/lmoresi/+Codes/UWenvironment.sh
+		
+		export UWPATH=/Users/lmoresi/+Codes/stgUnderworldE-2011.10.30
+		export UWEXEC=$UWPATH/build/bin/Underworld
+		export OUTPUTPATH=/Users/lmoresi/+Simulations/PEPI-reprise
+		export BASIC_RUN="$UWPATH/Underworld/InputFiles/+PublishedResults/LemialeEtAl-PEPI2008/LemialeEtAl-PEPI2008.xml \
+							$UWPATH/Experimental/InputFiles/StokesPIC+AugmentedLagrangian.xml \
+							$UWPATH/Experimental/InputFiles/Experimental_Components/MultigridForRegularSCR.xml \
+							-options_file $UWPATH/Experimental/InputFiles/options/options-scr-mg-accelerating.opt \					
+							--nonLinearTolerance=0.003 -scr_ksp_rtol 1.0e-4 -A11_ksp_rtol 1.0e-4 \			
+							--components.constitutiveMatrix.incompressibility_Penalty=1.0e2 \
+							--components.constitutiveMatrix.viscosity_weighting=false \
+							--checkpointEvery=25  --saveDataEvery=5 \
+							-Xscr_ksp_view -XA11_ksp_view "
+		
+		run_experiment1() {
+			OUTPUTNAME=Shearbox2D-No1
+			OUTPUTDIR=$OUTPUTPATH/$OUTPUTNAME;
+			INPUTDIR=$OUTPUTDIR  				# change this if restarting one experiment from a previous one
+		
+			if [ ! -d $OUTPUTDIR ]; then
+				mkdir -p $OUTPUTDIR; 
+			fi
+			
+			mkdir -p $OUTPUTDIR/Checkpoints >& /dev/null; \
+			OUTPUTFILE=${OUTPUTDIR}/output.txt ; \
+		
+			$UWEXEC $BASIC_RUN \
+					--outputPath=$OUTPUTDIR \
+					--checkpointReadPath=$INPUTDIR/Checkpoints \
+					--checkpointWritePath=$OUTPUTDIR/Checkpoints --checkpointAppendStep=1 \
+					--checkpointEvery=20  --saveDataEvery=10 \
+					--components.sampleDensity.value=30.0 \
+					--components.strainWeakening.softeningStrain=0.01 \
+					--Cohesion=50 --Cohesion2=0.1 \
+					--FrictionCoeff=0.5 FrictionCoeff2=0.5 \
+					--mgLevels=6 --elementResI=256 --elementResJ=128 --dim=2 \
+					--maxTimeSteps=100 \
+					--leftWallVelocity=0.5 --rightWallVelocity=-0.5 \
+					 > $OUTPUTFILE 2>&1	
+		}		
+						
+		# Run experiments as required
+		
+		# Experiment 1 ... notes go here 
+		#
+		  run_experiment1
+		#
+		#
+		# Experiment 2 ... notes go here 
+		#
+		#
+		# run_experiment2
+
+
+
+
+
+
+Reference
+---------
+
+
+	@article{lemi.muhl.ea:pepi2008,
+		Author = {Lemiale, V. and M{\"u}hlhaus, H.B. and Moresi, L. and Stafford, J.},
+		Date-Added = {2009-05-24 22:19:52 +1000},
+		Date-Modified = {2010-02-18 10:08:43 +1100},
+		Journal = {Physics of the Earth and Planetary Interiors},
+		Number = {1-4},
+		Pages = {177--186},
+		Publisher = {Elsevier},
+		Title = {Shear banding analysis of plastic models formulated for incompressible viscous flows},
+		Volume = {171},
+		Year = {2008}}

@@ -1,0 +1,51 @@
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <include>StgFEM/ConstantMesh.xml             </include>
+   <include>StgFEM/LinearMesh.xml               </include>
+   <include>StgFEM/VelocityField.xml            </include>
+   <include>StgFEM/PressureField.xml            </include>
+   <include>Underworld/GaussSwarm.xml           </include>
+   <include>StgFEM/TimeIntegrator.xml           </include>
+   <include>PICellerator/MaterialPointSwarm.xml </include>
+   <include>Underworld/StokesFlowUzawaCompressible.xml   </include>
+
+
+   <struct name="components" mergeType="merge">
+	 <!-- The Ppc Manager-->
+	 <struct name="default_ppcManager">
+		<param name="Type">PpcManager</param>
+		<param name="MaterialSwarm"> materialSwarm </param>
+		<param name="IntegrationSwarm"> picIntegrationPoints </param>
+		<param name="Scaling"> theScaling </param>
+		<param name="Mesh"> linearMesh </param>
+		<param name="Gravity"> gravity </param>
+		<list name="Properties">
+		  <struct>
+          <param name="PropertyName"> DensityLabel </param>
+          <param name="StoreOnParticles"> True </param>
+        </struct>
+		  <struct>
+          <param name="PropertyName"> Viscosity </param>
+        </struct>
+		</list>
+	 </struct>
+
+    <!-- Density and gravity based on ppc -->
+	 <struct type="struct" name="buoyancyForceTerm">
+		<param name="Type">BuoyancyForceTermPpc</param>
+		<param name="ForceVector">mom_force</param>
+		<param name="Swarm">picIntegrationPoints</param>
+		<param name="Manager">thePpcManager</param>
+	 </struct>
+
+    <!-- The properties configuration components -->
+	 <!--struct name="gravity">
+		<param name="Type">Ppc_Constant</param>
+		<param name="Manager">thePpcManager</param>
+      <param name="Value" > 9.8 </param>
+	 </struct-->
+
+  </struct>
+
+</StGermainData>

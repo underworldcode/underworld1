@@ -1,0 +1,13 @@
+Doing post-run tidyup:
+Restoring initial path '/home/pds/AuScopeCodes/stgUnderworldEGM-packages-devel/Experimental/InputFiles'
+CPU time regular was 0.826317, PPC was 0.830904
+CPU time regular was 0.840123, PPC was 0.814179
+CPU time regular was 0.809768, PPC was 0.809136
+CPU time regular was 0.813736, PPC was 0.827999
+CPU time regular was 0.826321, PPC was 0.81942
+CPU time regular was 0.815167, PPC was 0.844881
+CPU time regular was 0.808789, PPC was 0.849388
+CPU time regular was 0.799198, PPC was 0.826902
+CPU time regular was 0.849262, PPC was 0.831013
+CPU time regular was 0.800944, PPC was 0.810086
+Avg over 10 runs: regular=0.818962, PPC=0.826391

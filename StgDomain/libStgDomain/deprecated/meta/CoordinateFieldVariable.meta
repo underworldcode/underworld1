@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">CoordinateFieldVariable</param>
+<param name="Author">...</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StgDomain</param>
+<param name="Location">./StgDomain/Utils/src/</param>
+<param name="Project Web">http://www.stgermainproject.org/StgDomain.html</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License v2.1 - http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</param>
+<param name="Parent">FieldVariable</param>
+<param name="Reference">...</param>
+<param name="Summary">...</param>
+<param name="Description">Allows extraction of coordinates using the FieldVariable interface, only 1 dimension supported now, select an axis and all requests for values from the field will return the coordinate value of the selected axis</param>
+
+<!--Now the interesting stuff-->
+
+
+<list name="Params">
+	<struct>
+		<param name="Name">axis</param>
+		<param name="Type">String</param>
+		<param name="Default">"Y"</param>
+		<param name="Description">Axis to use x/y/z</param>
+	</struct>
+
+</list>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">FieldVariable</param>
+		<param name="Type">FieldVariable</param>
+		<param name="Description">The field that you want to use a coordinate from.</param>
+	</struct>
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">...</param>
+
+</StGermainData>

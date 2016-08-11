@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<Xdmf xmlns:xi="http://www.w3.org/2001/XInclude" Version="2.0">
+
+<Domain>
+
+   <Grid Name="FEM_Mesh_linearMesh">
+
+      <Time Value="0.142856" />
+
+         <Topology Type="Quadrilateral" NumberOfElements="900"> 
+            <DataItem Format="HDF" DataType="Int"  Dimensions="900 4">Mesh.linearMesh.00001.h5:/connectivity</DataItem>
+         </Topology>
+
+         <Geometry Type="XYZ">
+            <DataItem ItemType="Function"  Dimensions="961 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="961 1" Name="XCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 961 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="961 2">Mesh.linearMesh.00001.h5:/vertices</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="961 1" Name="YCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 961 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="961 2">Mesh.linearMesh.00001.h5:/vertices</DataItem>
+               </DataItem>
+            </DataItem>
+         </Geometry>
+
+         <Attribute Type="Scalar" Center="Node" Name="VelocityMagnitudeField">
+            <DataItem ItemType="HyperSlab" Dimensions="961 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 961 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="961 1">VelocityMagnitudeField.00001.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Cell" Name="PressureField">
+            <DataItem ItemType="HyperSlab" Dimensions="900 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 900 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="900 1">PressureField.00001.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+   </Grid>
+
+</Domain>
+
+</Xdmf>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="import" mergeType="merge">
+      <param>gLucifer</param>
+   </list>
+
+   <!--
+
+   The idea here is to stop duplication of components due to repeated including of xml files
+   
+   For now I am going to include all the VP definitions here, but what I would prefer to do
+   is to have the common components defined in this file a little more systematically,
+   then the viewports assemble them elsewhere and for the viewports to be included in the window definition file 
+
+   -->
+
+   <!-- <struct name="components" mergeType="merge">
+      <struct name="gLuciferDB">
+         <param name="Type">lucDatabase</param>
+         <param name="filename">gLuciferDBfile</param>
+         <param name="writeEvery">1</param>
+         <param name="singleFile">True</param>
+      </struct>
+   </struct>-->
+
+   <!-- <include>ParticleHasYieldedVP.xml</include>-->
+   <include>ParticleMaterialVP.xml</include>
+   <include>TemperatureAndVelocityArrowsVP.xml</include>
+   <!-- <include>StrainRateInvariantVP.xml</include>
+   <include>HorizontalCrossSectionsVP.xml</include>
+   <include>VerticalCrossSectionsVP.xml</include>-->
+   <include>BoundaryLayersVP.xml</include>
+   <!-- <include>PressureVP.xml</include>
+   <include>REPStressVP.xml</include>-->
+
+</StGermainData>
+
+
+

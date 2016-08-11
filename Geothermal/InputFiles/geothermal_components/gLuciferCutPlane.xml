@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<struct name="components" mergeType="merge">
+		<struct name="cutPlane" mergeType="replace">
+			<param name="Type">lucCrossSection</param>
+			<param name="FieldVariable">TemperatureField</param>
+			<param name="colour">DarkGray</param>
+			<param name="crossSectionY">0</param>
+			<param name="opacity">0.75</param> 
+		</struct>
+
+		<struct name="Viewport" mergeType="merge">
+			<list name="DrawingObject" mergeType="merge">
+				<param>cutPlane</param>
+			</list>
+		</struct>
+	</struct>
+</StGermainData>

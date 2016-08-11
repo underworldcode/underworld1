@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+	
+	<list name="import" mergeType="merge">
+		<param>Underworld</param>
+	</list>
+
+	
+	<list name="plugins" mergeType="Replace">
+		<!-- <struct>
+			<param name="Type">Underworld_EulerDeform</param>
+			<param name="Context">context</param>
+		</struct> -->
+		<struct>
+			<param name="Type">StgFEM_StandardConditionFunctions</param>
+			<param name="Context">context</param>
+		</struct>
+		<struct>
+			<param name="Type">Underworld_IncompressibleExtensionBC</param>
+			<param name="Context">context</param>
+		</struct>
+		<struct>  
+	        <param name="Type">Underworld_PressureCalibration</param>       
+	        <param name="Context">context</param>
+	    </struct>
+	</list>
+
+	<struct name="components" mergeType="merge">
+	   <element type="struct" name="context">
+	      <element type="param" name="Type">UnderworldContext</element>
+	    </element>
+	 </struct>
+	
+
+	<!-- Component Stuff -->
+	<include>StgFEM/ConstantMesh.xml                    </include>
+	<include>StgFEM/LinearMesh.xml                      </include>
+	<include>StgFEM/VelocityField.xml                   </include>
+	<include>StgFEM/PressureField.xml                   </include>
+	<include>Underworld/GaussSwarm.xml                  </include> 
+	<include>StgFEM/TimeIntegrator.xml                  </include>
+	<include>PICellerator/MaterialPointSwarm.xml        </include>
+	<include>Underworld/StokesFlowUzawaPIC.xml          </include>
+
+	<include>StgFEM/PeriodicX.xml                       </include>
+
+
+	<param name="timeIntegratorOrder"> 2 </param>
+
+	<struct name="components" mergeType="merge">
+		<struct name="buoyancyForceTerm">
+			<param name="Type">BuoyancyForceTerm</param>
+			<param name="ForceVector">mom_force</param>
+			<param name="TemperatureField">TemperatureField</param>
+			<param name="Swarm">picIntegrationPoints</param>
+			<param name="gravity">gravity</param>
+		</struct>
+	</struct>
+	
+	<param name="gravity"> 1.0 </param>
+
+	<!-- Make the mesh non-regular / regular as needed -->
+	<struct name="components" mergeType="merge">
+		<struct name="linearMeshGenerator" mergeType="merge">
+			<param name="regular"> True </param>
+		</struct>
+	</struct>
+
+	<!-- 
+		We can't specify 2D and 3D boundary conditions in the same way. 
+		These will need to be included in the 2D / 3D versions of the App. 
+		
+		velocityBCs.shear2D.xml or
+		velocityBCs.shear3D.xml
+		 
+	-->
+
+	
+
+
+
+</StGermainData>

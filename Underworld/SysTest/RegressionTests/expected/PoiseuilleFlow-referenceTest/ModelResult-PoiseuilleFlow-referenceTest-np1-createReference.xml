@@ -1,0 +1,25 @@
+<StgModelResult>
+  <modelName>PoiseuilleFlow-referenceTest-np1-createReference</modelName>
+  <outputPath>/home/julian/code/fresh_uw/Underworld/SysTest/RegressionTests/expected/PoiseuilleFlow-referenceTest</outputPath>
+  <jobMetaInfo>
+    <runType>MPI</runType>
+    <simtime>0.0</simtime>
+    <submitTime>2013-03-28 18:00:34.345237</submitTime>
+    <platformInfo>
+      <release>3.5.0-26-generic</release>
+      <machine>x86_64</machine>
+      <version>#42-Ubuntu SMP Fri Mar 8 23:18:20 UTC 2013</version>
+      <node>blackbox</node>
+      <system>Linux</system>
+    </platformInfo>
+    <performanceInfo>
+      <profilerInfo profType="UnixTimeCmd">
+        <avgMem_KB>0.0</avgMem_KB>
+        <pageFaults>0.0</pageFaults>
+        <maxMem_KB>19960.0</maxMem_KB>
+        <walltime>0.98</walltime>
+      </profilerInfo>
+    </performanceInfo>
+    <runCommand>mpiexec -np 1 /home/julian/code/fresh_uw/build/bin/StGermain PoiseuilleFlow.xml /home/julian/code/fresh_uw/Underworld/SysTest/RegressionTests/expected/PoiseuilleFlow-referenceTest/credo-analysis.xml </runCommand>
+  </jobMetaInfo>
+</StgModelResult>

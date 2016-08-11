@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<include>Underworld/BaseApps/RBFExamplesBaseFile.xml</include>
+
+<struct name="components" mergeType="merge">
+
+   <!-- create rbf swarm -->
+   <struct name="RBFManager_Sine">
+      <param name="Type">RBFManager</param>
+      <param name="ParticleSupportRadius">0.024</param>
+      <param name="RBFdim">2</param>
+      <param name="RBFSwarm">RBFSwarm</param>
+   </struct>
+   <struct name="RBFSwarm">
+      <param name="Type">Swarm</param>
+      <param name="CellLayout">CLLLayout_Sine</param>
+      <param name="ParticleLayout">csvSineParticleLayout</param>
+   </struct>
+   <struct name="CLLLayout_Sine">
+      <param name="Type">CLLCellLayout</param>
+      <param name="GeometryMesh">linearMesh</param>
+      <param name="CellSize">0.024</param>
+      <param name="MeshDim">2</param>
+   </struct>
+   <struct name="csvSineParticleLayout">
+      <param name="Type">ASCIIParticleLayout</param>
+      <param name="filename">sineHeight.csv</param>
+      <param name="mustUseAllParticles">False</param>
+      <list name="columnList" >
+         <param>RBFSwarm-PositionX</param>
+         <param>RBFSwarm-PositionZ</param>
+         <param>SwarmDataVariable</param>
+      </list>
+      <list name="columnScaling" >
+          <param>1</param>
+          <param>1</param>
+          <param>1</param>
+       </list>
+   </struct>
+   <struct name="ParticleData">
+      <param name="Type">Variable</param>
+      <param name="Rank">Scalar</param>
+      <param name="DataType">Double</param>
+   </struct>
+   <struct name="SwarmDataVariable">
+      <param name="Type">SwarmVariable</param>
+      <param name="Swarm">RBFSwarm</param>
+      <param name="Variable">ParticleData</param>
+   </struct>
+
+   <!-- fields and materials -->
+   <struct name="RBFHeightField_Sine">
+      <param name="Type">RBFFieldVariable</param>
+      <param name="RBFManager">RBFManager_Sine</param>
+      <param name="SwarmVariable">SwarmDataVariable</param>
+   </struct>
+   <struct name="belowSineWaveShape">
+      <param name="Type">BelowHeightField</param>
+      <param name="HeightField">RBFHeightField_Sine</param>
+   </struct>
+   <struct name="belowSineWaveMaterial">
+      <param name="Type">Material</param>
+      <param name="Shape">belowSineWaveShape</param>
+   </struct>
+
+</struct>
+  
+</StGermainData>

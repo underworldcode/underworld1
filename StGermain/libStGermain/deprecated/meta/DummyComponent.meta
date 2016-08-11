@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">DummyComponent</param>
+<param name="Author">John Mansour</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StGermain</param>
+<param name="Location">./StGermain/Utils/src/</param>
+<param name="Project Web">http://www.stgermainproject.org/</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License v2.1 - http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</param>
+<param name="Parent">Stg_Component</param>
+<param name="Reference"></param>
+<param name="Summary">This is an empty dummy component.</param>
+<param name="Description">This is an empty dummy component.  It's job is to do nothing.  It is used to replace a component instantiated via XML, therefore 'deleting' it</param>
+<list  name="Params"></list>
+<list  name="Dependencies"></list>
+
+<param name="Example">
+<![CDATA[
+		<struct name="NameOfComponentWeWishtoDelete" mergeType="replace">
+			<param name="Type">DummyComponent</param>
+		</struct>
+]]>
+</param>
+
+</StGermainData>

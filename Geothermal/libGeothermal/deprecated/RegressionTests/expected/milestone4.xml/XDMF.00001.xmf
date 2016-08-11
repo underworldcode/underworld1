@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+<!DOCTYPE Xdmf SYSTEM "Xdmf.dtd" []>
+<Xdmf xmlns:xi="http://www.w3.org/2001/XInclude" Version="2.0">
+
+<Domain>
+
+   <Grid Name="FEM_Grid_linearMesh">
+
+      <Time Value="0.000000" />
+
+         <Topology Type="Hexahedron" NumberOfElements="4608"> 
+            <DataItem Format="HDF" DataType="Int"  Dimensions="4608 8">Mesh.linearMesh.00001.h5:/connectivity</DataItem>
+         </Topology>
+
+         <Geometry Type="XYZ">
+            <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="5525 3">Mesh.linearMesh.00001.h5:/vertices</DataItem>
+         </Geometry>
+
+         <Attribute Type="Scalar" Center="Node" Name="TemperatureField">
+            <DataItem ItemType="HyperSlab" Dimensions="5525 1" >
+               <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 5525 1 </DataItem>
+               <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="5525 1">TemperatureField.00001.h5:/data</DataItem>
+            </DataItem>
+         </Attribute>
+
+   </Grid>
+
+   <Grid Name="FEM_Grid_irregularSurfaceMesh">
+
+      <Time Value="0.000000" />
+
+         <Topology Type="Quadrilateral" NumberOfElements="57831"> 
+            <DataItem Format="HDF" DataType="Int"  Dimensions="57831 4">Mesh.irregularSurfaceMesh.00001.h5:/connectivity</DataItem>
+         </Topology>
+
+         <Geometry Type="XYZ">
+            <DataItem ItemType="Function"  Dimensions="57877 3" Function="JOIN($0, $1, 0*$1)">
+               <DataItem ItemType="HyperSlab" Dimensions="57877 1" Name="XCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 0 1 1 57877 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="57877 2">Mesh.irregularSurfaceMesh.00001.h5:/vertices</DataItem>
+               </DataItem>
+               <DataItem ItemType="HyperSlab" Dimensions="57877 1" Name="YCoords">
+                  <DataItem Dimensions="3 2" Format="XML"> 0 1 1 1 57877 1 </DataItem>
+                  <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="57877 2">Mesh.irregularSurfaceMesh.00001.h5:/vertices</DataItem>
+               </DataItem>
+            </DataItem>
+         </Geometry>
+
+   </Grid>
+
+   <Grid Name="materialSwarm" GridType="Collection">
+
+      <Time Value="0.000000" />
+
+      <Grid Name="materialSwarm_proc_0">
+
+         <Topology Type="POLYVERTEX" NodesPerElement="36864"> </Topology>
+         <Geometry Type="XYZ">
+            <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="36864 3">materialSwarm.00001.h5:/materialSwarm-Position</DataItem>
+         </Geometry>
+
+         <Attribute Type="Vector" Center="Node" Name="materialSwarm-Position">
+            <DataItem Format="HDF" NumberType="Float" Precision="8" Dimensions="36864 3">materialSwarm.00001.h5:/materialSwarm-Position</DataItem>
+         </Attribute>
+
+         <Attribute Type="Scalar" Center="Node" Name="materialSwarm-MaterialIndex">
+            <DataItem Format="HDF" NumberType="Int" Dimensions="36864 1">materialSwarm.00001.h5:/materialSwarm-MaterialIndex</DataItem>
+         </Attribute>
+
+      </Grid>
+
+   </Grid>
+
+</Domain>
+
+</Xdmf>
+

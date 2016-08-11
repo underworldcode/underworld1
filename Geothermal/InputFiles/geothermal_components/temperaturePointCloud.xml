@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="plugins" mergeType="merge">
+      <struct>
+         <param name="Type">Geothermal_TemperaturePointCloud</param>
+         <param name="Context">context</param>
+         <param name="TemperatureField">TemperatureField</param>
+         <param name="Swarm">picIntegrationPoints</param>
+         <param name="MaterialManager">diffusionMaterial</param>
+         <!-- Set this to True to also output a .gocad file. -->
+         <param name="GOCADOutput">True</param>
+         <!-- Set this to True if temperature is to be mapped onto node positions,-->
+         <!-- otherwise it will be on particle positions.-->
+         <param name="MapTemperatureToNodes">False</param>
+      </struct>
+   </list>
+
+</StGermainData>

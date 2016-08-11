@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<struct name="components" mergeType="merge">
+	<!-- Camera View -->
+
+   <struct name="perspectiveViewCamera">
+      <param name="Type">lucCamera</param>
+      <param name="CentreFieldVariable">VelocityField</param>
+      <param name="translateX">0.36</param>
+      <param name="translateY">0.54</param>
+      <param name="translateZ">-4</param>
+      <param name="rotateX">22</param>
+      <param name="rotateY">45</param>
+   </struct>
+
+	<!-- Colour Maps -->
+	<struct name="strainRateColourMap">
+		<param name="Type">lucColourMap</param>
+		<param name="colours">Purple Blue Green Yellow Orange Red Black</param>
+		<param name="minimum">0.0</param>
+		<param name="maximum">1.0</param>
+		<param name="logScale">true</param>
+		<param name="dynamicRange">true</param>		
+	</struct>
+	<struct name="recoveredStressColourMap">
+		<param name="Type">lucColourMap</param>
+		<param name="colours">Purple Blue Green Yellow Orange Red Black</param>
+		<param name="minimum">0.0</param>
+		<param name="maximum">1.0</param>
+		<param name="logScale">false</param>
+		<param name="dynamicRange">true</param>		
+	</struct>
+	<struct name="velocityMagColourMap">
+		<param name="Type">lucColourMap</param>
+		<param name="colours">Purple Blue Green Yellow Orange Red Black</param>
+		<param name="minimum">0.0</param>
+		<param name="maximum">1.0</param>
+		<param name="logScale">false</param>
+		<param name="dynamicRange">true</param>		
+	</struct>	
+	<!-- Drawing Objects -->
+	<struct name="slabSurfaceWithStrainRateInv">
+		<param name="Type">lucIsosurface</param>
+		<param name="IsosurfaceField">SlabField</param>
+		<param name="ColourMap">strainRateColourMap</param>
+		<param name="ColourField">StrainRateInvariantField</param>
+		<param name="isovalue">0.1</param>
+		<param name="drawWalls">true</param>
+	</struct>		
+
+	<struct name="slabSurfaceWithRecoveredStressInv">
+		<param name="Type">lucIsosurface</param>
+		<param name="IsosurfaceField">SlabField</param>
+		<param name="ColourMap">recoveredStressColourMap</param>
+		<param name="ColourField">recoveredDeviatoricStressInvariantField</param>
+		<param name="isovalue">0.1</param>
+		<param name="drawWalls">true</param>
+	</struct>		
+
+
+
+
+	<struct name="lowerMantleSurface">
+		<param name="Type">lucIsosurface</param>
+		<param name="IsosurfaceField">LowerMantleField</param>
+		<param name="colour">Red</param>
+		<param name="isovalue">0.5</param>
+		<param name="drawWalls">true</param>
+	</struct>
+	<struct name="velocityArrows">
+		<param name="Type">lucVectorArrows</param>
+		<!--  Velocity arrows in a horizontal cross section -->
+		<param name="VectorVariable">VelocityField</param>
+		<param name="colour">Black</param>
+		<!--param name="CrossSection">y=0.8</param-->
+		<param name="arrowHeadSize">0.1</param> 
+		<param name="lengthScale">0.4</param>
+
+		<!-- resolutionX per processor -->
+		<!-- mesh size 32x16x16 on 4 cpus = 32/4 = 8 -->
+		<!-- mesh size 40x20x20 on 4 cpus = 40/4 = 10 -->
+		<param name="resolutionX">10</param>
+
+		<!-- resolutionZ = number of elements in Z direction -->
+		<param name="resolutionZ">elementResK</param>
+	</struct>				
+	<struct name="velocityMagScalarField">
+		<param name="Type">lucScalarField</param>
+		<param name="FieldVariable">VelocityMagnitudeField</param>
+		<param name="ColourMap">velocityMagColourMap</param>
+	</struct>	
+	<struct name="border">
+		<param name="Type">lucFieldVariableBorder</param>
+		<param name="FieldVariable">VelocityField</param>
+	</struct>
+	<struct name="strainRateColourBar">
+		<param name="Type">lucColourBar</param>
+		<param name="ColourMap">strainRateColourMap</param>
+	</struct>
+	<struct name="recoveredStressColourBar">
+		<param name="Type">lucColourBar</param>
+		<param name="ColourMap">recoveredStressColourMap</param>
+	</struct>
+	<struct name="velocityMagColourBar">
+		<param name="Type">lucColourBar</param>
+		<param name="ColourMap">velocityMagColourMap</param>
+	</struct>
+	<!-- Create Viewports -->
+
+	<struct name="PerspectiveView">
+		<param name="Type">lucViewport</param>
+		<param name="Camera">perspectiveViewCamera</param>
+		<list name="DrawingObject">
+			<param>slabSurfaceWithStrainRateInv</param>
+			<param>slabSurfaceWithRecoveredStressInv</param>
+			<param>velocityMagScalarField</param>
+			<param>velocityArrows</param>
+			<param>recoveredStressColourBar</param>
+			<param>border</param>
+		</list>
+	</struct>	
+
+
+</struct>
+
+<include>gLucifer/window.xml</include>
+<struct name="components" mergeType="merge">
+	<struct name="window" mergeType="merge">
+		<param name="height" mergeType="replace">592</param>
+		<param name="width" mergeType="replace">800</param>
+		<list name="Viewport">
+			<param>PerspectiveView</param>		
+		</list>
+	</struct>
+	<!--struct name="movie">
+		<param name="Type">lucDefaultVideoOutput</param>
+		<param name="Window">window</param>
+	</struct-->
+</struct>
+
+</StGermainData>

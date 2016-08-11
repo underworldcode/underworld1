@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+  <include>_setup.xml</include>
+  <!-- this includes the field recoveredDeviatoricStressField -->
+  <include>Underworld/REP_Setup_Compressible.xml</include>
+  <!--
+   -->
+  <struct name="components" mergeType="merge">
+    <!-- Put your custom components here -->
+    <struct type="struct" name="viscousHeatingTerm">
+      <param name="Type">ViscousHeatingTermPpc</param>
+      <param name="ForceVector">residual</param>
+      <param name="EnergyEqn">EnergyEqn</param>
+      <param name="Swarm">picIntegrationPoints</param>
+      <param name="StrainRateField">StrainRateField</param>
+      <param name="DeviatoricStressField">recoveredDeviatoricStressField</param>
+    </struct>
+    <struct type="struct" name="adiabaticHeatingTerm">
+      <param name="Type">AdiabaticHeatingTermPpc</param>
+      <param name="ForceVector">residual</param>
+      <param name="EnergyEqn">EnergyEqn</param>
+      <param name="Swarm">picIntegrationPoints</param>
+      <param name="VelocityField">VelocityField</param>
+      <param name="TemperatureField">TemperatureField</param>
+    </struct>
+  </struct>
+  <param name="dim"> 2 </param>
+  <!-- mesh parameters -->
+  <param name="elementResI"> 64 </param>
+  <param name="elementResJ"> 64 </param>
+  <param name="elementResK"> 1 </param>
+  <!-- Swarm parameters -->
+  <param name="particleLayoutType"> random </param>
+  <param name="particlesPerCell"> 20 </param>
+  <param name="seed"> 13 </param>
+  <!-- general simulation parameters -->
+  <param name="maxTimeSteps"> 3 </param>
+  <param name="dumpEvery"> 1 </param>
+  <param name="outputPath"> ./output/ </param>
+  <param name="checkpointEvery"> 1 </param>
+  <param name="saveCoordsWithFields"> 1 </param>
+  <!--   choose what to checkpoint
+	<list name="FieldVariablesToCheckpoint">
+		<param>VelocityField</param>
+		<param>VelocityGradientsField</param>
+	</list>
+	-->
+  <!--  restart from a previous checkpoint 
+  	<param name="restartTimestep"> 10 </param>
+  	-->
+</StGermainData>

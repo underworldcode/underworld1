@@ -1,0 +1,3 @@
+Running model 'RayTay-basicBenchmark' with command 'mpirun -np 1 /home/psunter/AuScopeCodes/stgUnderworldE-credoDev-work/build/bin/StGermain RayleighTaylorBenchmark.xml credo-analysis.xml  --gravity=1 > logFile.txt' ...
+Model ran successfully.
+Maximum value of Vrms was 0.000365, at time 64

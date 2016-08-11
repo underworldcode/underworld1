@@ -1,0 +1,78 @@
+\documentclass[a4paper]{article}
+\usepackage{alltt,amsmath,pifont}
+\usepackage{amssymb,multicol}
+\usepackage{subfigure,epsfig,wrapfig}
+\usepackage{program,verbatim,listings}
+\usepackage{color}
+\begin{document}
+
+\section{Stokes flow:}
+
+\begin{equation}f_i = \tau_{ij,j} - p_{,i}\end{equation}
+
+translates to in non-tensor notation AND dimensional numbers:
+
+\begin{equation}\eta \nabla^2 v - \nabla P =  g \rho_0 - g\rho_0 \alpha(T - T_0)\end{equation} 
+
+Since $T_0$ is 0 (effectively) the equation 2 becomes:
+
+\begin{equation}\eta \nabla^2 v - \nabla P =  g \rho_0 - g\rho_0 \alpha(T)\end{equation} 
+
+Using scaling relations defined in louis' pdf the scaled equation becomes:
+
+\begin{equation}\frac{\eta}{h^2} \nabla'^2 (\frac{\kappa}{h}v') - \nabla' P_0  - \frac{\eta \kappa}{h^3}\nabla' P' =  g \rho_0 - g\rho_0 \alpha(\Delta T T')\end{equation} 
+
+Where the non-dimensional variables are indicated by the prime.
+
+Using the relation: $\nabla P_0 = -g \rho_0$ and the scaling relation $P = P_0 + \frac{\eta \kappa}{d^2}P'$
+
+\begin{equation}\frac{\eta}{h^2} \nabla'^2 \frac{\kappa}{h}v' - \frac{\eta \kappa}{h^3}\nabla' P' =  - g\rho_0 \alpha(\Delta T T')\end{equation} 
+
+Now in terms of the Ra number this becomes:
+
+\begin{equation} \nabla'^2 v' - \nabla' P' =  -RaT'\end{equation} 
+
+which in turn is:
+
+\begin{equation} \nabla'^2 v' - \nabla' P' =  -Ra\frac{T}{\Delta T}\end{equation} 
+
+And to get everything back to dimensional again:
+
+\begin{equation} h^{2} \nabla^2 (\frac{v h}{\kappa}) - h \nabla (\frac{h^2(P - P_0)}{\eta \kappa}) =  -Ra\frac{T}{\Delta T}\end{equation} 
+
+Multiply by $\eta$ and $\kappa$ and take the constants out the front:
+
+\begin{equation} h^3 \eta \nabla^2 v - h^3 \nabla (P - P_0) = -\kappa \eta Ra\frac{T}{\Delta T}\end{equation} 
+
+rearrange:
+
+\begin{equation} h^3 \eta \nabla^2 v - h^3 \nabla P + h^3 \nabla P_0 = -\kappa \eta Ra\frac{T}{\Delta T}\end{equation} 
+
+again:
+
+\begin{equation} h^3 \eta \nabla^2 v - h^3 \nabla P = h^3 g \rho_0 -\kappa \eta Ra\frac{T}{\Delta T}\end{equation}
+
+and divide by $h^3$
+
+\begin{equation} \eta \nabla^2 v - \nabla P = g \rho_0 - \kappa \eta Ra\frac{T}{h^3 \Delta T}\end{equation}
+
+So that the dimensional force on the RHS of equation 3 is equal to:
+
+\begin{equation} g \rho_0 - g\rho_0 \alpha (T) =  g \rho_0 - \kappa \eta Ra\frac{T}{h^3 \Delta T}\end{equation}
+
+So that:
+
+\begin{equation} g\rho_0 \alpha =  \frac{\kappa \eta Ra}{h^3 \Delta T}\end{equation}
+
+Now using dimensional numbers for everything (from blankenbach):  $\alpha = 2.5\times10^{-5}$, $\kappa = 10^{-6}$, $h = 10^2$, $\rho_0 = 4\times10^{3}$, $g = 10$, $\Delta T = 10^3$, $Ra = 10^4$ and $\eta = 2.5\times10^{19}$
+\newline
+$10 \times 4\times 10^3 \times 2.5\times10^{-5} = \frac{10^{-6}\times 2.5 \times 10^{19} \times 10^4}{10^6 \times 10^3}$
+
+From this relation $\rho_0$ should be $10^{12}$.
+
+%
+% Indicate the style file to use here
+%
+\bibliographystyle{h-physrev3}
+
+\end{document} 

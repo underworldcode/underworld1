@@ -1,0 +1,23 @@
+<StgModelRun>
+  <name>PoiseuilleFlow-referenceTest-np1-createReference</name>
+  <modelInputFiles>
+    <inputFile>PoiseuilleFlow.xml</inputFile>
+  </modelInputFiles>
+  <basePath>/home/julian/code/fresh_uw/Underworld/SysTest/RegressionTests</basePath>
+  <outputPath>expected/PoiseuilleFlow-referenceTest</outputPath>
+  <jobParams>
+    <maxRunTime>None</maxRunTime>
+    <pollInterval>1</pollInterval>
+    <nproc>1</nproc>
+  </jobParams>
+  <simParams>
+    <restartstep>None</restartstep>
+    <stoptime>None</stoptime>
+    <nsteps>1</nsteps>
+    <dumpevery>0</dumpevery>
+    <cpevery>1</cpevery>
+  </simParams>
+  <paramOverrides />
+  <solverOpts />
+  <analysisOps />
+</StgModelRun>

@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<!--
+ Model: This simulation models Poiseuille flow 
+ a 2D steady, pressure driven, laminar flow between two plates
+
+ The analytic solution produces a velocity only in the x component which is:
+   vx(y) = dP * (h^2 - y^2) / (2 * dx * eta) ... (1)
+
+ where: 
+  y    the y-coordinate variable   
+  dP   is the change in pressure between the left and right boundaries
+  h    is HALF the distance between the top and bottom noSlip boundaries (HALF because it forms a neater analytic sol.)
+  dx   the distance between the left and right boundaries
+  eta  the viscosity of the fluid
+ 
+ This produces a maximum velocity vx(0) = dP * h^2 / (2 * dx * eta ) ... (2)
+
+ Nice lecture on Poiseuille flow https://www.youtube.com/watch?v=FyABB6FdIlQ
+
+
+ Numerical simulation:
+ - flux terms are used to apply boundary stress (pressure) conditions. 
+   this is facilitated by 1) enabling 'VectorSurfaceAssemblyTerm_NA__Fi__ni' and
+   2) not specifying vx boundary conditions along the right and left walls 
+
+ - if the simulation is behaving the max velocity (see FrequentOutput.dat) will be as (2) 
+-->
+
+  <list name="import">
+    <param>Underworld</param>
+  </list>
+
+  <include>Underworld/BaseApps/LidDrivenFEM.xml</include>
+
+  <list name="plugins" mergeType="merge">
+    <struct>
+      <param name="Type">StgFEM_FrequentOutput</param>
+      <param name="Context">context</param>
+    </struct>
+    <struct>
+      <param name="Type">Underworld_Vrms</param>
+      <param name="Context">context</param>
+      <param name="GaussSwarm">gaussSwarm</param>
+      <param name="VelocityField">VelocityField</param>
+    </struct>
+    <struct>
+      <param name="Type">StgFEM_CPUTime</param>
+      <param name="Context">context</param>
+    </struct>
+    <struct>
+      <param name="Type">Underworld_MaxVelocity</param>
+      <param name="Context">context</param>
+    </struct>
+  </list>
+
+  <struct name="components" mergeType="merge">
+    <struct name="context">
+      <param name="Type">UnderworldContext</param>
+    </struct>
+    <struct name="default_scaling">
+      <param name="Type">Scaling</param>
+      <param name="spaceCoefficient_meters">       1.0    </param>
+      <param name="timeCoefficient_seconds">       1.0    </param>
+      <param name="massCoefficient_kilograms">     1.0    </param>
+      <param name="temperatureCoefficient_kelvin"> 1.0    </param>
+    </struct>
+    <struct name="default_ppcManager">
+      <param name="Type">PpcManager</param>
+      <param name="MaterialSwarm"> gaussMaterialSwarm </param>
+      <param name="IntegrationSwarm"> gaussSwarm </param>
+      <param name="Scaling"> theScaling </param>
+      <param name="Mesh"> linearMesh </param>
+      <param name="Gravity"> 0 </param>
+      <list name="Properties">
+        <struct>
+          <param name="PropertyName"> DensityLabel </param>
+        </struct>
+      </list>
+    </struct>
+    <struct name="viscosity">
+      <param name="Type">MaterialViscosity</param>
+      <param name="eta0">5.0</param>
+    </struct>
+    <struct name="shape">
+      <param name="Type">Everywhere</param>
+    </struct>
+    <struct name="material">
+      <param name="Type">RheologyMaterial</param>
+      <param name="Shape">shape</param>
+      <param name="Rheology">viscosity</param>
+      <param name="DensityLabel">0</param>
+    </struct>
+
+  <!-- definition for the border integration points
+       required for incorporating boundary stresses -->
+    <struct name="borderCellLayout">
+      <param name="Type">SingleCellLayout</param>
+    </struct>
+    <struct name="borderParticleLayout">
+      <param name="Type">GaussBorderParticleLayout</param>
+    </struct>
+    <struct name="borderGaussSwarm">
+      <param name="Type">IntegrationPointsSwarm</param>
+      <param name="CellLayout">borderCellLayout</param>
+      <param name="ParticleLayout">borderParticleLayout</param>
+      <param name="FeMesh">elementMesh</param>
+      <param name="TimeIntegrator">timeIntegrator</param>
+      <param name="IntegrationPointMapper">borderGaussMapper</param>
+    </struct>
+    <struct name="borderGaussMapper">
+      <param name="Type">GaussMapper</param>
+      <param name="IntegrationPointsSwarm">borderGaussSwarm</param>
+      <param name="MaterialPointsSwarm">borderGaussMaterialSwarm</param>
+    </struct>
+    <struct name="borderBackgroundLayout">
+      <param name="Type">BackgroundParticleLayout</param>
+    </struct>
+    <!-- i really don't think this component is required, must test -->
+    <struct name="borderGaussMSwarmMovementHandler">
+      <param name="Type">ParticleMovementHandler</param>
+    </struct>
+    <struct name="borderGaussMaterialSwarm">
+      <param name="Type">MaterialPointsSwarm</param>
+      <param name="CellLayout">borderCellLayout</param>
+      <param name="ParticleLayout">borderBackgroundLayout</param>
+      <param name="FeMesh">elementMesh</param>
+      <list name="ParticleCommHandlers">
+        <param>borderGaussMSwarmMovementHandler</param>
+      </list>
+    </struct>
+
+    <!-- StressBC: Pressure of 5 on the right hand wall -->
+    <struct type="struct" name="forceTerm">
+      <param name="Type">VectorSurfaceAssemblyTerm_NA__Fi__ni</param>
+      <param name="functionLabel">7</param>
+      <param name="ForceVector">mom_force</param>
+      <param name="Swarm">borderGaussSwarm</param>
+      <param name="Surface">right</param>
+    </struct>
+  </struct>
+
+  <!-- Simulation control -->
+  <param name="maxTimeSteps">0</param>
+  <param name="outputPath">./output</param>
+  <param name="dumpEvery">1</param>
+  <param name="checkpointEvery">1</param>
+
+  <list name="FieldVariablesToCheckpoint">
+    <param>VelocityMagnitudeField</param>
+  </list>
+
+  <!-- Geometry & Mesh setup -->
+  <param name="dim">2</param>
+
+  <param name="minX">0.0</param> <param name="maxX">3.0</param>
+  <param name="elementResI">30</param>
+
+  <param name="minY">0.0</param> <param name="maxY">2.0</param>
+  <param name="elementResJ">30</param>
+
+  <!-- Set up BCs and ICs -->
+  <struct name="velocityBCs">
+    <param name="type">CompositeVC</param>
+    <list name="vcList">
+      <struct>
+        <param name="type"> WallVC </param>
+        <param name="wall"> bottom </param>
+        <list name="variables">
+          <struct>
+            <param name="name">vx</param>
+            <param name="type">double</param>
+            <param name="value"> 0 </param>
+          </struct>
+          <struct>
+            <param name="name">vy</param>
+            <param name="type">double</param>
+            <param name="value"> 0 </param>
+          </struct>
+        </list>
+      </struct>
+    <!-- note: on left and right wall we don't specify vx conditions as we
+               have stressBC conditions here.
+               For the left wall, as with any wall the default is a zero stress bc
+               acting on the wall
+    -->
+      <struct>
+        <param name="type"> WallVC </param>
+        <param name="wall"> left </param>
+        <list name="variables">
+          <struct>
+            <param name="name">vy</param>
+            <param name="type">double</param>
+            <param name="value"> 0 </param>
+          </struct>
+        </list>
+      </struct>
+      <struct>
+        <param name="type"> WallVC </param>
+        <param name="wall"> right </param>
+        <list name="variables">
+          <struct>
+            <param name="name">vy</param>
+            <param name="type">double</param>
+            <param name="value"> 0 </param>
+          </struct>
+        </list>
+      </struct>
+      <struct>
+        <param name="type"> WallVC </param>
+        <param name="wall"> top </param>
+        <list name="variables">
+          <struct>
+            <param name="name">vx</param>
+            <param name="type">double</param>
+            <param name="value"> 0 </param>
+          </struct>
+          <struct>
+            <param name="name">vy</param>
+            <param name="type">double</param>
+            <param name="value"> 0 </param>
+          </struct>
+        </list>
+      </struct>
+    </list>
+  </struct>
+
+  <!-- Viewport stuff -->
+<!--
+  <include>Underworld/Viewports/StrainRateInvariantVP.xml</include>
+  <include>gLucifer/window.xml</include>
+  <struct name="components" mergeType="merge">
+    <struct name="window" mergeType="merge">
+      <param name="Viewport"> StrainRateInvariantVP</param>
+    </struct>
+  </struct>
+-->
+</StGermainData>

@@ -1,0 +1,29 @@
+Underworld Manual Readme
+========================
+
+There's a prebuilt Underworld.pdf manual located in this directory.
+If rebuilding the manual, see the requirements and steps below.
+
+------------
+Requirements
+------------
+  Python-2.4+ (http://www.python.org/)
+  Sphinx-1.0+ (http://sphinx.pocoo.org/index.html)
+
+If all the requirements mentioned above are met, the Underworld
+manual can now be built from source. The manual can be built for online 
+(html) or pdf.
+
+-----
+Steps
+-----
+
+To build html version:
+  - Type make html
+    This will create the html version of the manual and put the files in
+    _build/html.
+
+To build pdf version:
+  - Type make latexpdf
+    This will translate the rst files into latex and create a pdf file.
+    The output file will be in _build/latex.

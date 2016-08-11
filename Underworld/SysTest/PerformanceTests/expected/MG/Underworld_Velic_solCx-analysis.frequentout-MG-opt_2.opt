@@ -1,0 +1,8 @@
+
+#Res#       Timestep            Time            Vrms     AvgCPUInner     AvgCPUOuter        AvgInIts       AvgOutIts        CPU_Time
+0.03125               1               0     0.000866888     0.000729345     0.000663678              26               6         1.58966
+
+
+#Res#       Timestep            Time            Vrms     AvgCPUInner     AvgCPUOuter        AvgInIts       AvgOutIts        CPU_Time
+0.015625               1               0     0.000875017      0.00310055      0.00183157              51               7         7.25046
+

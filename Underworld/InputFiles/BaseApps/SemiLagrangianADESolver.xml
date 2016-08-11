@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <list name="FieldVariablesToCheckpoint" mergeType="merge">
+      <param>VelocityField</param>
+      <param>TemperatureField</param>
+      <param>temperatureStarField</param>
+      <param>temperatureOldField</param>
+   </list>
+
+   <include> StgFEM/SemiLagrangianIntegrator.xml </include>
+
+   <struct name="components" mergeType="merge">
+
+      <!-- create the vecs and mats -->
+      <struct name="sVector">
+         <param name="Type">SolutionVector</param>
+         <param name="FeVariable">TemperatureField</param>
+      </struct>
+      <struct name="fVector">
+         <param name="Type">ForceVector</param>
+         <param name="FeVariable">TemperatureField</param>
+      </struct>
+
+      <struct name="kMatrix">
+         <param name="Type">StiffnessMatrix</param>
+         <param name="RowVariable">TemperatureField</param>
+         <param name="ColumnVariable">TemperatureField</param>
+         <param name="RHS">fVector</param>
+         <param name="allowZeroElementContributions">True</param>
+      </struct>
+
+      <!-- create the terms to fill vec and mats -->
+       <struct name="laplacianMatrixTerm">
+         <param name="Type">MatrixAssemblyTerm_NA_i__NB_i__F</param>
+         <param name="StiffnessMatrix">kMatrix</param>
+         <param name="Swarm">gaussSwarm</param>
+         <param name="functionLabel">laplacianMatPpc</param>
+      </struct>
+
+      <struct name="massMatrixTerm">
+         <param name="Type">MatrixAssemblyTerm_NA__NB__F</param>
+         <param name="StiffnessMatrix">kMatrix</param>
+         <param name="Swarm">gaussSwarm</param>
+         <param name="functionLabel">1</param>
+      </struct>
+
+      <struct name="laplacianVectorTerm">
+         <param name="Type">VectorAssemblyTerm_NA_i__Fi</param>
+         <param name="ForceVector">fVector</param>
+         <param name="Swarm">gaussSwarm</param>
+         <param name="functionLabel">laplacianVecPpc</param>
+      </struct>
+
+      <struct name="massVectorTerm">
+         <param name="Type">VectorAssemblyTerm_NA__F</param>
+         <param name="ForceVector">fVector</param>
+         <param name="Swarm">gaussSwarm</param>
+         <param name="functionLabel">temperatureStarFieldPpc</param>
+      </struct>
+
+      <!-- create the ppcs used by terms -->
+      <struct name="laplacianMatPpc">
+         <param name="Type">Ppc_Operation</param>
+         <param name="Operation"> * </param>
+         <list name="Properties">
+            <param>0.5</param>
+            <param>diffusivityPpc</param>
+            <param>dtPpc</param>
+         </list>
+      </struct>
+      <struct name="dtPpc">
+         <param name="Type">Ppc_Dt</param>
+      </struct>
+      <struct name="diffusivityPpc">
+         <param name="Type">Ppc_Constant</param>
+         <param name="Value"> 1.0 </param>
+      </struct>
+      <struct name="temperatureStarGradientFieldPpc">
+         <param name="Type">Ppc_Variable</param>
+         <param name="FieldVariable">temperatureStarGradientField</param>
+      </struct>
+      <struct name="temperatureStarFieldPpc">
+         <param name="Type">Ppc_Variable</param>
+         <param name="FieldVariable">temperatureStarField</param>
+      </struct>
+
+      <struct name="laplacianVecCoeffPpc">
+         <param name="Type">Ppc_Operation</param>
+         <param name="Operation"> * </param>
+         <list name="Properties">
+            <param>-0.5</param>
+            <param>diffusivityPpc</param>
+            <param>dtPpc</param>
+         </list>
+      </struct>
+
+      <struct name="laplacianVecPpc">
+         <param name="Type">Ppc_a_Vector</param>
+         <param name="Alpha">laplacianVecCoeffPpc</param>
+         <param name="Vector">temperatureStarGradientFieldPpc</param>
+      </struct>
+
+      <!-- create the SLE and solver -->
+
+      <struct name="SLADESLESolver">
+         <param name="Type">Energy_SLE_Solver</param>
+      </struct>
+
+      <struct name="SLADESLE">
+         <param name="Type">Energy_SLE</param>
+         <param name="SLE_Solver">SLADESLESolver</param>
+         <param name="Context">context</param>
+         <param name="StiffnessMatrix">kMatrix</param>
+         <param name="ForceVector">fVector</param>
+         <param name="SolutionVector">sVector</param>
+      </struct>
+      <struct name="integrator" mergeType="merge">
+         <param name="SLE">SLADESLE</param>
+      </struct>
+
+   </struct>
+
+</StGermainData>

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<param name="Name">FicoViscousCreep</param>
+	<param name="Author">JulianGiordani</param>
+	<param name="Organisation">MCC</param>
+	<param name="Project">Underworld</param>
+	<param name="Location">./Underworld/Rheology/src/</param>
+	<param name="Project Web">http://www.mcc.monash.edu.au/Software/Underworld</param>
+	<param name="Copyright">Copyright (c) 2005, Monash Cluster Computing</param>
+	<param name="License">http://www.opensource.org/licenses/bsd-license.php</param>
+	<param name="Parent">Rheology</param>
+	<param name="Reference">coming soon </param>
+	<param name="Summary"></param>
+	<param name="Description">coming soon</param>
+
+	<!--Now the interesting stuff-->
+	<list name="Params">
+	</list>
+
+	<list name="Dependencies">
+	</list>
+
+	<!-- Add an exmaple XML if possible -->
+	<param name="Example">
+	
+	<![CDATA[
+	<struct name="mantle_viscous_creep">
+		<param name="Type">FicoViscousCreep</param>
+		<param name="StrainRateInvariantField">StrainRateInvariantField</param>
+		<param name="TemperatureField">TemperatureField</param>
+		<param name="PressureField">PressureField</param>
+		<param name="GrainSize">1e-3</param>
+
+		<param name="enable_diffusion">True</param>
+		<param name="diffusion_material_constant" units="s^-1">8.7e15</param>
+		<param name="diffusion_activation_energy" units="kJ*mol^-1">300</param>
+		<param name="diffusion_stress_exponent">1</param>
+		<param name="diffusion_grainsize_exponent">-2.5</param>
+
+		<param name="enable_dislocation">True</param>
+		<param name="dislocation_material_constant" units="s^-1">3.5e22</param>
+		<param name="dislocation_activation_energy" units="kJ*mol^-1">510</param>
+		<param name="dislocation_stress_exponent">3.5</param>
+		<param name="dislocation_grainsize_exponent">0</param>
+
+		<param name="enable_peierls">True</param>
+		<param name="peierls_activation_enthalpy" units="kJ*mol^-1">510</param>
+		<param name="peierls_exponent_s">1</param>
+		<param name="peierls_exponent_q">1</param>
+		<param name="peierls_lower_threshold_pressure" units="Pa">1e8</param>
+		<param name="peierls_lower_threshold_temperature" units="K">613</param>
+		<param name="peierls_upper_threshold_temperature" units="K">1200</param>
+		<param name="peierls_material_constant" units="Pa^-2*s^-1">1e-4<!--1.4e-19--></param>
+		<param name="peierls_stress" units="Pa">1.5e9</param>
+
+		<!-- UNCOMMENT THIS TO USE THE STRAIN_RATE FORMULATION 
+		<param name="peierls_strainrate" units="s^-1">5.7e11</param>
+		-->
+		<param name="shear_modulus" units="Pa">8e10</param>
+		<param name="burgers_vector" units="m">5e-10</param>
+	</struct>
+			]]>
+	</param>
+
+</StGermainData>

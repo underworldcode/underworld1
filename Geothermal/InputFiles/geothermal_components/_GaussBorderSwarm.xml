@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<struct name="components" mergeType="merge">
+		<struct name="borderSwarmCellLayout">
+			<param name="Type">SingleCellLayout</param>
+		</struct>
+		<struct name="borderParticleLayout">
+			<param name="Type">GaussBorderParticleLayout</param>
+			<param name="gaussParticlesX">2</param>
+			<param name="gaussParticlesY">2</param>
+			<param name="gaussParticlesZ">2</param>
+		</struct>
+		<struct name="gaussBorderSwarm">
+			<param name="Type">Swarm</param>
+			<param name="CellLayout">borderSwarmCellLayout</param>
+			<param name="ParticleLayout">borderParticleLayout</param>
+		</struct>
+	</struct>	
+</StGermainData>

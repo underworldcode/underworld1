@@ -1,0 +1,51 @@
+Inherit StgModelRun from ModelRun, so has more specific functionality
+related to Underworld
+
+(This allows testing of things like an EllipsisModelRun in future)
+
+==
+
+Config notes:
+This ultimately suggests maintaining a few CREDO scripts/other config
+ files per application release, e.g.:
+ - "Underworld 1.4"
+ - "Underworld 1.5"
+ - "Ellipsis 0.9"
+ - "CitCom 2.1"
+
+These would have to basically implement common CREDO tests/analysis
+opps, according to the package's specific APIs.
+(Perhaps even record info on where to check out, preferred compile params,
+  other non-per-run provenance info)
+
+Qtn: where do these app-specific things reside? Distributed in main
+ CREDO release? Or in a sub-repo? Or in projects themselves?
+ (Probably 1st initially, then perhaps moving to 2nd)
+
+==
+
+Issues:
+ - Need to improve the design of ParamInfo etc as a result to be more
+   consistent....
+  - Have some kind of specific vision of how you interact with a model's
+  parameters
+   - I.E. is there a general list that should work for multiple applications,
+   and know how to interact with their XMLs?
+   - Idea: strategy pattern may be appropriate, SimParamsIOHandler
+   may be better so that there is one general 'SimParams' object
+   the user interacts with, and automagically the correct SimParams
+   IO handler is used based on the Model.
+
+ -Where up to: when creating SysTests, now need some knowledge of what 
+ ModelRun type to create and use, based on the application context.
+ We already have SysTestSuite being aware of the application e.g.
+ "Underworld", thus:
+   - SysTestSuite module keeps a mapping from
+     "application" -> ModelRun, ModelResult classes
+     (or perhaps ModelRun has a createModelResult() method?)
+   - When SysTests are created, this application info
+     needs to be saved with them.
+   - Then the _createDefaultModelRun factory method can utilise this
+   - Likewise the SysTestSuite.addStdTest factory method can also
+     automatically attach this info
+

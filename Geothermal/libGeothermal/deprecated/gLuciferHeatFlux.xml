@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+   <struct name="components" mergeType="merge">
+      <!-- conductivity(scalar) * TemperatureGradient(vector) (dot) normal(vector) = heatFlux(scalar) -->
+      <include>Geothermal/_ConductivityField.xml</include>
+      <struct name="heatFluxField"> 
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">ScalarByVectorMultiplication</param>
+         <list name="Operands">
+            <param>conductivityField</param>
+            <param>TemperatureGradientsField</param>
+         </list>
+      </struct>      
+      <!-- Get temperature gradient -->
+      <struct name="TemperatureGradientsField"> 
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Gradient</param>
+         <param name="Operand">TemperatureField</param>
+      </struct>
+      <!-- Get heat flux vector magnitude -->
+      <struct name="heatFluxMagnitudeField"> 
+         <param name="Type">OperatorFeVariable</param>
+         <param name="Operator">Magnitude</param>
+         <param name="Operand">heatFluxField</param>
+      </struct>
+      <!-- Get heat flux vector Y component -->
+      <struct name="heatFluxYField"> 
+         <param name="Type"> OperatorFeVariable </param>
+         <param name="Operator">TakeSecondComponent</param>
+         <param name="Operand">heatFluxField</param>
+      </struct>
+    	<!-- Heat flux visualisation -->
+		<struct name="heatFluxColourMap">
+			<param name="Type">lucColourMap</param>
+			<param name="colours">
+				(0.04)DarkGreen (0.05)ForestGreen (0.1)YellowGreen (0.15)OrangeRed (0.2)Firebrick
+			</param>
+			<param name="dynamicRange">false</param>
+			<param name="logScale">false</param>
+		</struct>
+		<struct name="heatFluxColourBar">
+			<param name="Type">lucColourBar</param>
+			<param name="ColourMap">heatFluxColourMap</param>
+			<param name="precision">3</param>
+			<param name="margin">50</param>
+			<param name="ticks">3</param>
+			<param name="tick1">0.05</param>
+			<param name="tick2">0.1</param>
+			<param name="tick3">0.15</param>
+		</struct>
+
+      <!-- Put these together in a viewport -->
+      <struct name="Viewport" mergeType="merge">
+         <list name="DrawingObject" mergeType="merge">
+            <param>heatFluxColourBar</param>
+         </list>
+      </struct>
+   </struct>
+</StGermainData>

@@ -1,0 +1,48 @@
+#
+# NOTE: The number of multigrid levels needs to be added as an
+# option to the input XML file as follows:
+#
+#   $UWPATH/StgFEM/Apps/StgFEM_Components/MultigridForRegular.xml
+#   <param name="mgLevels">2</param>
+#
+
+-Uzawa_velSolver_ksp_type fgmres
+#-Uzawa_velSolver_ksp_view
+#-Uzawa_velSolver_ksp_monitor
+
+-A11_ksp_type fgmres
+-A11_ksp_view
+-A11_ksp_monitor
+-A11_ksp_rtol 1.0e-4
+
+#-Uzawa_velSolver_ksp_converged_reason
+
+# Define MG preconditioner - default options
+
+#-pc_mg_smoothup 5
+#-pc_mg_smoothdown 5
+#-mg_levels_ksp_type richardson
+#-mg_levels_pc_type sor
+#-mg_levels_ksp_max_it 5
+
+# For the case where a distributed coarse (i.e. not redundant) solve is required
+
+#-mg_coarse_ksp_type cg
+-mg_coarse_ksp_max_it 10
+-mg_coarse_ksp_rtol 1.0e-4
+#-mg_coarse_pc_type sor
+#-mg_coarse_sub_pc_type cholesky
+-mg_levels_ksp_rtol 1.0e-4
+-mg_levels_ksp_max_it 5
+-mg_coarse_redundant_ksp_rtol 1.0e-4
+
+# These more aggressive options give a pretty robust / efficient solve
+
+-pc_mg_smoothup 10
+-pc_mg smoothdown 10
+
+-mg_levels_ksp_type minres
+-mg_levels_ksp_max_its 3
+-mg_levels_pc_type sor
+-mg_levels_pc_sub_type cholesky
+-mg_levels_ksp_convergence_test skip

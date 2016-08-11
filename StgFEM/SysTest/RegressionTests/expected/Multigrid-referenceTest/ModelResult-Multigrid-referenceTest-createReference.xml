@@ -1,0 +1,7 @@
+<StgModelResult>
+  <modelName>Multigrid-referenceTest-createReference</modelName>
+  <outputPath>expected/Multigrid-referenceTest</outputPath>
+  <jobMetaInfo>
+    <simtime>0.59375</simtime>
+  </jobMetaInfo>
+</StgModelResult>

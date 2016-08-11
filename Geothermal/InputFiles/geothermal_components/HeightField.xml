@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<struct name="components" mergeType="merge">
+		<struct name="height">
+			<param name="Type"> MeshVariable </param>
+			<param name="Rank"> Scalar </param>
+			<param name="DataType"> Double </param>
+			<param name="mesh"> irregularSurfaceMesh </param>
+		</struct>
+		<struct name="heightBCs">
+			<param name="Type"> CompositeVC </param>
+			<param name="Data"> irregularSurfaceMesh </param>
+		</struct>
+		<struct name="heightICs">
+			<param name="Type"> CompositeVC </param>
+			<param name="Data"> irregularSurfaceMesh </param>
+		</struct>
+		<struct name="heightDofLayout">
+			<param name="Type"> DofLayout </param>
+			<param name="MeshVariable"> height </param>
+		</struct>
+		<struct name="HeightField">
+			<param name="Type"> FeVariable_IrregTri </param>
+			<param name="FEMesh"> irregularSurfaceMesh </param>
+			<param name="DofLayout"> heightDofLayout </param>
+			<param name="BC"> heightBCs </param>
+			<param name="IC"> heightICs </param>
+			<param name="LinkedDofInfo"> heightLinkedDofs </param>
+		</struct>
+	</struct>
+
+</StGermainData>

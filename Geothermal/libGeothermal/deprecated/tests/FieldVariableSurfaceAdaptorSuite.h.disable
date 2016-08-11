@@ -1,0 +1,6 @@
+#ifndef Geothermal_FieldVariableSurfaceAdaptorSuite_h
+#define Geothermal_FieldVariableSurfaceAdaptorSuite_h
+
+void FieldVariableSurfaceAdaptorSuite( pcu_suite_t* suite );
+
+#endif

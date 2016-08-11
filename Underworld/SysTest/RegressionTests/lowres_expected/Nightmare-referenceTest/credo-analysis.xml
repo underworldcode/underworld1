@@ -1,0 +1,10 @@
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+  <param mergeType="replace" name="outputPath">lowres_expected/Nightmare-referenceTest</param>
+  <param mergeType="replace" name="maxTimeSteps">6</param>
+  <param mergeType="replace" name="dumpEvery">0</param>
+  <param mergeType="replace" name="checkpointEvery">5</param>
+  <list mergeType="merge" name="FieldVariablesToCheckpoint">
+    <param>VelocityField</param>
+    <param>PressureField</param>
+  </list>
+</StGermainData>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">SUPGAdvDiffTermPpc</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StgFEM</param>
+<param name="Location">./StgFEM/SLE/ProvidedSystems/AdvectionDiffusion/src/</param>
+<param name="Project Web">http://www.stgermainproject.org/StgFEM.html</param>
+<param name="Copyright">Copyright (C) 2004-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License v2.1 - http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</param>
+<param name="Reference">Brooks, A. and T. Hughes, Streamline upwind Petrov-Galerkin formulations for convection dominated flows with paricular emphasis on the incompressible Navier-Stokes equation, Comput. Methods Apll. Mech. Eng., Vol 32, 1982, pp. 199-259</param>
+<param name="Parent">ForceTerm</param>
+<param name="Description">The weighted residual vector for the SU/PG method. This implementation uses a Ppc value for the diffusivity.</param> 
+
+
+<list name="Params">
+	<struct>
+		<param name="Name">UpwindXiFunction</param>
+		<param name="Type">String</param>
+		<param name="Default">"Exact"</param>
+		<param name="Description">Determines the function to calculate the upwind parameter. Options are 'DoublyAsymptoticAssumption', 'CriticalAssumption' and 'Exact'. See Brooks and Hughes, Section 3.3.1, pp. 213-214</param>
+	</struct>
+</list>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">VelocityField</param>
+		<param name="Type">FeVariable</param>
+		<param name="Description">The Velocity Field doing the advection.</param>
+	</struct>
+
+		<struct>
+			<param name="Essential">True</param>
+			<param name="Name">DiffusivityLabel</param>
+			<param name="Type">Ppc</param>
+			<param name="Description">The Ppc Label used for the diffusivity of the material.</param>
+		</struct>
+		<struct>
+			<param name="Essential">True</param>
+			<param name="Name">Manager</param>
+			<param name="Type">PpcManager</param>
+			<param name="Description">The PpcManager is required to calculate the
+			ppc values. If not explicitly defined the code assumes a PpcManager exists
+			called 'default_ppcManager'</param>
+		</struct>
+
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">
+<![CDATA[
+	 <struct type="struct" name="defaultResidualForceTerm" mergeType="replace">
+      <param name="Type">SUPGAdvDiffTermPpc</param>
+      <param name="ForceVector">residual</param>
+      <param name="EnergyEqn">EnergyEqn</param>
+      <param name="Swarm">picIntegrationPoints</param>
+      <param name="VelocityField">VelocityField</param>
+      <param name="PhiField">TemperatureField</param>
+      <param name="DiffusivityLabel">DiffusivityLabel</param>
+    </struct>
+	</struct>]]>
+</param>
+
+</StGermainData>

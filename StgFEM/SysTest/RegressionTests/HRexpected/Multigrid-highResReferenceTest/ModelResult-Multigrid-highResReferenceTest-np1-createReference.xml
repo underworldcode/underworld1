@@ -1,0 +1,7 @@
+<StgModelResult>
+  <modelName>Multigrid-highResReferenceTest-np1-createReference</modelName>
+  <outputPath>/home/psunter/AuScopeCodes/stgUnderworldE-PETSc-2.3.3-CREDOWork/StgFEM/SysTest/RegressionTests/HRexpected/Multigrid-highResReferenceTest</outputPath>
+  <jobMetaInfo>
+    <simtime>0.0</simtime>
+  </jobMetaInfo>
+</StgModelResult>

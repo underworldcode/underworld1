@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">PolygonShapeXZ</param>
+<param name="Author">JulianGiordani</param>
+<param name="Organisation">Monash</param>
+<param name="Project">StgDomain</param>
+<param name="Location">./StgDomain/Shape/src/</param>
+<param name="Project Web">http://www.stgermainproject.org/StgDomain.html</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License v2.1 - http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</param>
+<param name="Parent">Stg_Shape</param>
+<param name="Reference">...</param>
+<param name="Summary"> See PolygonShape ... this just does the same but simplified for the case where the polygon lives in the XZ plane </param>
+<param name="Description">Constructs a prism shape, if dimension equals 3 (exits otherwise). A list of vertices is supplied in the x-z plane and is used to construct the polygon face of the shape. </param>
+
+<list name="Params">
+	<struct>
+		<param name="Name">vertices</param>
+		<param name="Type">list</param>
+		<param name="Default">N/A</param>
+		<param name="Description">*Vertices* used to construct the polygon in 2D or prism base in 3D. At least 3 vertices must be specified.</param>
+	</struct>
+	<struct>
+		<param name="Name">startY</param>
+		<param name="Type">Double</param>
+		<param name="Default">0.0</param>
+		<param name="Description">Only used in 3-D. The starting depth of the prism</param>
+	</struct>
+	<struct>
+		<param name="Name">endY</param>
+		<param name="Type">Double</param>
+		<param name="Default">0.0</param>
+		<param name="Description">Only used in 3-D. The ending depth of the prism</param>
+	</struct>
+
+</list>
+
+<list name="Dependencies">
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">
+   <![CDATA[
+   <struct name="rotate_triangular_prism">
+      <param name="Type">PolygonShapeXZ</param>
+
+      <!-- prism depth -->
+      <param name="startY">0.5</param>
+      <param name="endY">1</param>
+
+      <!-- polygon vertices in x-z -->
+      <list name="vertices">
+         <asciidata>
+         <columnDefinition name = "x" type="double"/>
+         <columnDefinition name = "z" type="double"/>
+         0.3  0.2 
+         0.50  0.2 
+         0.3  0.50 
+         </asciidata>
+      </list>
+   </struct>
+   ]]>
+</param>
+
+</StGermainData>

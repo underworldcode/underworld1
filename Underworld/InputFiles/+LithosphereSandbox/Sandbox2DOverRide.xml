@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	
+<!-- 	Over-rides to the standard Sandbox environment provided by $UWPATH/InputFiles/+LithosphereSandbox/Sandbox2D.xml 
+		(which needs to be sourced first, along with this file)-->	
+
+
+<!-- Default geometry --> 
+
+<param name="minX"> -1.0 </param>
+<param name="maxX">  1.0 </param>
+
+<!-- Component Over-rides -->
+
+<struct name="components" mergeType="merge">
+
+	<!-- Define some material stripes -->
+
+	<struct name="stripe1">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.05</param>
+	  <param name="endY">0.1</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe2">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.15</param>
+	  <param name="endY">0.2</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe3">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.25</param>
+	  <param name="endY">0.3</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe4">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.35</param>
+	  <param name="endY">0.4</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe5">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.45</param>
+	  <param name="endY">0.5</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe6">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.55</param>
+	  <param name="endY">0.6</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe7">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.65</param>
+	  <param name="endY">0.7</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe8">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.75</param>
+	  <param name="endY">0.8</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe9">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.85</param>
+	  <param name="endY">0.9</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+	<struct name="stripe10">
+	  <param name="Type">Box</param>
+	  <param name="startX">minX</param>
+	  <param name="endX">maxX</param>
+	  <param name="startY">0.95</param>
+	  <param name="endY">1.0</param>
+	  <param name="startZ">minZ</param>
+	  <param name="endZ">maxZ</param>
+	</struct>
+
+	<struct name="stripesShape">
+	  <param name="Type">Union</param>
+	  <list name="shapes">
+	    <param>stripe1</param>
+	    <param>stripe2</param>
+	    <param>stripe3</param>
+	    <param>stripe4</param>
+	    <param>stripe5</param>
+	    <param>stripe6</param>
+	    <param>stripe7</param>
+	    <param>stripe8</param>
+	    <param>stripe9</param>
+	    <param>stripe10</param>
+	  </list>
+	</struct>
+	
+	
+	<!-- Make the SNES interface available -->
+	
+	<struct name="DruckerPragerSNES">
+	  <param name="Type">DruckerPragerXXVE</param>
+	  <param name="StrainRateField">StrainRateField</param>
+	  <param name="PressureField">PressureField</param>
+	  <param name="MaterialPointsSwarm">materialSwarm</param>
+	  <param name="IntegrationSwarm">picIntegrationPoints</param>
+	  <param name="Context">context</param>
+	  <param name="StrainWeakening">strainWeakening</param>
+	  <param name="cohesion">Cohesion</param>
+	  <param name="frictionCoefficient">FrictionCoeff</param>
+	  <param name="cohesionAfterSoftening">Cohesion</param>
+	  <param name="frictionCoefficientAfterSoftening">FrictionCoeff</param>
+	  <!-- Strain weakening is built in ! -->
+	  <!-- <param name="alpha">1.0</param> -->
+	  <!-- <param name="beta">0.0</param> -->
+	  <!-- <param name="kappa">1.0</param> -->
+	  <!-- <param name="alphaB">0.0</param> -->
+	  <!-- <param name="betaB">0.0</param> -->
+	  <!-- <param name="kappaB">1.0</param> -->
+	  <param name="ViscoelasticForceTerm">viscoelasticForceTerm</param>
+	  <param name="ViscoelasticRheology">viscoelasticRheology</param>
+	  <param name="minYieldCriterion">minYieldCriterion</param>
+      <param name="minViscosity">minViscosity</param>
+	</struct>    
+	
+
+	<!-- Add stripes into the mix -->
+	
+	<struct name="bar" mergeType="replace">
+		<param name="Type">RheologyMaterial</param>
+		<param name="Shape">barShape</param>
+		<param name="DensityLabel">sampleDensity</param>
+		<list name="Rheology">
+			<param>barViscosity</param>
+			<!-- <param>DruckerPrager</param> -->
+			<param>DruckerPragerSNES</param>
+		</list>
+	</struct>
+	
+	<struct name="barStripes"  mergeType="replace">
+		<param name="Type">RheologyMaterial</param>
+		<param name="Shape">stripesShape</param>
+		<param name="DensityLabel">sampleDensity</param>
+		<list name="Rheology">
+			<param>barViscosity</param>
+			<!-- <param>DruckerPragerVE</param> -->
+			<param>DruckerPragerSNES</param>
+		</list>
+	</struct>
+
+	<!-- Ensure elasticity is negligible by default -->
+
+	<struct name="viscoelasticRheology" mergeType="merge">
+		<param name="elasticTimeStep" mergeType="replace">1.0</param>
+		<param name="mu"  mergeType="replace">1.0e100</param>
+	</struct>	
+
+</struct>
+
+
+</StGermainData> 

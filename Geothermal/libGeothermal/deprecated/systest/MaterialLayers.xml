@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<param name="coalBoxMinX">-1.0</param>
+	<param name="coalBoxMinY">-1.0</param>
+	<param name="coalBoxMinZ">-1.0</param>
+	<param name="coalBoxMaxX">+1.0</param>
+	<param name="coalBoxMaxY">+0.2</param>
+	<param name="coalBoxMaxZ">+1.0</param>
+
+	<struct name="components" mergeType="merge">
+		<struct name="surface_1_Mesh">
+			<param name="Type">FeMesh</param>
+			<param name="elementType">linear</param>
+			<param name="UseFeAlgorithms">False</param>
+		</struct>
+		<struct name="surface_1_MeshGenerator">
+			<param name="Type">IrregularQuadGenerator</param>
+			<param name="mesh">surface_1_Mesh</param>
+			<param name="dims">2</param> <!-- dim - 1 -->
+			<param name="shadowDepth">shadowDepth</param>
+			<param name="meshTopologyFilePrefix">./input/surface_1.1</param>
+			<list name="enabledDims">
+				<param>0</param>
+				<param>1</param>
+				<param>2</param>
+			</list>
+			<list name="enabledIncidence" mergeType="merge">
+				<param>0</param><param>0</param>
+				<param>1</param><param>0</param>
+				<param>2</param><param>0</param>
+				<param>0</param><param>1</param>
+				<param>0</param><param>2</param>
+			</list>
+		</struct>
+		<struct name="surface_1">
+			<param name="Type"> MeshVariable </param>
+			<param name="Rank"> Scalar </param>
+			<param name="DataType"> Double </param>
+			<param name="mesh"> surface_1_Mesh </param>
+		</struct>
+		<struct name="surface_1_DofLayout">
+			<param name="Type"> DofLayout </param>
+			<param name="mesh"> surface_1_Mesh </param>
+			<list name="BaseVariables">
+				<param>surface_1</param>
+			</list>
+		</struct>
+		<struct name="Surface_1_HeightField">
+			<param name="Type"> FeVariable </param>
+			<param name="FEMesh"> surface_1_Mesh </param>
+			<param name="DofLayout"> surface_1_DofLayout </param>
+			<param name="LinkedDofInfo"> surface_1_LinkedDofs </param>
+		</struct>
+
+		<struct name="surface_2_Mesh">
+			<param name="Type">FeMesh</param>
+			<param name="elementType">linear</param>
+			<param name="UseFeAlgorithms">False</param>
+		</struct>
+		<struct name="surface_2_MeshGenerator">
+			<param name="Type">IrregularQuadGenerator</param>
+			<param name="mesh">surface_2_Mesh</param>
+			<param name="dims">2</param> <!-- dim - 1 -->
+			<param name="shadowDepth">shadowDepth</param>
+			<param name="meshTopologyFilePrefix">./input/surface_2.1</param>
+			<list name="enabledDims">
+				<param>0</param>
+				<param>1</param>
+				<param>2</param>
+			</list>
+			<list name="enabledIncidence" mergeType="merge">
+				<param>0</param><param>0</param>
+				<param>1</param><param>0</param>
+				<param>2</param><param>0</param>
+				<param>0</param><param>1</param>
+				<param>0</param><param>2</param>
+			</list>
+		</struct>
+		<struct name="surface_2">
+			<param name="Type"> MeshVariable </param>
+			<param name="Rank"> Scalar </param>
+			<param name="DataType"> Double </param>
+			<param name="mesh"> surface_2_Mesh </param>
+		</struct>
+		<struct name="surface_2_DofLayout">
+			<param name="Type"> DofLayout </param>
+			<param name="mesh"> surface_2_Mesh </param>
+			<list name="BaseVariables">
+				<param>surface_2</param>
+			</list>
+		</struct>
+		<struct name="Surface_2_HeightField">
+			<param name="Type"> FeVariable </param>
+			<param name="FEMesh"> surface_2_Mesh </param>
+			<param name="DofLayout"> surface_2_DofLayout </param>
+			<param name="LinkedDofInfo"> surface_2_LinkedDofs </param>
+		</struct>
+
+		<struct name="basementMesh">
+			<param name="Type">FeMesh</param>
+			<param name="elementType">linear</param>
+			<param name="UseFeAlgorithms">False</param>
+		</struct>
+		<struct name="basementMeshGenerator">
+			<param name="Type">IrregularQuadGenerator</param>
+			<param name="mesh">basementMesh</param>
+			<param name="dims">2</param> <!-- dim - 1 -->
+			<param name="shadowDepth">shadowDepth</param>
+			<param name="meshTopologyFilePrefix">./input/basement.1</param>
+			<list name="enabledDims">
+				<param>0</param>
+				<param>1</param>
+				<param>2</param>
+			</list>
+			<list name="enabledIncidence" mergeType="merge">
+				<param>0</param><param>0</param>
+				<param>1</param><param>0</param>
+				<param>2</param><param>0</param>
+				<param>0</param><param>1</param>
+				<param>0</param><param>2</param>
+			</list>
+		</struct>
+		<struct name="basement">
+			<param name="Type"> MeshVariable </param>
+			<param name="Rank"> Scalar </param>
+			<param name="DataType"> Double </param>
+			<param name="mesh"> basementMesh </param>
+		</struct>
+		<struct name="basementDofLayout">
+			<param name="Type"> DofLayout </param>
+			<param name="mesh"> basementMesh </param>
+			<list name="BaseVariables">
+				<param>basement</param>
+			</list>
+		</struct>
+		<struct name="BasementHeightField">
+			<param name="Type"> FeVariable </param>
+			<param name="FEMesh"> basementMesh </param>
+			<param name="DofLayout"> basementDofLayout </param>
+			<param name="LinkedDofInfo"> basementLinkedDofs </param>
+		</struct>
+
+		<!-- materials & default shapes -->
+		<struct name="backgroundShape">
+			<param name="Type">Everywhere</param>
+		</struct>
+		<struct name="nowhereShape">
+			<param name="Type">BelowPlane</param>
+			<param name="offset">-1.0e10</param>
+		</struct>
+		<struct name="top_material">
+			<param name="Type">Material</param>
+			<param name="Shape">nowhereShape</param>
+			<list name="materialExtensions">
+				<param>0.10</param>
+				<param>0.00</param>
+			</list>
+		</struct>
+		<struct name="surface_1_material">
+			<param name="Type">Material</param>
+			<param name="Shape">nowhereShape</param>
+			<list name="materialExtensions">
+				<param>0.20</param>
+				<param>0.00</param>
+			</list>
+		</struct>
+		<struct name="surface_2_material">
+			<param name="Type">Material</param>
+			<param name="Shape">nowhereShape</param>
+			<list name="materialExtensions">
+				<param>0.30</param>
+				<param>0.00</param>
+			</list>
+		</struct>
+		<struct name="basement_material">
+			<param name="Type">Material</param>
+			<param name="Shape">nowhereShape</param>
+			<list name="materialExtensions">
+				<param>0.40</param>
+				<param>0.00</param>
+			</list>
+		</struct>
+		
+		<struct name="materialsManager">
+			<param name="Type">ConductivityMaterialManager</param>
+			<param name="MaterialSwarm">materialSwarm</param>
+			<list name="Materials">
+				<param>top_material</param>
+				<param>surface_1_material</param>
+				<param>surface_2_material</param>
+				<param>basement_material</param>
+			</list>
+			<list name="HeightMaps">
+				<param>Surface_1_HeightField</param>
+				<param>Surface_2_HeightField</param>
+				<param>BasementHeightField</param>
+			</list>
+			<list name="HeightMapFilePrefixes">
+				<param>./input/surface_1.1</param>
+				<param>./input/surface_2.1</param>
+				<param>./input/basement.1</param>
+			</list>
+		</struct>
+	</struct>
+</StGermainData>

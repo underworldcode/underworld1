@@ -1,0 +1,172 @@
+\documentclass[a4paper,10pt]{article}
+
+\begin{document}
+
+
+\section{Specifying units for Underworld parameters}
+
+Any numerical parameter in the xml file may include a 
+tag indicating its units. For example,
+\begin{verbatim}
+    <param name="density" units="kg/m^3"> 3300 </param>
+\end{verbatim}
+
+The unit description is constructed using a combination of
+some predefined physical units (See next tables) and the
+operators
+``\verb+/+'', ``\verb+*+'' and ``\verb+^+''.
+
+Examples of \emph{valid} units are
+\begin{center}
+\begin{tabular}{ll}
+Velocity & \verb+m/s+ or \verb+km/h+ or \verb+cm/yr+ or
+\verb+km/Myr+\\
+Density & \verb+kg*m^-3+ or \verb+g/cm^3+ \\
+Pressure & \verb+Pa+ or \verb+GPa+ or \verb+bar+ or \verb+kbar+\\
+Thermal diffusivity & \verb+m^2/s+ \\
+Thermal conductivity & \verb+W/m/K+ \\
+Thermal capacity (Cp) & \verb+J/(kg*K)+ \\
+Thermal expansivity & \verb+K^-1+ \\
+Compressibility & \verb+MPa^-1+ \\
+Heat source (microW/m$^3$)& \verb+uW*m^-3+ \\
+Viscosity & \verb+Pa*s+ or \verb+MPa*s+\\
+Energy & \verb+J+ or \verb+kJ+\\
+Clapeyron slope & \verb+MPa/K+ \\
+Activation Energy & \verb+kJ/mol+ \\
+Activation Volume & \verb+J/MPa/mol+ 
+\end{tabular}
+\end{center}
+
+Examples of \emph{not-valid} units are
+
+\begin{center}
+\begin{tabular}{lll}
+Thermal expansivity & \verb+1/K+ & \emph{wrong!}
+\texttt{1} is not a unit\\
+Temperature & \verb+C+ & \emph{wrong!} use \texttt{K} instead\\
+Preexponential parameter & \verb+MPa^-n+ & \emph{wrong!}
+who is \texttt{n}?? \\
+Viscosity & \verb+Pa s+ & \emph{wrong!} connector needed\\
+Viscosity & \verb+Pas+ & \emph{wrong!} connector needed\\
+\end{tabular}
+\end{center}
+
+All the units can be prepended with one of following prefixes
+
+\begin{center}
+\begin{tabular}{lcl}
+Prefix & Symbol & Value \\
+\hline
+    yotta    &\texttt{Y} &     $\times10^{24}$ \\
+    zetta    &\texttt{Z} &     $\times10^{21}$ \\
+    exa      &\texttt{E} &     $\times10^{18}$ \\
+    peta     &\texttt{P} &     $\times10^{15}$ \\
+    tera     &\texttt{T} &     $\times10^{12}$ \\
+    giga     &\texttt{G} &     $\times10^{9}$ \\
+    mega     &\texttt{M} &     $\times10^{6}$ \\
+    kilo     &\texttt{k} &     $\times10^{3}$ \\
+    hecto    &\texttt{h} &     $\times10^{2}$ \\
+    deca     &\texttt{e} &     $\times10^{1}$ \\
+    deci     &\texttt{d} &     $\times10^{-1}$ \\
+    centi    &\texttt{c} &     $\times10^{-2}$ \\
+    milli    &\texttt{m} &     $\times10^{-3}$ \\
+    micro    &\texttt{u} &     $\times10^{-6}$ \\
+    nano     &\texttt{n} &     $\times10^{-9}$ \\
+    pico     &\texttt{p} &     $\times10^{-12}$ \\
+    femto    &\texttt{f} &     $\times10^{-15}$ \\
+    atto     &\texttt{a} &     $\times10^{-18}$ \\
+    zepto    &\texttt{z} &     $\times10^{-21}$ \\
+    yocto    &\texttt{y} &     $\times10^{-24}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The built-in units are described in the following table
+\small
+\begin{center}
+\begin{tabular}{lll}
+\hline
+{\bf Length} units & Symbol & Conversion to SI (m)\\
+\hline
+     meter         &\texttt{m} &         1.0\\
+     angstrom      &\texttt{angstrom} &  1e-10\\
+     astron.unit   &\texttt{astrUnit} & 149597870690\\
+     feet          &\texttt{feet} &      0.3048\\
+     foot          &\texttt{foot} &      0.3048\\
+     inch          &\texttt{inch} &      0.0254\\
+     mile          &\texttt{mile} &      1609.344\\
+     light year    &\texttt{ly} &        9454254955500000\\
+     parsec        &\texttt{parsec} &    30856774879000000\\
+\hline
+{\bf Time} units & Symbol & Conversion to SI (s)\\
+\hline
+     seconds        &\texttt{s} &                     1\\
+     minute         &\texttt{min} &                  60\\
+     hour           &\texttt{h} &                  3600\\
+     day            &\texttt{day} &               86400\\
+     week           &\texttt{week} &             604800\\
+     fortnight      &\texttt{fortnight} &       1209600\\
+     month          &\texttt{month} &           2628000\\
+     year           &\texttt{yr} &             31536000\\
+     decade         &\texttt{decade} &        315360000\\
+     century        &\texttt{century} &      3153600000\\
+     millennium     &\texttt{millennium} &  31536000000\\
+\hline
+{\bf Mass} units & Symbol & Conversion to SI (kg)\\
+\hline
+     gram           &\texttt{g} &          1e-3\\
+     atomic mass u. &\texttt{AtMaUnit} &   1.66053873e-27\\
+     ounce          &\texttt{ounce} &      0.028349523125\\
+     pound          &\texttt{pound} &      0.45359237\\
+     ton            &\texttt{ton} &        1000\\
+     tonne          &\texttt{tonne} &      1000\\
+\hline
+{\bf Temperature} units & Symbol & Conversion to SI (K)\\
+\hline
+     kelvin         &\texttt{K} &          1.0\\
+\hline
+{\bf Electric current} units & Symbol & Conversion to SI (A)\\
+\hline
+     ampere         &\texttt{A} &          1.0\\
+\hline
+{\bf Acceleration} units & Symbol & Conversion to SI (m/s$^2$)\\
+\hline
+    g-unit              &\texttt{G} &   9.80665\\
+    gal                 &\texttt{gal} &     0.01\\
+\hline  
+{\bf Energy} units & Symbol & Conversion to SI (J)\\
+\hline
+     Joule               &\texttt{J} &       1.0\\
+     calorie             &\texttt{cal} &     4.184\\
+     erg                 &\texttt{erg} &     1e-7\\
+\hline
+{\bf Force} units & Symbol & Conversion to SI (N)\\
+\hline
+     Newton              &\texttt{N} &       1.0 \\
+     dyne                &\texttt{dyne} &    0.00001 \\
+\hline
+{\bf Frequency} units & Symbol & Conversion to SI (Hz)\\
+\hline
+     Hertz              &\texttt{Hz} &       1.0 \\
+\hline
+{\bf Pressure} units & Symbol & Conversion to SI (Pa)\\
+\hline
+     Pascal              &\texttt{Pa} &           1.0 \\
+     atmosphere          &\texttt{atm} &     101325.01 \\
+     bar                 &\texttt{bar} &     100000.0 \\
+     cm of hg            &\texttt{cmHg} &      1333.2239 \\
+     mm of hg            &\texttt{mmHg} &       133.32239 \\
+\hline
+{\bf Amount of substance} units & Symbol & Conversion to SI
+(mol)\\
+\hline
+     mol              &\texttt{mol} &           1.0 \\
+\hline
+\end{tabular}
+\end{center}
+\normalfont
+
+
+
+
+\end{document}

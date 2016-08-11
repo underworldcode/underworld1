@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head> 
+ 
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+
+<!--
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/> 
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> 
+
+<link href="css.css" rel="stylesheet" type="text/css" /> 
+-->
+ 
+<title>To run MG convergence tests:</title> 
+</head><body> 
+<div> 
+
+
+
+<h1>To run MG convergence tests:</h1>
+
+<code>./runAndTestMG.pl [xmlfile] [ OPTIONS ]</code>
+
+<p>where OPTIONS:</p>
+<dl>
+ <dt> <code>-myOwnOptFiles [specifiedmgoptfile]</code></dt> 
+  
+  <dd>where [specifiedmgoptfile]
+is a .dat file with the list of the options files you want to use and
+this will call a separate subroutine to include your options files in
+an array by reading the .dat file and storing the lines with .opt in an
+array. See options/exampleOptionFile.opt for a list of all the possible
+options you can set and exampleOptFilesMG.dat for an example of how to
+list the option files you want to use. </dd><dt><code>-paramFile [filename]</code></dt>
+  
+ <dd> where [filename]
+is the param file where both resolution and mgLevels are set. By
+default serial runs of resolution 64sq, 128sq with mgLevels of 4 and 5
+are done- REMEMBER TO SET the mgLevels parameter in the command line.
+See OFileMG2D.dat. A recommended method for setting mgLevels is to find
+the number of levels where the coarsest grid is about 8x8 and the
+number of levels should be calculated as if you are running the job on
+1 proc. For example for a 64sq job, the mgLevels is set to 4 regardless
+of how many procs the job is on (the MG solver takes care to ensure
+that the coarsest grid on each proc is as close to 8x8 as possible). </dd><dt><code>-nonAnalytic [reffilepath]</code></dt>
+  
+  <dd>where [reffilepath]
+is the high resolution reference solution file path where the high
+resolution solution field variable is compared against the run time
+solutions instead of the analytic solution. IF THIS IS SET, YOU MUST
+SET THE TEST TIMESTEP variable. See pluginForMGTest.xml and the
+pluginData struct for how to set out the numeric and reference fields
+for comparison. </dd><dt><code>-testTimestep [testtimestep]</code></dt>
+  
+ <dd> The timestep at which you want your high resolution reference solution and your numeric solution compared at.	</dd>								
+  
+  <dt><code>-againstExpected [expfilename]</code></dt>
+  
+  <dd>will check the generated numbers against a file you specify, assuming the file is in the 'expected/MG/' dir.  It can be a frequent output file or a convergence file. By default a check will not occur.</dd>
+  
+  <dt><code>-againstEachOther</code></dt>
+  
+  <dd>will
+compare the generated convergence results and frequent output results
+for each option file (assumes these results are generated in the log
+dir). Finds the quickest inner, outer and if non-linear, non-linear
+iterations, the least number of inner, outer and non-linear iterations
+and the best convergence rates for each field. The log dir files will
+be saved with the name of the particular option file concatinated onto
+the end of the file name, for user reference. For example:
+log/Underworld_ExtensionFMM.xml-analysis.frequentout-MG-opt_1.opt. The
+best option files for each field variable (convergence or speed) will
+be printed to screen.</dd>
+</dl>									
+
+<h2>EXAMPLES: 1 analytic, 2 nonanalytic</h2>
+<ol>
+	<li>
+		<code>./runAndTestMG.pl testVelicSolCx.xml -myOwnOptFiles exampleOptFilesMG.dat -againstEachOther</code>
+		
+		<p>Runs
+with user specified option files, NO param file OFile.dat, NO check
+against a specified expected file although the generated convergence
+and timing variables for each option file specified, are compared
+against each other.</p>
+	</li>
+	
+	<li>
+	<p>UNCOMMENT OUT PLUGIN DATA STRUCT IN pluginForMGTest.xml</p> 
+	<code>./runAndTestMG.pl ExtensionFMM.xml -paramFile OFileMG2D.dat -nonAnalytic ./output/HRRefSoln_opt_2 -testTimestep 1</code>      
+	<p>Runs
+with default option files, a user specified resolution and mgLevel via
+a param file OFileMG2D.dat, NO check against a specified expected file
+and the timestep the high resolution and low resolution field variables
+are compared at is 1.</p>
+	
+	</li>
+</ol>
+
+
+<p>These scripts measure the convergence rates in numerical fields
+generated in Underworld either against analytic solutions supplied by
+Mirko Velic OR a fine resolution grid that was run earlier.</p>
+<p>The error of FEM fields should decrease with higher resolution -
+depending on the choice of element type that represents a given field.</p>
+<p>These scripts run error measures on given field at several resolutions and then process how the error converges.</p>
+<p>THESE SCRIPTS REQUIRE EXPERIMENTAL TO BE BUILT</p>
+
+
+
+</div> 
+ </body></html>
